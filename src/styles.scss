@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./assets/scss/link";
+
+
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+li{
+  list-style: none;
+}
+svg{
+  width: 100%;
+  height: 100%;
+}
+input:focus{
+  outline: none;
+}
+
+
+
+section{
+     @include flex(between);
+     @include size($section-min-height, 100%);
+     align-items: stretch;
+     .sec_title{
+       @include flex(center);
+       background-color: $sec_title_bg_color;
+       width: $sec_title_min-width;
+       h4{
+         text-align: center;
+         font-size: 12px;
+         font-weight: 700;
+         color: $black;
+         margin: 0;
+       }
+     }
+    .int_sec_val {
+      @include flex(between);
+      @include size(100%, calc(100% - $sec_title_min-width));
+      padding: 5px;
+    }
+   }
+
+ nb-layout{
+  nb-layout-column {
+    padding: 0!important;
+  }
+}
+ nb-card-body{
+  padding: 0!important;
+}
+ nb-select.size-tiny:not(.full-width) {
+  width: 8rem!important;
+   .select-button{
+     //padding: 0!important;
+     width: 8rem!important;
+     min-width: 125px;
+   }
+}
+.nb-theme-default h3{
+  line-height: normal!important;
+}

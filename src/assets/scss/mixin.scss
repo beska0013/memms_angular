@@ -1,0 +1,169 @@
+
+
+
+@mixin flex($spacing : none, $direction : row){
+  display:flex;
+  @if $direction == column{
+    flex-direction: column;
+  }
+  @if $direction == row{
+    flex-direction: row;
+  }
+  @if $spacing == between{
+    justify-content: space-between;
+  }
+  @else if $spacing == around{
+    justify-content: space-around;
+  }
+  @else if $spacing == even{
+    justify-content: space-evenly;
+  }
+  @else if $spacing == center{
+    justify-content:center;
+  }
+  @else if $spacing == start{
+    justify-content:flex-start;
+  }
+  @else if $spacing == end{
+    justify-content:flex-end;
+  }
+  align-items:center;
+}
+
+
+
+@mixin square($size){
+  width:$size;
+  height:$size;
+}
+@mixin min-square($size){
+  min-width:$size;
+  min-height:$size;
+}
+@mixin max-square($size){
+  max-width:$size;
+  max-height:$size;
+}
+
+@mixin size($height,$width) {
+  height: $height;
+  width: $width;
+}
+@mixin min-size($height,$width) {
+  min-height: $height;
+  min-width: $width;
+}
+@mixin max-size($height,$width) {
+  max-height: $height;
+  max-width: $width;
+}
+
+
+@mixin bg($link,$size){
+  background-image: url($link);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $size;
+  -o-background-size: $size;
+  -moz-background-size: $size;
+  -webkit-background-size: $size;
+}
+
+@mixin bg_web($size){
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: $size;
+  -o-background-size: $size;
+  -moz-background-size: $size;
+  -webkit-background-size: $size;
+}
+
+
+@mixin font($name,$color, $size, $weight){
+  color: $color;
+  font-weight: $weight;
+  font-size: $size;
+  font-family: $name, sans-serif;
+}
+
+
+@mixin checkSvg{
+  svg{
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0 0 0 #7ac142;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    circle{
+      stroke-dasharray: 166;
+      stroke-dashoffset: 166;
+      stroke-width: 2;
+      stroke-miterlimit: 10;
+      stroke: #7ac142;;
+      fill: none;
+      animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards
+    }
+    path{
+      transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards
+    }
+  }
+
+  @keyframes stroke{100%{stroke-dashoffset: 0}}
+  @keyframes scale{0%, 100%{transform: none}50%{transform: scale3d(1.1, 1.1, 1)}}
+  @keyframes fill{100%{box-shadow: inset 0 0 0 30px #7ac142}}
+}
+
+@mixin updateSvg{
+  svg{
+    fill: #7ac142;
+  }
+  &:hover{
+    transform: scale(1.2);
+    transition: all .3s ease-in-out;
+  }
+  &.activate{
+    animation: rotate 2s cubic-bezier(.16,.8,.31,.98) infinite;
+  }
+  @keyframes rotate {
+    0%{
+      transform: scale(1.2) rotate(0deg);
+    }
+    100%{transform: scale(1.2) rotate(360deg);}
+  }
+}
+
+@mixin loading($size, $display:inline-block ) {
+  display: $display;
+  position: relative;
+  width: $size;
+  height: $size;
+  span {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: $size;
+    height: $size;
+    //margin: 2px;
+    border: 3px solid ;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #CCCCCC transparent transparent transparent;
+    &:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+    &:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+    &:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+
+
+  }
+}
+

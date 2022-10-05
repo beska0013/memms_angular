@@ -1,0 +1,27 @@
+@import "../../../../assets/scss/link";
+
+
+
+
+section{
+
+  border-bottom: $section-border;
+  .int_sec_val{
+
+    .title_input_wrap{
+      @include size(100%, 80%);
+      @include flex(center);
+      position: relative;
+    }
+    input{
+      @include square(100%);
+      &:hover{
+        border: 1px solid #d0d0d0;
+      }
+      &.warning{
+        border: 2px solid #ff0000;
+      }
+
+    }
+  }
+}

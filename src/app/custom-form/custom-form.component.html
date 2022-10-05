@@ -1,0 +1,25 @@
+<nb-layout>
+  <nb-layout-column>
+    <nb-card>
+      <nb-card-body>
+
+    <app-header [prjTitle]="formData.form.ProjectTitle"
+                [title]="formData.form.Title.split(':').slice(1).join(':')"
+                [smmId]="formData.form.SMM00000Calculated">
+    </app-header>
+    <app-fm-title [titleValue]="formData.form.ProjectTitle"
+                  (titleInput)="onTitleChange($event)" ></app-fm-title>
+
+    <app-fm-control [humanResource]="formData.prjHumanRecource"
+                    [status]="formData.status"
+                    [statusReason]="formData.statusReason"
+                    [organizations]="formData.organizations"
+                    [formData]="formData.form"></app-fm-control>
+        </nb-card-body>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>
+
+
+
+

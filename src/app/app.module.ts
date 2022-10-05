@@ -1,18 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {HttpClientModule} from "@angular/common/http";
+import {CustomFormComponent} from "./custom-form/custom-form.component";
+import {NbLayoutModule, NbThemeModule} from "@nebular/theme";
+
+
+
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    CustomFormComponent,
+    NbThemeModule.forRoot(),
+    NbLayoutModule,
   ],
   providers: [],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

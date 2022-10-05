@@ -1,0 +1,17 @@
+<section>
+  <div class="sec_title">
+    <h4>Title</h4>
+  </div>
+
+  <div class="int_sec_val">
+    <div class="title_input_wrap">
+      <input id="int_title"
+             type="text"
+             data-type="ProjectTitle"
+             [ngModel]="titleValue" (ngModelChange)="onTitleChannge($event)">
+    </div>
+    <p id="titleWarning" class="input-warning"></p>
+  </div>
+
+
+</section>

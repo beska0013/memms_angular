@@ -1,1 +1,42 @@
-<p>fm-tags works!</p>
+<section>
+  <div class="sec_title">
+    <h4>{{sectionTitle}}</h4>
+  </div>
+  <div class="sec_content">
+    <label for="searchScope" class="inputLabel searchScope">
+      <h6> Search Scope</h6>
+      <input [formControl]="searchScope"
+             [fieldSize]="'tiny'"
+             id="searchScope"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoSearchScope"/>
+      <nb-autocomplete #autoSearchScope>
+        <nb-option *ngFor="let org of organizations" [value]="org.Title">
+          {{ org.Title }}
+        </nb-option>
+      </nb-autocomplete>
+    </label>
+
+      <nb-form-field>
+      <nb-tag-list (tagRemove)="onTagRemove($event)">
+        <nb-tag [status]="status" *ngFor="let tag of trees" [text]="tag" removable></nb-tag>
+        <input id="tags"
+               type="text"
+               nbTagInput
+               (input)="onInputChanges()"
+               (tagAdd)="onTagAdd($event.value)"
+               [nbAutocomplete]="autocomplete"
+               fullWidth>
+      </nb-tag-list>
+
+      <nb-icon nbSuffix icon="search" pack="eva"></nb-icon>
+      </nb-form-field>
+      <nb-autocomplete [activeFirst]="true" #autocomplete (selectedChange)="onTagAdd($event)">
+        <nb-option *ngFor="let option of taglist;trackBy: trackByFn"
+                   [value]="option">{{ option }}</nb-option>
+      </nb-autocomplete>
+
+  </div>
+</section>

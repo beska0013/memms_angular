@@ -4,25 +4,17 @@ import {HttpClient} from "@angular/common/http";
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppService  {
 
-  constructor(private http:HttpClient) {
-
-  }
-
-
-
+  constructor(private http:HttpClient) {}
 
   getForm = () => {
     const itemIdINT = GetUrlKeyValue("ID");
     return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('Projects')/items('${itemIdINT}')`)
-  }
-
-  getFormData =() => {
-
   }
 
   getListByFilter(listName:string, selectItems:string[], count:number,filterQuery: string){
@@ -33,18 +25,12 @@ export class AppService  {
     return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${listName}')/items?$select=${selectItems.toString()}`)
   }
 
-  createSubscription = async () =>{
 
-}
+  searchListItems(arg:{listName: string, selectItems: string[], filterQuery: string}){
+      return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${arg.listName}')/items?$select=${arg.selectItems.toString()}&$filter=${arg.filterQuery}`)
 
-  protected render(): void {
+
   }
-
-  private _loadDocuments(): void {
-    // load documents here
-  console.log(this)
-  }
-
 
 
 }

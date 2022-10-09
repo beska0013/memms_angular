@@ -12,27 +12,7 @@ export class AppComponent{
 
   constructor(private srv:AppService) {}
 
-  frequency = [
-    'No Review',
-    'Daily',
-    'Week from now',
-    'Weekly on',
-    'Mon - Wed',
-    'Tue - Thur',
-    'Mon - Wed - Fri',
-    'Month from now',
-    'Monthly on',
-    'Twice a month',
-    'Two weeks from now',
-    'Every two weeks on',
-    'Every two months',
-    'Quarterly',
-    'Six months from now',
-    'Twice a year on',
-    'This day next year',
-    'Yearly on',
-    'Custom review date'
-  ];
+
 
 
 

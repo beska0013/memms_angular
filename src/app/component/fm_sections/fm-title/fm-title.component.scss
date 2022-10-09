@@ -4,10 +4,7 @@
 
 
 section{
-
-  border-bottom: $section-border;
-  .int_sec_val{
-
+  .sec_content{
     .title_input_wrap{
       @include size(100%, 80%);
       @include flex(center);

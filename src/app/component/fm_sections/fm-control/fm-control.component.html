@@ -3,57 +3,128 @@
     <h4>Control</h4>
   </div>
 
-  <div class="int_sec_val">
-<!--    <input #autoInput-->
-<!--           nbInput-->
-<!--           type="text"-->
-<!--           (input)="onChange()"-->
-<!--           placeholder="Enter value"-->
-<!--           [nbAutocomplete]="auto" />-->
+  <div class="sec_content">
+    <label for="cnt_organization" class="inputLabel">
+      <h6> Control Organization</h6>
+    <input [formControl]="cntSectionFmControls.OrgSelect"
+           [fieldSize]="'tiny'"
+           id="cnt_organization"
+           nbInput
+           type="text"
+           placeholder="Enter value"
+           [nbAutocomplete]="autoOrg"/>
+    <nb-autocomplete #autoOrg>
+      <nb-option *ngFor="let org of organizations" [value]="org.Title">
+        {{ org.Title }}
+      </nb-option>
+    </nb-autocomplete>
+    </label>
+    <label for="cnt_owner" class="inputLabel">
+      <h6>Owner</h6>
+      <input [formControl]="cntSectionFmControls.OwnerSelect"
+             [fieldSize]="'tiny'"
+             id="cnt_owner"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoOWner"/>
+      <nb-autocomplete #autoOWner>
+        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
+          {{ human.Title }}
+        </nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_manager" class="inputLabel">
+      <h6>Manager</h6>
+      <input [formControl]="cntSectionFmControls.ManagerSelect"
+             [fieldSize]="'tiny'"
+             id="cnt_manager"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoManager"/>
+      <nb-autocomplete #autoManager>
+        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
+          {{ human.Title }}
+        </nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_lead" class="inputLabel">
+      <h6>Lead</h6>
+      <input [formControl]="cntSectionFmControls.LeadSelect"
+             [fieldSize]="'tiny'"
+             id="cnt_lead"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoLead"/>
+      <nb-autocomplete #autoLead>
+        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
+          {{ human.Title }}
+        </nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_priorityGr" class="inputLabel">
+      <h6>Priority  Group</h6>
+      <input [formControl]="cntSectionFmControls.PriorityGrSelect"
+             [fieldSize]="'tiny'"
+             id="cnt_priorityGr"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoPriorityGr"/>
+      <nb-autocomplete #autoPriorityGr>
+        <nb-option *ngFor="let group of priorityGroup" [value]="group">{{group}}</nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_prioritySubGr" class="inputLabel">
+      <h6>Priority Sub  Group</h6>
+      <input [formControl]="cntSectionFmControls.PrioritySubGrSelect"
+             [fieldSize]="'tiny'"
+             id="cnt_prioritySubGr"
+             nbInput
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="autoPrioritySubGr"/>
+      <nb-autocomplete #autoPrioritySubGr>
+        <nb-option *ngFor="let group of prioritySubGroup" [value]="group">{{group}}</nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_percentComplete" class="inputLabel">
+      <h6>Percent Complete</h6>
+      <input id="cnt_percentComplete"
+             type="text"
+             nbInput
+             [formControl]="cntSectionFmControls.PercentComplete"
+             [fieldSize]="'tiny'">
+      <span>%</span>
+    </label>
+    <label for="cnt_status" class="inputLabel">
+      <h6>Status</h6>
+      <input id="cnt_status"
+             type="text"
+             nbInput
+             [nbAutocomplete]="autoStatus"
+             [formControl]="cntSectionFmControls.StatusSelect"
+             [fieldSize]="'tiny'">
 
-<!--    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">-->
+      <nb-autocomplete #autoStatus>
+        <nb-option *ngFor="let st of status" [value]="st.Title">{{st.Title}}</nb-option>
+      </nb-autocomplete>
+    </label>
+    <label for="cnt_statusReason" class="inputLabel">
+      <h6>Status Reason</h6>
+      <input id="cnt_statusReason"
+             type="text"
+             nbInput
+             [nbAutocomplete]="autoStatusReason"
+             [formControl]="cntSectionFmControls.StatusReasonSelect"
+             [fieldSize]="'tiny'">
 
-<!--      <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">-->
-<!--        {{ option }}-->
-<!--      </nb-option>-->
-
-<!--    </nb-autocomplete>-->
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.OrganizationId">
-        <nb-option *ngFor="let org of organizations" [value]="org.ID">{{org.Title}}</nb-option>
-      </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.OwnerId">
-        <nb-option *ngFor="let human of humanResource" [value]="human.ID">{{human.Title}}</nb-option>
-      </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.ProjectManagerId">
-      <nb-option *ngFor="let human of humanResource" [value]="human.ID">{{human.Title}}</nb-option>
-    </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.ProjectLeadId">
-      <nb-option *ngFor="let human of humanResource" [value]="human.ID">{{human.Title}}</nb-option>
-    </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.ProjectPriorityGroup">
-      <nb-option *ngFor="let group of priorityGroup" [value]="group">{{group}}</nb-option>
-    </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.ProjectPrioritySubGroup">
-      <nb-option *ngFor="let sub_group of prioritySubGroup" [value]="sub_group">{{sub_group}}</nb-option>
-    </nb-select>
-
-    <input type="text" nbInput  [fieldSize]="'tiny'" [value]="this.formData.PercentComplete">
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.StatusId">
-        <nb-option *ngFor="let st of status" [value]="st.ID">{{st.Title}}</nb-option>
-      </nb-select>
-
-    <nb-select [size]="'tiny'" placeholder="Select Showcase" [(selected)]="this.formData.StatusReasonId">
-        <nb-option *ngFor="let stR of statusReason" [value]="stR.ID">{{stR.Title}}</nb-option>
-      </nb-select>
-
-
+      <nb-autocomplete #autoStatusReason>
+        <nb-option *ngFor="let stR of statusReason" [value]="stR.Title">{{stR.Title}}</nb-option>
+      </nb-autocomplete>
+    </label>
 
   </div>
 </section>

@@ -1,1 +1,39 @@
-<p>fm-review-frequency works!</p>
+<section>
+  <div class="sec_title">
+    <h4>Review Frequency</h4>
+  </div>
+  <div class="sec_content">
+    <div class="frequency">
+      <input
+        [fieldSize]="'tiny'"
+        id="cnt_owner"
+        nbInput
+        type="text"
+        placeholder="Enter value"
+        [nbAutocomplete]="autoOWner"/>
+      <nb-autocomplete #autoOWner (selectedChange)="frequencyChage($event)">
+        <nb-option *ngFor="let options of frequency" [value]="options">
+          {{ options }}
+        </nb-option>
+      </nb-autocomplete>
+
+      <div class="date_cnt">
+        <app-datepicker [for]="'frequencyDate'"></app-datepicker>
+        <button nbButton
+                outline
+                status="primary"
+                size="small"
+                shape="rectangle">Advance</button>
+      </div>
+
+    </div>
+    <div class="fraquency_dateTypes" >
+      <app-frequency-date-types [type]="type"></app-frequency-date-types>
+    </div>
+
+
+
+  </div>
+
+
+</section>

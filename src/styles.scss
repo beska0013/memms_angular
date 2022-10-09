@@ -2,6 +2,9 @@
 
 
 
+
+
+
 *{
   box-sizing: border-box;
   margin: 0;
@@ -18,12 +21,11 @@ input:focus{
   outline: none;
 }
 
-
-
 section{
      @include flex(between);
-     @include size($section-min-height, 100%);
+     @include min-size($section-min-height, 100%);
      align-items: stretch;
+     border-bottom: $section-border;
      .sec_title{
        @include flex(center);
        background-color: $sec_title_bg_color;
@@ -34,31 +36,86 @@ section{
          font-weight: 700;
          color: $black;
          margin: 0;
+         line-height: normal;
        }
      }
-    .int_sec_val {
+     .sec_content {
       @include flex(between);
-      @include size(100%, calc(100% - $sec_title_min-width));
+      align-items: flex-end;
+      min-height: $section-min-height;
+      width:  calc(100% - $sec_title_min-width) ;
       padding: 5px;
     }
+  &.tabs-section{
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    border: 1px solid #aaa;
+    padding: 0 $space-4;
+    label{
+      @include flex(start);
+      width: 100%;
+      margin:$space-4 0;
+      input{
+        width: calc(100% - 157px);
+        max-width: calc(100% - 157px)!important;
+      }
+    }
+    .label-title{
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      font-family: "Verdana",sans-serif;
+      margin: 0 1em 0 0;
+      width: 157px;
+      text-align: end;
+      white-space: nowrap;
+
+    }
+    .dates{
+      @include flex(start);
+      width: 100%;
+      margin:$space-4 0;
+      label{
+        display: block;
+      }
+    }
+  }
    }
 
- nb-layout{
-  nb-layout-column {
-    padding: 0!important;
+
+.rootEl{
+  padding: 2px;
+}
+.inputLabel{
+  @include flex(start, column);
+  align-items: start;
+  position: relative;
+  margin: 0 1rem 0 0;
+  input{
+    width: 8rem!important;
+    &#cnt_percentComplete {
+      & + span {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        translate: 150% -10%;
+      }
+    }
+  }
+  &.tagLabel{
+    width: 100%;
+  }
+
+}
+.wrapper{
+  @include flex(start);
+  & > * {
+    flex: 1;
+    &:nth-child(2){
+      section{border-left: $section-border;}
+    }
+
   }
 }
- nb-card-body{
-  padding: 0!important;
-}
- nb-select.size-tiny:not(.full-width) {
-  width: 8rem!important;
-   .select-button{
-     //padding: 0!important;
-     width: 8rem!important;
-     min-width: 125px;
-   }
-}
-.nb-theme-default h3{
-  line-height: normal!important;
-}
+

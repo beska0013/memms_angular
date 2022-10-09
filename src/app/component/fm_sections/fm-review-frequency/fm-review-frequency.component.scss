@@ -1,0 +1,10 @@
+@import "../../../../assets/scss/link";
+
+.frequency{
+  input{
+    width: 100%;
+  }
+  .date_cnt{
+    @include  flex(center)
+  }
+}

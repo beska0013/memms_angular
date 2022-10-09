@@ -1,3 +1,33 @@
+@import "../../assets/scss/link";
 
 
+nav{
+  background-color: $sec_title_bg_color;
+  border-bottom: $section-border;
+  ul{
+    @include flex(start);
+    margin: $space-1 0;
+    li{
+      color: #000;
+      font-weight: 400;
+      font-size: 16px;
+      font-family: "Verdana",sans-serif;
+      padding: 0.5rem;
+      border-right: 4px solid gray;
+      cursor: pointer;
+      text-transform: capitalize;
+      &:hover {
+        transition: all .3s ease-in-out;
+        background-color: #ddd;
+      }
+      &.active{
+        background-color: #ccc;
+      }
+
+    }
+  }
+}
+.tabs-content{
+  padding: $space-1;
+}
 

@@ -58,7 +58,7 @@ section{
       margin:$space-4 0;
       input{
         width: calc(100% - 157px);
-        max-width: calc(100% - 157px)!important;
+        max-width: unset!important;
       }
     }
     .label-title{
@@ -70,7 +70,6 @@ section{
       width: 157px;
       text-align: end;
       white-space: nowrap;
-
     }
     .dates{
       @include flex(start);
@@ -78,6 +77,10 @@ section{
       margin:$space-4 0;
       label{
         display: block;
+        input{
+          //width: 100%;
+        }
+
       }
     }
   }

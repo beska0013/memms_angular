@@ -2,18 +2,20 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
+import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
 
 
 
 @Component({
   selector: 'app-fm-control',
   standalone: true,
-  imports: [
-    CommonModule,
-    NebularModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        NebularModule,
+        ReactiveFormsModule,
+        SearchableDropdownComponent,
 
-  ],
+    ],
   templateUrl: './fm-control.component.html',
   styleUrls: ['./fm-control.component.scss']
 })

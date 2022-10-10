@@ -12,6 +12,7 @@ section{
     }
     input{
       @include square(100%);
+      max-width: 100%!important;
       &:hover{
         border: 1px solid #d0d0d0;
       }

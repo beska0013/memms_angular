@@ -9,7 +9,7 @@
     </app-header>
 
     <app-fm-title [titleValue]="formData.form.ProjectTitle"
-                  (titleInput)="onTitleChange($event)"></app-fm-title>
+                  (titleInput)="onTitleInput($event)"></app-fm-title>
 
     <app-fm-control [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"
@@ -66,6 +66,7 @@
           <app-general *ngSwitchCase="'General'"></app-general>
           <app-area-tools *ngSwitchCase="'Area Tools'"></app-area-tools>
           <app-notes *ngSwitchCase="'Notes'"></app-notes>
+          <app-audio-log *ngSwitchCase="'Audio Log'"></app-audio-log>
           <app-tasks *ngSwitchCase="'Tasks'"></app-tasks>
           <app-links *ngSwitchCase="'Links'"></app-links>
           <app-files *ngSwitchCase="'Files'"></app-files>

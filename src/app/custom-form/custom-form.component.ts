@@ -18,6 +18,7 @@ import {FilesComponent} from "../component/tabs/files/files.component";
 import {SecurityComponent} from "../component/tabs/security/security.component";
 import {TimeComponent} from "../component/tabs/time/time.component";
 import {AutoTextComponent} from "../component/tabs/auto-text/auto-text.component";
+import {AudioLogComponent} from "../component/tabs/audio-log/audio-log.component";
 
 
 @Component({
@@ -41,6 +42,7 @@ import {AutoTextComponent} from "../component/tabs/auto-text/auto-text.component
     SecurityComponent,
     TimeComponent,
     AutoTextComponent,
+    AudioLogComponent,
 
   ],
   templateUrl: './custom-form.component.html',
@@ -65,6 +67,10 @@ export class CustomFormComponent   implements OnInit {
     },
     {
       name:'Notes',
+      active:false
+    },
+    {
+      name:'Audio Log',
       active:false
     },
     {
@@ -138,6 +144,7 @@ export class CustomFormComponent   implements OnInit {
   }
 
   ngOnInit(): void {
+     console.log('v3.0')
     this.initControlSection();
     this.initAreaSection();
     this.initTagsSection();
@@ -150,7 +157,7 @@ export class CustomFormComponent   implements OnInit {
     for (const key in this.form.controls) {
       this.form.controls[key].valueChanges.subscribe(res => {
         if(this.form.controls[key].dirty){
-          console.log(this.form.controls[key]);
+         // console.log(this.form.controls[key]);
         }
       })
     }
@@ -162,11 +169,11 @@ export class CustomFormComponent   implements OnInit {
 
   }
 
-  onTitleChange(event){
+   onTitleInput(event){
     this.formData.form.ProjectTitle = event
   }
 
-  initAreaSection(){
+  private initAreaSection(){
     const areaPath = this.formData.form.Title.split(':').slice(0, this.formData.form.Title.split(':').length - 1).join(':')
     const areaPathId = this.calcAreaPathId();
     this.areaPathList.push({ID: areaPathId, Title: areaPath})
@@ -176,37 +183,37 @@ export class CustomFormComponent   implements OnInit {
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initTagsSection(){
+  private initTagsSection(){
 
     this.tagSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initReviewContextSection(){
+  private initReviewContextSection(){
 
     this.revieContextSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initTeamSection(){
+  private initTeamSection(){
 
     this.teamSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initStakeholderSection(){
+  private initStakeholderSection(){
 
     this.stakeholdeSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initNotificationsSection(){
+  private initNotificationsSection(){
 
     this.notificationsSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
-  initControlSection(){
+  private initControlSection(){
 
 
     this.form.controls.orgInputFormControl
@@ -246,11 +253,7 @@ export class CustomFormComponent   implements OnInit {
 
   }
 
-  trackTab(index, item){
-    return item
-  }
-
-  calcAreaPathId(){
+  private calcAreaPathId(){
     const chBoundShadow = [this.formData.form.CHOrganizationId]
     for (let i = 1; i <= 10 ; i++) {
       !!this.formData.form[`CH${i}BoundShadow`] ?
@@ -260,7 +263,13 @@ export class CustomFormComponent   implements OnInit {
     return chBoundShadow.join(':')
   }
 
-  calcProjectTitle(){
+  trackTab(index, item){
+    return item
+  }
+
+
+
+ calcProjectTitle(){
     const title = this.formData.form.Title.split(':').slice(1);
     return title.slice(0, title.length - 1).join(':');
   }

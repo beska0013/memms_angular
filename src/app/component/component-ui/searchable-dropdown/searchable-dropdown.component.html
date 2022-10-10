@@ -1,0 +1,15 @@
+<label for="dropdown" class="inputLabel">
+  <h6> {{title}}</h6>
+  <input [formControl]="fmControl"
+         [fieldSize]="'tiny'"
+         id="dropdown"
+         nbInput
+         type="text"
+         placeholder="Enter value"
+         [nbAutocomplete]="auto"/>
+  <nb-autocomplete #auto (selectedChange)="onChange()">
+    <nb-option *ngFor="let item of dropdownList" [value]="item.Title || item">
+      {{ item.Title || item}}
+    </nb-option>
+  </nb-autocomplete>
+</label>

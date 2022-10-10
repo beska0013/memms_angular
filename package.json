@@ -25,6 +25,7 @@
     "@types/sharepoint": "^2016.1.10",
     "angular-cd-timer": "^3.0.0",
     "eva-icons": "^1.1.3",
+    "ng-audio-recorder": "^0.0.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

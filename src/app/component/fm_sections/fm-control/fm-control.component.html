@@ -4,92 +4,37 @@
   </div>
 
   <div class="sec_content">
-    <label for="cnt_organization" class="inputLabel">
-      <h6> Control Organization</h6>
-    <input [formControl]="cntSectionFmControls.OrgSelect"
-           [fieldSize]="'tiny'"
-           id="cnt_organization"
-           nbInput
-           type="text"
-           placeholder="Enter value"
-           [nbAutocomplete]="autoOrg"/>
-    <nb-autocomplete #autoOrg>
-      <nb-option *ngFor="let org of organizations" [value]="org.Title">
-        {{ org.Title }}
-      </nb-option>
-    </nb-autocomplete>
-    </label>
-    <label for="cnt_owner" class="inputLabel">
-      <h6>Owner</h6>
-      <input [formControl]="cntSectionFmControls.OwnerSelect"
-             [fieldSize]="'tiny'"
-             id="cnt_owner"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoOWner"/>
-      <nb-autocomplete #autoOWner>
-        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
-          {{ human.Title }}
-        </nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="cnt_manager" class="inputLabel">
-      <h6>Manager</h6>
-      <input [formControl]="cntSectionFmControls.ManagerSelect"
-             [fieldSize]="'tiny'"
-             id="cnt_manager"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoManager"/>
-      <nb-autocomplete #autoManager>
-        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
-          {{ human.Title }}
-        </nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="cnt_lead" class="inputLabel">
-      <h6>Lead</h6>
-      <input [formControl]="cntSectionFmControls.LeadSelect"
-             [fieldSize]="'tiny'"
-             id="cnt_lead"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoLead"/>
-      <nb-autocomplete #autoLead>
-        <nb-option *ngFor="let human of humanResource" [value]="human.Title">
-          {{ human.Title }}
-        </nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="cnt_priorityGr" class="inputLabel">
-      <h6>Priority  Group</h6>
-      <input [formControl]="cntSectionFmControls.PriorityGrSelect"
-             [fieldSize]="'tiny'"
-             id="cnt_priorityGr"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoPriorityGr"/>
-      <nb-autocomplete #autoPriorityGr>
-        <nb-option *ngFor="let group of priorityGroup" [value]="group">{{group}}</nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="cnt_prioritySubGr" class="inputLabel">
-      <h6>Priority Sub  Group</h6>
-      <input [formControl]="cntSectionFmControls.PrioritySubGrSelect"
-             [fieldSize]="'tiny'"
-             id="cnt_prioritySubGr"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoPrioritySubGr"/>
-      <nb-autocomplete #autoPrioritySubGr>
-        <nb-option *ngFor="let group of prioritySubGroup" [value]="group">{{group}}</nb-option>
-      </nb-autocomplete>
-    </label>
+    <app-searchable-dropdown [labelFor]="'cnt_organization'"
+                             [title]="'Control Organization'"
+                             [fmControl]="cntSectionFmControls.OrgSelect"
+                             [dropdownList]="organizations"></app-searchable-dropdown>
+
+    <app-searchable-dropdown [labelFor]="'cnt_owner'"
+                             [title]="'Owner'"
+                             [fmControl]="cntSectionFmControls.OwnerSelect"
+                             [dropdownList]="humanResource"></app-searchable-dropdown>
+
+    <app-searchable-dropdown [labelFor]="'cnt_manager'"
+                             [title]="'Manager'"
+                             [fmControl]="cntSectionFmControls.ManagerSelect"
+                             [dropdownList]="humanResource"></app-searchable-dropdown>
+
+    <app-searchable-dropdown [labelFor]="'cnt_lead'"
+                             [title]="'Lead'"
+                             [fmControl]="cntSectionFmControls.LeadSelect"
+                             [dropdownList]="humanResource"></app-searchable-dropdown>
+
+    <app-searchable-dropdown [labelFor]="'cnt_priorityGr'"
+                             [title]="'Priority Group'"
+                             [fmControl]="cntSectionFmControls.PriorityGrSelect"
+                             [dropdownList]="priorityGroup"></app-searchable-dropdown>
+
+    <app-searchable-dropdown [labelFor]="'cnt_prioritySubGr'"
+                             [title]="'Priority Sub  Group'"
+                             [fmControl]="cntSectionFmControls.PrioritySubGrSelect"
+                             [dropdownList]="prioritySubGroup"></app-searchable-dropdown>
+
+
     <label for="cnt_percentComplete" class="inputLabel">
       <h6>Percent Complete</h6>
       <input id="cnt_percentComplete"

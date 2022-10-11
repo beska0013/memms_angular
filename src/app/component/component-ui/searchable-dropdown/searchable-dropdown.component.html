@@ -1,15 +1,55 @@
-<label for="dropdown" class="inputLabel">
+<label [for]="labelFor" class="inputLabel">
   <h6> {{title}}</h6>
-  <input [formControl]="fmControl"
-         [fieldSize]="'tiny'"
-         id="dropdown"
-         nbInput
-         type="text"
-         placeholder="Enter value"
-         [nbAutocomplete]="auto"/>
-  <nb-autocomplete #auto (selectedChange)="onChange()">
-    <nb-option *ngFor="let item of dropdownList" [value]="item.Title || item">
-      {{ item.Title || item}}
-    </nb-option>
-  </nb-autocomplete>
+<!--  <input [formControl]="fmControl"-->
+<!--         [fieldSize]="'tiny'"-->
+<!--         (input)="onInput()"-->
+<!--         (change)="onChange()"-->
+<!--         [id]="labelFor"-->
+<!--         #autoInput-->
+<!--         nbInput-->
+<!--         type="text"-->
+<!--         placeholder="Enter value"-->
+<!--         [nbAutocomplete]="auto"/>-->
+<!--  <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">-->
+<!--    <nb-option *ngFor="let item of filteredOptions$ | async" [value]="item['Title'] || item">-->
+<!--      {{ item['Title'] || item}}-->
+<!--    </nb-option>-->
+<!--  </nb-autocomplete>-->
+
+  <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">
+    <input [formControl]="fmControl"
+           [fieldSize]="'tiny'"
+           (input)="onInput()"
+           (change)="onChange()"
+           [id]="labelFor"
+           #autoInput
+           nbInput
+           type="text"
+           placeholder="Enter value"
+           [nbAutocomplete]="auto"/>
+    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+      <nb-option *ngFor="let item of options" [value]="item['Title'] || item">
+        {{ item['Title'] || item}}
+      </nb-option>
+    </nb-autocomplete>
+  </ng-container>
+
+  <ng-template #inputTemplate>
+
+    <input [formControl]="fmControl"
+           [fieldSize]="'tiny'"
+           (change)="onChange()"
+           [id]="labelFor"
+           #autoInput
+           nbInput
+           type="text"
+           placeholder="Enter value"/>
+    <span>%</span>
+    <!--      <input [id]="labelFor"-->
+    <!--             type="text"-->
+    <!--             nbInput-->
+    <!--             (change)="onFieldChange($event)"-->
+    <!--             [formControl]="cntSectionFmControls.PercentComplete"-->
+    <!--             [fieldSize]="'tiny'">-->
+  </ng-template>
 </label>

@@ -133,44 +133,9 @@ export class CustomFormComponent   implements OnInit {
   stakeholdeSearchScope = new FormControl();
   notificationsSearchScope = new FormControl();
 
-   tabsHandler(i:number){
-    this.tabs.forEach((tab,index ) => {
-      index === i ? this.activateTab(tab) :  tab.active = false
-    })
-  }
   private activateTab(tab:{name:string,active:boolean}){
-     tab.active = true
-     this.tabType = tab.name;
-  }
-
-  ngOnInit(): void {
-     console.log('v3.0')
-    this.initControlSection();
-    this.initAreaSection();
-    this.initTagsSection();
-    this.initReviewContextSection();
-    this.initTeamSection();
-    this.initStakeholderSection();
-    this.initNotificationsSection();
-
-
-    for (const key in this.form.controls) {
-      this.form.controls[key].valueChanges.subscribe(res => {
-        if(this.form.controls[key].dirty){
-         // console.log(this.form.controls[key]);
-        }
-      })
-    }
-
-    // console.log(this.formData.form.Title.split(':').slice(0, this.formData.form.Title.split(':').length - 1));
-    console.log(this.formData);
-    // console.log(this.form);
-
-
-  }
-
-   onTitleInput(event){
-    this.formData.form.ProjectTitle = event
+    tab.active = true
+    this.tabType = tab.name;
   }
 
   private initAreaSection(){
@@ -263,16 +228,53 @@ export class CustomFormComponent   implements OnInit {
     return chBoundShadow.join(':')
   }
 
-  trackTab(index, item){
+   tabsHandler(i:number){
+    this.tabs.forEach((tab,index ) => {
+      index === i ? this.activateTab(tab) :  tab.active = false
+    })
+  }
+   onSectionValueChange(event){
+      console.log('onSectionValueChange',event);
+   }
+   onTitleInput(event){
+    this.formData.form.ProjectTitle = event
+  }
+   trackTab(index, item){
     return item
   }
-
-
-
- calcProjectTitle(){
+   calcProjectTitle(){
     const title = this.formData.form.Title.split(':').slice(1);
     return title.slice(0, title.length - 1).join(':');
   }
+
+
+
+  ngOnInit(): void {
+     console.log('v3.0')
+    this.initControlSection();
+    this.initAreaSection();
+    this.initTagsSection();
+    this.initReviewContextSection();
+    this.initTeamSection();
+    this.initStakeholderSection();
+    this.initNotificationsSection();
+
+
+    for (const key in this.form.controls) {
+      this.form.controls[key].valueChanges.subscribe(res => {
+        if(this.form.controls[key].dirty){
+         // console.log(this.form.controls[key]);
+        }
+      })
+    }
+
+
+    console.log(this.formData);
+  }
+
+
+
+
 
 
 

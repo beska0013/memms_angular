@@ -19,7 +19,7 @@ export class AppComponent{
   customForm = this.srv.getForm()
     .pipe(switchMap((fm_data:any) => combineLatest([
         this.srv.getListByFilter('ProjectHumanResources', ['ID','Title'], 320, `OrganizationId eq ${fm_data.OrganizationId}`),
-        this.srv.getListByFilter('ProjectStatusReason', ['ID','Title'], 10, `StatusId eq ${fm_data.StatusId}`),
+        this.srv.getAllListItems('ProjectStatusReason', ['ID','Title','StatusId']),
         this.srv.getAllListItems('ProjectStatus',['ID','Title']),
         this.srv.getAllListItems('ProjectOrganization',['ID','Title']),
       ]).pipe(map((res:any) => ({

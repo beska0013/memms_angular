@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
+import {ControlDataTypes} from "../../../../models/formDataTypes";
 
 
 
@@ -20,43 +21,33 @@ import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdow
   styleUrls: ['./fm-control.component.scss']
 })
 export class FmControlComponent implements OnInit, AfterViewInit {
+  constructor() { }
 
   @Input() formData!: any
   @Input() humanResource!:any;
   @Input() status:any;
   @Input() statusReason:any;
   @Input() organizations!:any;
-
-
   @Input() cntSectionFmControls:any
-
-  constructor() { }
-  selectedItem = 2;
+  @Output() output = new EventEmitter()
 
 
-
-
-
-
-  // ownerInputFormControl = new FormControl();
-
+  dataTypes = new ControlDataTypes()
   priorityGroup = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   prioritySubGroup = ['A', 'B', 'C'];
 
 
+  onFieldChange(event){
+    console.log(event);
+    //this.output.emit(event)
+  }
 
 
 
 
   ngOnInit(): void {
+    console.log(this.dataTypes.orgId);
 
-
-   // this.orgInputFormControl.valueChanges.subscribe(res => console.log(res))
-
-    // console.log('humanResource', this.humanResource);
-    // console.log('status', this.status);
-    // console.log('statusReason', this.statusReason);
-    // console.log('organizations', this.organizations);
   }
 
 

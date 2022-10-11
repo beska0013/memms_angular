@@ -1,3 +1,9 @@
+@forward '@nebular/theme/styles/theming';
+@use '@nebular/theme/styles/theming' as *;
+@use '@nebular/theme/styles/themes/default';
+
+$nb-enable-css-custom-properties: true;
+
 
 :host nb-tab {
   padding: 1.25rem;
@@ -15,13 +21,12 @@ nb-card-body{
 nb-select.size-tiny:not(.full-width) {
   width: 8rem!important;
   .select-button{
-    //padding: 0!important;
     width: 8rem!important;
     min-width: 125px;
   }
 }
 .nb-theme-default h3{
-  line-height: normal!important;
+  line-height: normal;
 }
 .nb-theme-default h6{
   margin: 0!important;;
@@ -80,4 +85,8 @@ nb-form-field{
 }
 .nb-theme-default [nbButton].appearance-outline.size-small{
   padding: 3px 6px!important;
+}
+
+.nb-theme-default [nbInput].shape-rectangle {
+  border-radius: 0;
 }

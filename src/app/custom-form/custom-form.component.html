@@ -2,82 +2,74 @@
   <nb-layout-column>
     <nb-card>
       <nb-card-body>
-
     <app-header [prjTitle]="formData.form.ProjectTitle"
                 [title]="calcProjectTitle()"
                 [smmId]="formData.form.SMM00000Calculated">
     </app-header>
-
     <app-fm-title [titleValue]="formData.form.ProjectTitle"
                   (titleInput)="onTitleInput($event)"></app-fm-title>
-
-    <app-fm-control [cntSectionFmControls] = cntSectionFmControls
+    <app-fm-control (output)="onSectionValueChange($event)" [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"
                     [status]="formData.status"
                     [statusReason]="formData.statusReason"
                     [organizations]="formData.organizations"
                     [formData]="formData.form"></app-fm-control>
+    <div class="wrapper">
+      <app-fm-area [areaPathList]="areaPathList"
+                   [searchScope]="areaSeachScope"
+                   [areaFmControl]="form.controls.areaInputFmControl"
+                   [organizations]="formData.organizations"></app-fm-area>
 
-        <div class="wrapper">
-          <app-fm-area [areaPathList]="areaPathList"
-                       [searchScope]="areaSeachScope"
-                       [areaFmControl]="form.controls.areaInputFmControl"
-                       [organizations]="formData.organizations"></app-fm-area>
 
+      <app-fm-tags [status]="'basic'"
+                   [listName]="'ProjectTags'"
+                   [sectionTitle]="'Tags'"
+                   [organizations]="formData.organizations"
+                   [searchScope]="tagSearchScope"></app-fm-tags>
+    </div>
+    <div class="wrapper">
+      <app-fm-tags [status]="'success'"
+                  [searchScope]="revieContextSearchScope"
+                  [sectionTitle]="'Review Context'"
+                  [organizations]="formData.organizations"></app-fm-tags>
+      <app-fm-review-frequency ></app-fm-review-frequency>
+    </div>
+    <app-fm-tags [status]="'warning'"
+                 [sectionTitle]="'Team'"
+                 [searchScope]="teamSearchScope"
+                 [organizations]="formData.organizations"></app-fm-tags>
+    <div class="wrapper">
+      <app-fm-tags [status]="'danger'"
+                   [sectionTitle]="'Stakeholder'"
+                   [searchScope]="stakeholdeSearchScope"
+                   [organizations]="formData.organizations"></app-fm-tags>
 
-          <app-fm-tags [status]="'basic'"
-                       [listName]="'ProjectTags'"
-                       [sectionTitle]="'Tags'"
-                       [organizations]="formData.organizations"
-                       [searchScope]="tagSearchScope"></app-fm-tags>
-        </div>
-
-        <div class="wrapper">
-          <app-fm-tags [status]="'success'"
-                      [searchScope]="revieContextSearchScope"
-                      [sectionTitle]="'Review Context'"
-                      [organizations]="formData.organizations"></app-fm-tags>
-          <app-fm-review-frequency ></app-fm-review-frequency>
-        </div>
-        <app-fm-tags [status]="'warning'"
-                     [sectionTitle]="'Team'"
-                     [searchScope]="teamSearchScope"
-                     [organizations]="formData.organizations"></app-fm-tags>
-
-        <div class="wrapper">
-          <app-fm-tags [status]="'danger'"
-                       [sectionTitle]="'Stakeholder'"
-                       [searchScope]="stakeholdeSearchScope"
-                       [organizations]="formData.organizations"></app-fm-tags>
-
-          <app-fm-tags [status]="'info'"
-                       [sectionTitle]="'Notifications'"
-                       [searchScope]="notificationsSearchScope"
-                       [organizations]="formData.organizations"></app-fm-tags>
-        </div>
-        <nav>
-          <ul>
-            <li *ngFor="let tab of tabs;index as i;trackBy:trackTab"
-                [class]="{'active': tab.active}"
-                (click)="tabsHandler(i)"> {{tab.name}}</li>
-          </ul>
-        </nav>
-        <div class="tabs-content" [ngSwitch]="tabType">
-          <app-general *ngSwitchCase="'General'"></app-general>
-          <app-area-tools *ngSwitchCase="'Area Tools'"></app-area-tools>
-          <app-notes *ngSwitchCase="'Notes'"></app-notes>
-          <app-audio-log *ngSwitchCase="'Audio Log'"></app-audio-log>
-          <app-tasks *ngSwitchCase="'Tasks'"></app-tasks>
-          <app-links *ngSwitchCase="'Links'"></app-links>
-          <app-files *ngSwitchCase="'Files'"></app-files>
-          <app-security *ngSwitchCase="'Security'"></app-security>
-          <app-time *ngSwitchCase="'Time'"></app-time>
-          <app-auto-text *ngSwitchCase="'Auto Text'"></app-auto-text>
-        </div>
-        </nb-card-body>
+      <app-fm-tags [status]="'info'"
+                   [sectionTitle]="'Notifications'"
+                   [searchScope]="notificationsSearchScope"
+                   [organizations]="formData.organizations"></app-fm-tags>
+    </div>
+    <nav>
+      <ul>
+        <li *ngFor="let tab of tabs;index as i;trackBy:trackTab"
+            [class]="{'active': tab.active}"
+            (click)="tabsHandler(i)"> {{tab.name}}</li>
+      </ul>
+    </nav>
+    <div class="tabs-content" [ngSwitch]="tabType">
+      <app-general *ngSwitchCase="'General'"></app-general>
+      <app-area-tools *ngSwitchCase="'Area Tools'"></app-area-tools>
+      <app-notes *ngSwitchCase="'Notes'"></app-notes>
+      <app-audio-log *ngSwitchCase="'Audio Log'"></app-audio-log>
+      <app-tasks *ngSwitchCase="'Tasks'"></app-tasks>
+      <app-links *ngSwitchCase="'Links'"></app-links>
+      <app-files *ngSwitchCase="'Files'"></app-files>
+      <app-security *ngSwitchCase="'Security'"></app-security>
+      <app-time *ngSwitchCase="'Time'"></app-time>
+      <app-auto-text *ngSwitchCase="'Auto Text'"></app-auto-text>
+    </div>
+      </nb-card-body>
     </nb-card>
-
-
   </nb-layout-column>
 </nb-layout>
 

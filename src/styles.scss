@@ -21,6 +21,7 @@ input:focus{
   outline: none;
 }
 
+
 section{
      @include flex(between);
      @include min-size($section-min-height, 100%);
@@ -40,12 +41,13 @@ section{
        }
      }
      .sec_content {
-      @include flex(between);
+      @include flex(start);
       align-items: flex-end;
       min-height: $section-min-height;
       width:  calc(100% - $sec_title_min-width) ;
       padding: 5px;
-    }
+
+      }
   &.tabs-section{
     flex-direction: column;
     border-radius: 8px;
@@ -84,33 +86,13 @@ section{
       }
     }
   }
-   }
+}
 
 
 .rootEl{
   padding: 2px;
 }
-.inputLabel{
-  @include flex(start, column);
-  align-items: start;
-  position: relative;
-  margin: 0 1rem 0 0;
-  input{
-    width: 8rem!important;
-    &#cnt_percentComplete {
-      & + span {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        translate: 150% -10%;
-      }
-    }
-  }
-  &.tagLabel{
-    width: 100%;
-  }
 
-}
 .wrapper{
   @include flex(start);
   & > * {
@@ -122,3 +104,7 @@ section{
   }
 }
 
+.tinyField{ width: $w-tiny}
+.smallField{ width: $w-small}
+.mediumField{ width: $w-mediium}
+.largeField{ width: $w-large}

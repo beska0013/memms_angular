@@ -4,73 +4,68 @@
   </div>
 
   <div class="sec_content">
-    <app-searchable-dropdown [labelFor]="'cnt_organization'"
+    <app-searchable-dropdown class="mediumField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.orgId"
+                             [labelFor]="'cnt_organization'"
                              [title]="'Control Organization'"
                              [fmControl]="cntSectionFmControls.OrgSelect"
                              [dropdownList]="organizations"></app-searchable-dropdown>
-
-    <app-searchable-dropdown [labelFor]="'cnt_owner'"
+    <app-searchable-dropdown class="largeField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.ownerId"
+                             [labelFor]="'cnt_owner'"
                              [title]="'Owner'"
                              [fmControl]="cntSectionFmControls.OwnerSelect"
                              [dropdownList]="humanResource"></app-searchable-dropdown>
-
-    <app-searchable-dropdown [labelFor]="'cnt_manager'"
+    <app-searchable-dropdown class="largeField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.mngId"
+                             [labelFor]="'cnt_manager'"
                              [title]="'Manager'"
                              [fmControl]="cntSectionFmControls.ManagerSelect"
                              [dropdownList]="humanResource"></app-searchable-dropdown>
-
-    <app-searchable-dropdown [labelFor]="'cnt_lead'"
+    <app-searchable-dropdown class="largeField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.leadId"
+                             [labelFor]="'cnt_lead'"
                              [title]="'Lead'"
                              [fmControl]="cntSectionFmControls.LeadSelect"
                              [dropdownList]="humanResource"></app-searchable-dropdown>
-
-    <app-searchable-dropdown [labelFor]="'cnt_priorityGr'"
+    <app-searchable-dropdown class="tinyField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.prGroup"
+                             [labelFor]="'cnt_priorityGr'"
                              [title]="'Priority Group'"
                              [fmControl]="cntSectionFmControls.PriorityGrSelect"
                              [dropdownList]="priorityGroup"></app-searchable-dropdown>
-
-    <app-searchable-dropdown [labelFor]="'cnt_prioritySubGr'"
-                             [title]="'Priority Sub  Group'"
+    <app-searchable-dropdown class="smallField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.prSubGroup"
+                             [labelFor]="'cnt_prioritySubGr'"
+                             [title]="'Priority Sub Group'"
                              [fmControl]="cntSectionFmControls.PrioritySubGrSelect"
                              [dropdownList]="prioritySubGroup"></app-searchable-dropdown>
-
-
-    <label for="cnt_percentComplete" class="inputLabel">
-      <h6>Percent Complete</h6>
-      <input id="cnt_percentComplete"
-             type="text"
-             nbInput
-             [formControl]="cntSectionFmControls.PercentComplete"
-             [fieldSize]="'tiny'">
-      <span>%</span>
-    </label>
-    <label for="cnt_status" class="inputLabel">
-      <h6>Status</h6>
-      <input id="cnt_status"
-             type="text"
-             nbInput
-             [nbAutocomplete]="autoStatus"
-             [formControl]="cntSectionFmControls.StatusSelect"
-             [fieldSize]="'tiny'">
-
-      <nb-autocomplete #autoStatus>
-        <nb-option *ngFor="let st of status" [value]="st.Title">{{st.Title}}</nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="cnt_statusReason" class="inputLabel">
-      <h6>Status Reason</h6>
-      <input id="cnt_statusReason"
-             type="text"
-             nbInput
-             [nbAutocomplete]="autoStatusReason"
-             [formControl]="cntSectionFmControls.StatusReasonSelect"
-             [fieldSize]="'tiny'">
-
-      <nb-autocomplete #autoStatusReason>
-        <nb-option *ngFor="let stR of statusReason" [value]="stR.Title">{{stR.Title}}</nb-option>
-      </nb-autocomplete>
-    </label>
-
+    <app-searchable-dropdown class="smallField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.prSubGroup"
+                             [labelFor]="'cnt_percentComplete'"
+                             [title]="'Percent Complete'"
+                             [fmControl]="cntSectionFmControls.PercentComplete"></app-searchable-dropdown>
+    <app-searchable-dropdown class="smallField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.sts"
+                             [labelFor]="'cnt_status'"
+                             [title]="'Status'"
+                             [fmControl]="cntSectionFmControls.StatusSelect"
+                             [dropdownList]="status"></app-searchable-dropdown>
+    <app-searchable-dropdown class="largeField"
+                             (output)="onFieldChange($event)"
+                             [dataType]="dataTypes.percent"
+                             [labelFor]="'cnt_statusReason'"
+                             [title]="'Status Reason'"
+                             [fmControl]="cntSectionFmControls.StatusReasonSelect"
+                             [dropdownList]="statusReason"></app-searchable-dropdown>
   </div>
 </section>
 

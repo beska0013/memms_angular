@@ -1,0 +1,29 @@
+@import "../../../../assets/scss/link";
+
+
+.inputLabel{
+  @include flex(start, column);
+  width: 100%!important;
+  align-items: start;
+  position: relative;
+  padding: 0 $space-4 0 0;
+  input{
+    width: 100%!important;
+
+    &#cnt_percentComplete {
+      & + span {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        translate: -200% -10%;
+      }
+    }
+  }
+  &.tagLabel{
+    width: 100%;
+  }
+
+}
+
+
+

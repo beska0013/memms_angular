@@ -4,7 +4,7 @@
 .inputLabel{
   @include flex(start, column);
   width: 100%!important;
-  align-items: start;
+  align-items: flex-start;
   position: relative;
   padding: 0 $space-4 0 0;
   input{

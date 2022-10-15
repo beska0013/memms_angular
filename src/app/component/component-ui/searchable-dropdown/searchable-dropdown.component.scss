@@ -7,9 +7,20 @@
   align-items: flex-start;
   position: relative;
   padding: 0 $space-4 0 0;
-  input{
-    width: 100%!important;
+    input{
+      @include square(100%);
+      @include fieldFont;
+      max-width: 100%!important;
+      border-radius: 0;
+      border: 1px solid #000000;
+      background-color: transparent;
+      &::placeholder{ @include fieldFont;}
+      &:-ms-input-placeholder{ @include fieldFont;}
+      &::-ms-input-placeholder{ @include fieldFont;}
 
+      &:hover{
+        border: 1px solid #d0d0d0;
+      }
     &#cnt_percentComplete {
       & + span {
         position: absolute;
@@ -19,9 +30,7 @@
       }
     }
   }
-  &.tagLabel{
-    width: 100%;
-  }
+
 
 }
 

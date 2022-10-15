@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  fieldInputChange:'input_change',
+  fieldSelectChange:'select_change',
 };

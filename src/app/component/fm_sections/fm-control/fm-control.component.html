@@ -47,7 +47,7 @@
                              [dropdownList]="prioritySubGroup"></app-searchable-dropdown>
     <app-searchable-dropdown class="smallField"
                              (output)="onFieldChange($event)"
-                             [dataType]="dataTypes.prSubGroup"
+                             [dataType]="dataTypes.percent"
                              [labelFor]="'cnt_percentComplete'"
                              [title]="'Percent Complete'"
                              [fmControl]="cntSectionFmControls.PercentComplete"></app-searchable-dropdown>
@@ -60,11 +60,11 @@
                              [dropdownList]="status"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
-                             [dataType]="dataTypes.percent"
+                             [dataType]="dataTypes.stsReason"
                              [labelFor]="'cnt_statusReason'"
                              [title]="'Status Reason'"
                              [fmControl]="cntSectionFmControls.StatusReasonSelect"
-                             [dropdownList]="statusReason"></app-searchable-dropdown>
+                             [dropdownList]="statusReasonList"></app-searchable-dropdown>
   </div>
 </section>
 

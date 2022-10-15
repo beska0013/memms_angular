@@ -1,4 +1,11 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
@@ -7,10 +14,11 @@ import {ControlDataTypes} from "../../../../models/formDataTypes";
 
 
 
+
 @Component({
   selector: 'app-fm-control',
   standalone: true,
-    imports: [
+  imports: [
         CommonModule,
         NebularModule,
         ReactiveFormsModule,
@@ -20,8 +28,8 @@ import {ControlDataTypes} from "../../../../models/formDataTypes";
   templateUrl: './fm-control.component.html',
   styleUrls: ['./fm-control.component.scss']
 })
-export class FmControlComponent implements OnInit, AfterViewInit {
-  constructor() { }
+export class FmControlComponent implements OnInit {
+  constructor(private cdr:ChangeDetectorRef) { }
 
   @Input() formData!: any
   @Input() humanResource!:any;
@@ -29,32 +37,38 @@ export class FmControlComponent implements OnInit, AfterViewInit {
   @Input() statusReason:any;
   @Input() organizations!:any;
   @Input() cntSectionFmControls:any
-  @Output() output = new EventEmitter()
+  @Output() output = new EventEmitter();
 
+  statusReasonList:any[]
 
-  dataTypes = new ControlDataTypes()
+  dataTypes = new ControlDataTypes();
   priorityGroup = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   prioritySubGroup = ['A', 'B', 'C'];
 
 
   onFieldChange(event){
-    console.log(event);
-    //this.output.emit(event)
+    if(this.formData[event.type] === event.value) return null
+    console.log('onFieldChange',event);
+    console.log(event.type, this.formData[event.type]);
+    if(event.type === 'StatusId'){
+      this.statusFieldsCascade(event.value)
+    }
+    this.output.emit(event)
   }
+//TODO fix cascade between status and status_reason
+  private statusFieldsCascade(statusId:number){
+    this.statusReasonList = this.statusReason.filter(item => item.StatusId === statusId);
+    //this.cntSectionFmControls.StatusReasonSelect.reset()
 
-
+  }
 
 
   ngOnInit(): void {
-    console.log(this.dataTypes.orgId);
+    // console.log(this.formData);
+    this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
 
   }
 
-
-
-  ngAfterViewInit(): void {
-
-  }
 
 
 

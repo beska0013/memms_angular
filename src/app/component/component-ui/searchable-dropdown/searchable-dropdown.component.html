@@ -8,10 +8,11 @@
            [id]="labelFor"
            #autoInput
            nbInput
+           fullWidth
            type="text"
            placeholder="Enter value"
            [nbAutocomplete]="auto"/>
-    <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
+    <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
       <nb-option *ngFor="let item of options" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>

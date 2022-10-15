@@ -15,36 +15,58 @@
                     [organizations]="formData.organizations"
                     [formData]="formData.form"></app-fm-control>
     <div class="wrapper">
-      <app-fm-area [areaPathList]="areaPathList"
-                   [searchScope]="areaSeachScope"
+      <app-fm-area
+                   [areaPathList]="formData.chAreaPath"
+                   [labelFor]="'area_searchScope'"
+                   [listName]="'CHAreaPaths'"
+                   [searchScope]="areaSearchScope"
                    [areaFmControl]="form.controls.areaInputFmControl"
                    [organizations]="formData.organizations"></app-fm-area>
 
 
       <app-fm-tags [status]="'basic'"
+                   [labelFor]="'tags_searchScope'"
                    [listName]="'ProjectTags'"
+                   [initialValues]="{ids:formData.form.Tags, members:formData.form.TagIds}"
+                   [taglist]="formData.projectTags"
                    [sectionTitle]="'Tags'"
                    [organizations]="formData.organizations"
                    [searchScope]="tagSearchScope"></app-fm-tags>
     </div>
     <div class="wrapper">
-      <app-fm-tags [status]="'success'"
-                  [searchScope]="revieContextSearchScope"
-                  [sectionTitle]="'Review Context'"
-                  [organizations]="formData.organizations"></app-fm-tags>
+      <app-fm-tags [taglist]="formData.projectReviewContextTags"
+                   [labelFor]="'reviewContextTags_searchScope'"
+                   [listName]="'ProjectReviewContextTags'"
+                   [initialValues]="{ids:formData.form.ReviewContextTagsIds, members:formData.form.ReviewContextTags}"
+                   [status]="'success'"
+                   [searchScope]="revieContextSearchScope"
+                   [sectionTitle]="'Review Context'"
+                   [organizations]="formData.organizations"></app-fm-tags>
       <app-fm-review-frequency ></app-fm-review-frequency>
     </div>
-    <app-fm-tags [status]="'warning'"
+    <app-fm-tags [taglist]="formData.prjHumanRecource"
+                 [labelFor]="'team_searchScope'"
+                 [listName]="'ProjectHumanResources'"
+                 [initialValues]="{ids:formData.form.TeamMembersIds, members:formData.form.TeamMembers}"
+                 [status]="'warning'"
                  [sectionTitle]="'Team'"
                  [searchScope]="teamSearchScope"
                  [organizations]="formData.organizations"></app-fm-tags>
     <div class="wrapper">
-      <app-fm-tags [status]="'danger'"
+      <app-fm-tags [taglist]="formData.prjHumanRecource"
+                   [labelFor]="'stakeholder_searchScope'"
+                   [listName]="'ProjectHumanResources'"
+                   [initialValues]="{ids:formData.form.StakeholderMembersIds, members:formData.form.StakeholderMembers}"
+                   [status]="'danger'"
                    [sectionTitle]="'Stakeholder'"
                    [searchScope]="stakeholdeSearchScope"
                    [organizations]="formData.organizations"></app-fm-tags>
 
-      <app-fm-tags [status]="'info'"
+      <app-fm-tags [taglist]="formData.prjHumanRecource"
+                   [labelFor]="'notification_searchScope'"
+                   [listName]="'ProjectHumanResources'"
+                   [initialValues]="{ids:formData.form.NotificationMembersIds, members:formData.form.NotificationMembers}"
+                   [status]="'info'"
                    [sectionTitle]="'Notifications'"
                    [searchScope]="notificationsSearchScope"
                    [organizations]="formData.organizations"></app-fm-tags>

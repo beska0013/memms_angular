@@ -8,20 +8,20 @@ import {
   ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  NbTagComponent,
-  NbTagInputDirective,
-} from "@nebular/theme";
+
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {AppService} from "../../../app.service";
+import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
+import {TagUiComponent} from "../../component-ui/tag-ui/tag-ui.component";
+import {map, Observable, of} from "rxjs";
 
 
 
 @Component({
   selector: 'app-fm-tags',
   standalone: true,
-  imports: [CommonModule, NebularModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, NebularModule, ReactiveFormsModule, FormsModule, SearchableDropdownComponent, TagUiComponent],
   templateUrl: './fm-tags.component.html',
   styleUrls: ['./fm-tags.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,48 +34,28 @@ export class FmTagsComponent implements OnInit {
   @Input() organizations!:any;
   @Input() searchScope!:any;
   @Input() listName!:any;
-           taglist:any[];
+  @Input() labelFor:string;
 
-  trackByFn(index, item) {
-    return item.name;
+  $taglistItems:Observable<any>
+
+
+  @Input() taglist:any[];
+  @Input() initialValues:{ids:string, members:string};
+
+  onSearchScopeChange(event){
+    const chosenOrgId = this.organizations.find(item => item.ID === event.value).ID
+    this.$taglistItems =  this.srv.getListByFilter(this.listName,['ID','Title'],500, `OrganizationId eq ${chosenOrgId}`)
+                          .pipe(map( res => {
+                            // console.log('tags',res);
+                            this.cdr.markForCheck();
+                            return  res['value']
+                          }))
   }
 
-  trees: Set<string> = new Set([]);
 
-
-  @ViewChild(NbTagInputDirective, { read: ElementRef }) tagInputElement: ElementRef<HTMLInputElement>;
-
-  onTagRemove(tagToRemove: NbTagComponent): void {
-    this.trees?.delete(tagToRemove.text);
-    this.taglist?.push(tagToRemove.text);
-  }
-
-  onTagAdd(value: string): void {
-    if (value) {
-      this.trees?.add(value);
-      this.taglist = this.taglist?.filter(o => o !== value);
-    }
-    this.tagInputElement.nativeElement.value = '';
-    this.taglist = [];
-  }
-
-  onInputChanges(){
-    const value =  this.tagInputElement.nativeElement.value;
-    const searchScopeId = this.organizations.find(item => item.Title === this.searchScope.value).ID
-    this.srv.searchListItems({
-      listName: this.listName ,
-      selectItems: ['ID', 'Title'],
-      filterQuery: `substringof('${value}',Title) and OrganizationId eq ${searchScopeId}`,
-    }).subscribe((res:{value:any[]}) => {
-      console.log(res);
-      this.taglist = res.value.map(item => item.Title);
-      // console.log(this.taglist);
-      this.cdr.markForCheck()
-    })
-
+  ngOnInit(): void {
+    this.$taglistItems = of(this.taglist);
 
   }
-
-  ngOnInit(): void {}
 
 }

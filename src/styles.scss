@@ -3,7 +3,9 @@
 
 
 
-
+html, body{
+  overflow: auto;
+}
 
 *{
   box-sizing: border-box;
@@ -41,7 +43,7 @@ section{
        }
      }
      .sec_content {
-      @include flex(start);
+      @include flex(between);
       align-items: flex-end;
       min-height: $section-min-height;
       width:  calc(100% - $sec_title_min-width) ;
@@ -108,3 +110,12 @@ section{
 .smallField{ width: $w-small}
 .mediumField{ width: $w-mediium}
 .largeField{ width: $w-large}
+.maxField{ width:$w-max }
+.areaField{
+  width: calc(100% - $w-mediium);
+  .inputLabel{
+    padding: 0!important;
+  }
+
+}
+.tags{width: calc(100% - $w-mediium)}

@@ -4,36 +4,20 @@
   </div>
 
   <div class="sec_content">
-    <label for="area_searchScope" class="inputLabel searchScope">
-      <h6> Search Scope</h6>
-      <input [formControl]="searchScope"
-             [fieldSize]="'tiny'"
-             id="area_searchScope"
-             nbInput
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoSearchScope"/>
-      <nb-autocomplete #autoSearchScope>
-        <nb-option *ngFor="let org of organizations" [value]="org.Title">
-          {{ org.Title }}
-        </nb-option>
-      </nb-autocomplete>
-    </label>
-    <label for="areaPath" class="inputLabel areaLabel">
-      <h6>Area</h6>
-      <input [formControl]="areaFmControl"
-             [fieldSize]="'tiny'"
-             id="areaPath"
-             nbInput
-             fullWidth
-             type="text"
-             placeholder="Enter value"
-             [nbAutocomplete]="autoArea"/>
-      <nb-autocomplete #autoArea>
-        <nb-option *ngFor="let path of areaPathList" [value]="path.Title">
-          {{ path.Title }}
-        </nb-option>
-      </nb-autocomplete>
-    </label>
+    <app-searchable-dropdown class="mediumField"
+                             [fmControl]="searchScope"
+                             [labelFor]="labelFor"
+                             [title]="'Search Scope'"
+                             (output)="onSearchScopeChange($event)"
+                             [dropdownList]="organizations"></app-searchable-dropdown>
+
+
+    <app-searchable-dropdown class="areaField"
+                             [dataType]="CHAreaPath"
+                             (output)="onFieldChange($event)"
+                             [fmControl]="areaFmControl"
+                             [labelFor]="'areaPath'"
+                             [title]="'Area'"
+                             [dropdownList]="$areaListItems | async"></app-searchable-dropdown>
   </div>
 </section>

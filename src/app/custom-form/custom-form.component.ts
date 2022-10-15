@@ -99,7 +99,8 @@ export class CustomFormComponent   implements OnInit {
     },
 
   ]
-  tabType:string = 'General'
+  tabType:string = 'General';
+
 
   form = new FormGroup({
     orgInputFormControl: new FormControl(),
@@ -126,7 +127,7 @@ export class CustomFormComponent   implements OnInit {
     StatusReasonSelect: this.form.controls.statusInputFmControl,
 }
 
-  areaSeachScope = new FormControl();
+  areaSearchScope = new FormControl();
   tagSearchScope = new FormControl();
   revieContextSearchScope = new FormControl();
   teamSearchScope = new FormControl();
@@ -139,12 +140,13 @@ export class CustomFormComponent   implements OnInit {
   }
 
   private initAreaSection(){
-    const areaPath = this.formData.form.Title.split(':').slice(0, this.formData.form.Title.split(':').length - 1).join(':')
-    const areaPathId = this.calcAreaPathId();
-    this.areaPathList.push({ID: areaPathId, Title: areaPath})
+    const areaPath = this.formData.form.Title.split(':')
+                      .map(str => str.trim())
+                      .slice(0, this.formData.form.Title.split(':').length - 1)
+                      .join(':')
     this.form.controls.areaInputFmControl.setValue(areaPath);
 
-    this.areaSeachScope.setValue(this.formData.organizations
+    this.areaSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
 
@@ -233,8 +235,9 @@ export class CustomFormComponent   implements OnInit {
       index === i ? this.activateTab(tab) :  tab.active = false
     })
   }
+
    onSectionValueChange(event){
-      console.log('onSectionValueChange',event);
+      //console.log('onSectionValueChange',event);
    }
    onTitleInput(event){
     this.formData.form.ProjectTitle = event
@@ -250,7 +253,6 @@ export class CustomFormComponent   implements OnInit {
 
 
   ngOnInit(): void {
-     console.log('v3.0')
     this.initControlSection();
     this.initAreaSection();
     this.initTagsSection();
@@ -269,7 +271,7 @@ export class CustomFormComponent   implements OnInit {
     }
 
 
-    console.log(this.formData);
+    console.log('custom-form line 274', this.formData);
   }
 
 

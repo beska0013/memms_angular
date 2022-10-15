@@ -90,3 +90,13 @@ nb-form-field{
 .nb-theme-default [nbInput].shape-rectangle {
   border-radius: 0;
 }
+.nb-theme-default nb-option-list.size-medium nb-option{
+  font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif!important;
+  font-size: 13px!important;
+  font-weight: 400!important;
+}
+
+.nb-theme-default nb-tag{
+  border-radius: 0!important;
+  font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif!important;
+}

@@ -18,6 +18,7 @@ export class AppService  {
   }
 
   getListByFilter(listName:string, selectItems:string[], count:number,filterQuery: string){
+
       return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${listName}')/items?$top=${count}&$select=${selectItems.toString()}&$filter=${filterQuery}`)
   }
 

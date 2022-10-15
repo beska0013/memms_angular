@@ -1,0 +1,18 @@
+<nb-form-field>
+  <nb-tag-list (tagRemove)="onTagRemove($event)">
+    <nb-tag [status]="status" [size]="'tiny'" *ngFor="let tag of trees" [text]="tag" removable></nb-tag>
+    <input type="text"
+           nbTagInput
+           (input)="onInput()"
+           (tagAdd)="onTagAdd($event.value)"
+           [nbAutocomplete]="autocomplete"
+           fullWidth>
+  </nb-tag-list>
+
+  <nb-autocomplete  #autocomplete (selectedChange)="onTagAdd($event)">
+    <nb-option *ngFor="let option of filteredOptions$ | async ;trackBy: trackByFn"
+               [value]="option['Title']">{{ option['Title'] }}</nb-option>
+  </nb-autocomplete>
+</nb-form-field>
+
+

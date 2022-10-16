@@ -8,7 +8,8 @@
     </app-header>
     <app-fm-title [titleValue]="formData.form.ProjectTitle"
                   (titleInput)="onTitleInput($event)"></app-fm-title>
-    <app-fm-control (output)="onSectionValueChange($event)" [cntSectionFmControls] = cntSectionFmControls
+    <app-fm-control (output)="onSectionValueChange($event)"
+                    [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"
                     [status]="formData.status"
                     [statusReason]="formData.statusReason"
@@ -79,7 +80,9 @@
       </ul>
     </nav>
     <div class="tabs-content" [ngSwitch]="tabType">
-      <app-general *ngSwitchCase="'General'"></app-general>
+      <app-general *ngSwitchCase="'General'"
+                   [genTabFmControls]="generalTabFmControls"
+                   [formData]="formData.form"></app-general>
       <app-area-tools *ngSwitchCase="'Area Tools'"></app-area-tools>
       <app-notes *ngSwitchCase="'Notes'"></app-notes>
       <app-audio-log *ngSwitchCase="'Audio Log'"></app-audio-log>

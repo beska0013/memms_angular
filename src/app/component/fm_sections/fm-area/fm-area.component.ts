@@ -28,9 +28,10 @@ export class FmAreaComponent implements OnInit {
   CHAreaPath = 'CHOrganizationBoundShadow:CH1BoundShadow:CH2BoundShadow:CH3BoundShadow:CH4BoundShadow:CH5BoundShadow:CH6BoundShadow:CH7BoundShadow:CH8BoundShadow:CH9BoundShadow:CH10BoundShadow'
 
   onFieldChange(event){
-    console.log(event);
+    //TODO fix firing event on first time
+   // console.log(event);
     const chosenCh = this.areaPathList.find(item => item.ID === event.value)
-    console.log('onFieldChange',chosenCh.CHPath);
+    //console.log('onFieldChange',chosenCh.CHPath);
 
   }
 

@@ -56,3 +56,21 @@ export class TagsDataTypes{
   readonly prjStakeholders:{ids:string, members:string}
   readonly prjNotifications:{ids:string, members:string}
 }
+
+
+export class GeneralTabDataTypes{
+ readonly highLvLGoal:string;
+ readonly acceptanceCriteria:string;
+ readonly businessBenefit:string;
+ readonly internalSts:string;
+ readonly externalSts:string;
+ constructor() {
+
+   this.highLvLGoal = 'ProjectHighLevelGoal';
+   this.acceptanceCriteria= 'AcceptanceCriteria';
+   this.businessBenefit= 'BusinessBenefit';
+   this.internalSts= 'Current_x0020_Status';
+   this.externalSts= 'External_x0020_Status';
+ }
+
+}

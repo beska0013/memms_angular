@@ -9,33 +9,29 @@
     <app-datepicker [for]="'currentStsdat'"></app-datepicker>
   </div>
 
-  <label for="highLvlGoal">
-    <h5 class="label-title">High Level Goal:</h5>
-    <input id='highLvlGoal' nbInput  type="text">
-  </label>
+  <app-input-ui [title]="'High Level Goal:'"
+                [dataType]="dataTypes.highLvLGoal"
+                [initialValue]="formData.ProjectHighLevelGoal"
+                [labelFor]="'highLvlGoal'"></app-input-ui>
 
-  <label for="acceptanceCriteria">
-    <h5 class="label-title">Acceptance Criteria:</h5>
-    <input id='acceptanceCriteria' nbInput  type="text">
-  </label>
+  <app-input-ui [title]="'Acceptance Criteria:'"
+                [dataType]="dataTypes.acceptanceCriteria"
+                [initialValue]="formData.AcceptanceCriteria"
+                [labelFor]="'acceptanceCriteria'"></app-input-ui>
 
-  <label for="buisinessBenefit">
-    <h5 class="label-title">Business Benefit:</h5>
-    <input id='buisinessBenefit' nbInput  type="text">
-  </label>
+  <app-input-ui [title]="'Business Benefit:'"
+                [dataType]="dataTypes.businessBenefit"
+                [initialValue]="formData.BusinessBenefit"
+                [labelFor]="'buisinessBenefit'"></app-input-ui>
 
-  <label for="internalStatus">
-    <h5 class="label-title">Internal Status:</h5>
-    <input id='internalStatus' nbInput  type="text">
-  </label>
+  <app-input-ui [title]="'Internal Status:'"
+                [dataType]="dataTypes.internalSts"
+                [initialValue]="formData.Current_x0020_Status"
+                [labelFor]="'internalStatus'"></app-input-ui>
 
-  <label for="externalStatus">
-    <h5 class="label-title">External Status:</h5>
-    <input id='externalStatus' nbInput  type="text">
-  </label>
-
-
-
-
+  <app-input-ui [title]="'External Status:'"
+                [dataType]="dataTypes.externalSts"
+                [initialValue]="formData.External_x0020_Status"
+                [labelFor]="'externalStatus'"></app-input-ui>
 
 </section>

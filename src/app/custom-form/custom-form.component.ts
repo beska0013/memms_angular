@@ -19,6 +19,7 @@ import {SecurityComponent} from "../component/tabs/security/security.component";
 import {TimeComponent} from "../component/tabs/time/time.component";
 import {AutoTextComponent} from "../component/tabs/auto-text/auto-text.component";
 import {AudioLogComponent} from "../component/tabs/audio-log/audio-log.component";
+import {CustomFormService} from "./custom-form.service";
 
 
 @Component({
@@ -50,7 +51,7 @@ import {AudioLogComponent} from "../component/tabs/audio-log/audio-log.component
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomFormComponent   implements OnInit {
-  constructor( private srv:AppService) { }
+  constructor( private srv:AppService, private customFmSrv:CustomFormService) { }
 
   @Input() formData!: any;
 
@@ -126,6 +127,14 @@ export class CustomFormComponent   implements OnInit {
     StatusSelect: this.form.controls.statusInputFmControl,
     StatusReasonSelect: this.form.controls.statusInputFmControl,
 }
+
+  generalTabFmControls = {
+    highLevelGoal:new FormControl(),
+    acceptanceCriteria: new FormControl(),
+    buisinessBenefit: new FormControl(),
+    internalStatus: new FormControl(),
+    externalStatus: new FormControl(),
+  }
 
   areaSearchScope = new FormControl();
   tagSearchScope = new FormControl();
@@ -220,6 +229,26 @@ export class CustomFormComponent   implements OnInit {
 
   }
 
+  private initGeneralTabsValues(){
+    this.generalTabFmControls.highLevelGoal
+      .setValue(this.formData.form.ProjectHighLevelGoal);
+    this.generalTabFmControls.acceptanceCriteria
+      .setValue(this.formData.form.AcceptanceCriteria)
+    this.generalTabFmControls.buisinessBenefit
+      .setValue(this.formData.form.BusinessBenefit)
+    this.generalTabFmControls.internalStatus
+      .setValue(this.formData.form.Current_x0020_Status)
+    this.generalTabFmControls.externalStatus
+      .setValue(this.formData.form.External_x0020_Status)
+  }
+
+  private genTabhandler(){
+    // this.generalTabFmControls.highLevelGoal.valueChanges.subscribe(res=>{
+    //   console.log(res);
+    // })
+  }
+
+
   private calcAreaPathId(){
     const chBoundShadow = [this.formData.form.CHOrganizationId]
     for (let i = 1; i <= 10 ; i++) {
@@ -237,14 +266,18 @@ export class CustomFormComponent   implements OnInit {
   }
 
    onSectionValueChange(event){
-      //console.log('onSectionValueChange',event);
+      console.log('onSectionValueChange',event);
    }
+
    onTitleInput(event){
-    this.formData.form.ProjectTitle = event
+     console.log('onTitleInput', event);
+     this.formData.form.ProjectTitle = event
   }
+
    trackTab(index, item){
     return item
   }
+
    calcProjectTitle(){
     const title = this.formData.form.Title.split(':').slice(1);
     return title.slice(0, title.length - 1).join(':');
@@ -260,7 +293,9 @@ export class CustomFormComponent   implements OnInit {
     this.initTeamSection();
     this.initStakeholderSection();
     this.initNotificationsSection();
+    this.initGeneralTabsValues();
 
+    this.genTabhandler();
 
     for (const key in this.form.controls) {
       this.form.controls[key].valueChanges.subscribe(res => {
@@ -272,6 +307,10 @@ export class CustomFormComponent   implements OnInit {
 
 
     console.log('custom-form line 274', this.formData);
+
+    this.customFmSrv.sessionLogHandler();
+    this.customFmSrv.sessionLogCheck();
+
   }
 
 

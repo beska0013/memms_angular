@@ -1,11 +1,11 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, ElementRef,
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output, ViewChild
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
@@ -33,6 +33,7 @@ export class InputUiComponent implements OnInit{
     private cdr:ChangeDetectorRef
   ){}
 
+  @ViewChild('input')inputRef:ElementRef
 
   @Input() labelFor:string;
   @Input() title:string;
@@ -42,6 +43,7 @@ export class InputUiComponent implements OnInit{
   @Output() output = new EventEmitter();
 
   tooltip:string;
+  timeOutInterval:any
   // toolTipPosition:NbPosition = NbPosition.BOTTOM_END;
   // toolTipAdgustment:NbAdjustment = NbAdjustment.NOOP;
   disableState = false;
@@ -65,7 +67,8 @@ export class InputUiComponent implements OnInit{
     this.customFmSrv.$deleteSessionLogItemState.next(true);
     const list = [...this.customFmSrv.$updatableList.value]
           list.push({[`${this.dataType}`]: this.inputControl.value});
-    this.customFmSrv.$updatableList.next(list)
+    this.customFmSrv.$updatableList.next(list);
+    clearInterval(this.timeOutInterval);
   }
 
   private lockField = (res) => {
@@ -97,6 +100,14 @@ export class InputUiComponent implements OnInit{
     this.customFmSrv.$sessionLogListToCreate.next(list);
   }
 
+  onInActivity(){
+    this.timeOutInterval = setTimeout(() => {
+      this.inputRef.nativeElement.blur();
+      },
+      3000
+    )
+
+  }
 
 
 
@@ -106,7 +117,8 @@ export class InputUiComponent implements OnInit{
       console.log('fieldLock',res);
     })
     this.inputControl.valueChanges.subscribe(res => {
-
+          clearInterval(this.timeOutInterval);
+          this.onInActivity()
     })
 
   }

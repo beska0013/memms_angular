@@ -74,3 +74,12 @@ export class GeneralTabDataTypes{
  }
 
 }
+
+export class AutoTextDataTypes{
+  filenameTag:string;
+  emailTag:string;
+  constructor() {
+    this.filenameTag = 'Tag_x0020_Filename_x0020_Text';
+    this.emailTag = 'Tag_x0020_Email_x0020_Text';
+  }
+}

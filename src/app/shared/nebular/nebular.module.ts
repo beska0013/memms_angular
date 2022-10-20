@@ -10,7 +10,7 @@ import {
   NbLayoutModule,
   NbSelectModule,
   NbTabsetModule,
-  NbTagModule, NbTooltipModule
+  NbTagModule, NbTimepickerModule, NbTooltipModule
 } from "@nebular/theme";
 import {NbEvaIconsModule} from "@nebular/eva-icons";
 
@@ -35,6 +35,7 @@ import {NbEvaIconsModule} from "@nebular/eva-icons";
     NbFormFieldModule,
     NbButtonModule,
     NbTooltipModule,
+    NbTimepickerModule
   ],
   providers:[NbTabsetModule]
 })

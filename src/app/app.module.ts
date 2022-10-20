@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CustomFormComponent} from "./custom-form/custom-form.component";
-import {NbDatepickerModule, NbThemeModule} from "@nebular/theme";
+import {NbDatepickerModule, NbThemeModule, NbTimepickerModule} from "@nebular/theme";
 
 
 
@@ -17,6 +17,7 @@ import {NbDatepickerModule, NbThemeModule} from "@nebular/theme";
     CustomFormComponent,
     NbDatepickerModule.forRoot(),
     NbThemeModule.forRoot(),
+    NbTimepickerModule.forRoot(),
   ],
   providers: [],
 

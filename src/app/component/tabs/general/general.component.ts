@@ -28,7 +28,7 @@ export class GeneralComponent implements OnInit {
 
   dataTypes = new GeneralTabDataTypes();
   @Input() formData:any
-  @Input() genTabFmControls:any;
+  @Input() fmControls:any;
 
 
   ngOnInit(): void {

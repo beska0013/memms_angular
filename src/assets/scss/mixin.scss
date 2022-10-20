@@ -92,6 +92,18 @@
   font-family: $name, sans-serif;
 }
 
+@mixin main_btn_hover{
+  background-color: #87CEFA;
+  transition: background-color .3s ease-in-out;
+}
+
+@mixin fm_input{
+  @include square(100%);
+  max-width: 100%!important;
+  border-radius: 0;
+  border: 1px solid #000000;
+  background-color: #FFFFFF;
+}
 
 @mixin checkSvg{
   svg{

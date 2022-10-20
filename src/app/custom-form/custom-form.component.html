@@ -81,7 +81,7 @@
     </nav>
     <div class="tabs-content" [ngSwitch]="tabType">
       <app-general *ngSwitchCase="'General'"
-                   [genTabFmControls]="generalTabFmControls"
+                   [fmControls]="generalTabFmControls"
                    [formData]="formData.form"></app-general>
       <app-area-tools *ngSwitchCase="'Area Tools'"></app-area-tools>
       <app-notes *ngSwitchCase="'Notes'"></app-notes>
@@ -91,7 +91,9 @@
       <app-files *ngSwitchCase="'Files'"></app-files>
       <app-security *ngSwitchCase="'Security'"></app-security>
       <app-time *ngSwitchCase="'Time'"></app-time>
-      <app-auto-text *ngSwitchCase="'Auto Text'"></app-auto-text>
+      <app-auto-text *ngSwitchCase="'Auto Text'"
+                      [fmControls]="autoTextTabFmControls"
+                      [formData]="formData.form"></app-auto-text>
     </div>
       </nb-card-body>
     </nb-card>

@@ -11,11 +11,7 @@ section{
       position: relative;
     }
     input{
-      @include square(100%);
-      max-width: 100%!important;
-      border-radius: 0;
-      border: 1px solid #000000;
-      background-color: transparent;
+      @include fm_input;
       &:hover{
         border: 1px solid #d0d0d0;
       }

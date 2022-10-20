@@ -99,9 +99,9 @@ export class CustomFormComponent   implements OnInit {
       active:false
     },
 
-  ]
-  tabType:string = 'General';
+  ];
 
+  tabType:string = 'General';
 
   form = new FormGroup({
     orgInputFormControl: new FormControl(),
@@ -126,7 +126,7 @@ export class CustomFormComponent   implements OnInit {
     PercentComplete: this.form.controls.percentCompleteInputFmControl,
     StatusSelect: this.form.controls.statusInputFmControl,
     StatusReasonSelect: this.form.controls.statusInputFmControl,
-}
+};
 
   generalTabFmControls = {
     highLevelGoal:new FormControl(),
@@ -134,7 +134,13 @@ export class CustomFormComponent   implements OnInit {
     buisinessBenefit: new FormControl(),
     internalStatus: new FormControl(),
     externalStatus: new FormControl(),
-  }
+  };
+
+  autoTextTabFmControls = {
+    emailTags :new FormControl(),
+    filenameTag: new FormControl()
+  };
+
 
   areaSearchScope = new FormControl();
   tagSearchScope = new FormControl();

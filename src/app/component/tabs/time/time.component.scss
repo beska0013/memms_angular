@@ -1,0 +1,35 @@
+@import './../../../../assets/scss/link';
+
+
+$timeEl_height:40px;
+.tabs-section{
+  padding: 1rem;
+}
+.sec-content{
+  @include flex(start);
+  .inputWrapper{
+    height: $timeEl_height;
+    padding: 0 .5rem;
+
+  }
+  input{
+    @include fm_input;
+  }
+  button{
+    background-color: transparent;
+    font-weight: 700;
+    transition:$transition-main;
+    border: none;
+    cursor: pointer;
+    height: $timeEl_height;
+    &:hover{
+      @include main_btn_hover
+    }
+  }
+  hr{
+    width: 4px;
+    background-color: gray;
+    height: $timeEl_height;
+  }
+}
+

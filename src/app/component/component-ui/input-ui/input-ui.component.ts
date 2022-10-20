@@ -44,8 +44,7 @@ export class InputUiComponent implements OnInit{
 
   tooltip:string;
   timeOutInterval:any
-  // toolTipPosition:NbPosition = NbPosition.BOTTOM_END;
-  // toolTipAdgustment:NbAdjustment = NbAdjustment.NOOP;
+
   disableState = false;
   inputControl:FormControl;
   fieldLock = this.customFmSrv.SeessionLogFieldTypes()
@@ -100,10 +99,9 @@ export class InputUiComponent implements OnInit{
     this.customFmSrv.$sessionLogListToCreate.next(list);
   }
 
-  onInActivity(){
-    this.timeOutInterval = setTimeout(() => {
-      this.inputRef.nativeElement.blur();
-      },
+  private onInActivity(){
+    this.timeOutInterval = setTimeout(() =>
+      this.inputRef.nativeElement.blur(),
       3000
     )
 
@@ -118,7 +116,7 @@ export class InputUiComponent implements OnInit{
     })
     this.inputControl.valueChanges.subscribe(res => {
           clearInterval(this.timeOutInterval);
-          this.onInActivity()
+          this.onInActivity();
     })
 
   }

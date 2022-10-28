@@ -89,7 +89,7 @@
       <app-tasks *ngSwitchCase="'Tasks'"></app-tasks>
       <app-links *ngSwitchCase="'Links'"></app-links>
       <app-files *ngSwitchCase="'Files'"></app-files>
-      <app-security *ngSwitchCase="'Security'"></app-security>
+      <app-security *ngSwitchCase="'Security'" [humanResource]="formData.humanResource"></app-security>
       <app-time *ngSwitchCase="'Time'"></app-time>
       <app-auto-text *ngSwitchCase="'Auto Text'"
                       [fmControls]="autoTextTabFmControls"

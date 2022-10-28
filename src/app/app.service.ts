@@ -32,14 +32,15 @@ export class AppService  {
     return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${listName}')/items?$select=${selectItems.toString()}`)
   }
 
-  deleteListItembyId(list_name:string,id:number){
+  deleteSessionLogListItemby(item:any){
     const headers = new HttpHeaders({
       "Accept": "application/json;odata=verbose",
       "X-RequestDigest": `${_spPageContextInfo.formDigestValue}`,
       "X-HTTP-Method": "DELETE",
       "If-Match": "*",
     })
-    return this.http.delete(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${list_name}')/items('${id}')`,{headers: headers})
+    const filter = `Field_type eq ${item.type} and User_id eq ${_spPageContextInfo.userId}`
+    return this.http.delete(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('ProjectSessionLog')/items('${item.ID}')`,{headers: headers})
   }
 
   createListItem(DATA:any, list_name:string){

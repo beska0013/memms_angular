@@ -10,26 +10,36 @@
   </div>
 
   <app-input-ui [title]="'High Level Goal:'"
+                (output)="onOutputChange($event)"
+                (onInputStart)="inputStart($event)"
                 [dataType]="dataTypes.highLvLGoal"
                 [initialValue]="formData.ProjectHighLevelGoal"
                 [labelFor]="'highLvlGoal'"></app-input-ui>
 
   <app-input-ui [title]="'Acceptance Criteria:'"
+                (output)="onOutputChange($event)"
+                (onInputStart)="inputStart($event)"
                 [dataType]="dataTypes.acceptanceCriteria"
                 [initialValue]="formData.AcceptanceCriteria"
                 [labelFor]="'acceptanceCriteria'"></app-input-ui>
 
   <app-input-ui [title]="'Business Benefit:'"
+                (output)="onOutputChange($event)"
+                (onInputStart)="inputStart($event)"
                 [dataType]="dataTypes.businessBenefit"
                 [initialValue]="formData.BusinessBenefit"
                 [labelFor]="'buisinessBenefit'"></app-input-ui>
 
   <app-input-ui [title]="'Internal Status:'"
+                (output)="onOutputChange($event)"
+                (onInputStart)="inputStart($event)"
                 [dataType]="dataTypes.internalSts"
                 [initialValue]="formData.Current_x0020_Status"
                 [labelFor]="'internalStatus'"></app-input-ui>
 
   <app-input-ui [title]="'External Status:'"
+                (output)="onOutputChange($event)"
+                (onInputStart)="inputStart($event)"
                 [dataType]="dataTypes.externalSts"
                 [initialValue]="formData.External_x0020_Status"
                 [labelFor]="'externalStatus'"></app-input-ui>

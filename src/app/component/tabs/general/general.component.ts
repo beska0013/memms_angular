@@ -1,13 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {DatepickerComponent} from "../../component-ui/datepicker/datepicker.component";
-import {NbSharedModule} from "@nebular/theme/components/shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputUiComponent} from "../../component-ui/input-ui/input-ui.component";
 import {GeneralTabDataTypes} from "../../../../models/formDataTypes";
 import {CustomFormService} from "../../../custom-form/custom-form.service";
-import {tap} from "rxjs";
+
 
 @Component({
   selector: 'app-general',
@@ -25,17 +24,21 @@ import {tap} from "rxjs";
 export class GeneralComponent implements OnInit {
 
   constructor(private customFmSrv:CustomFormService) { }
-
-  dataTypes = new GeneralTabDataTypes();
   @Input() formData:any
   @Input() fmControls:any;
+           dataTypes = new GeneralTabDataTypes();
+  @Output() output = new EventEmitter();
+
+
+
+  onOutputChange = (event) => this.customFmSrv.deleteSessionLog(event)
+
+  inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
 
 
   ngOnInit(): void {
     console.log('general',this.formData);
-    // this.sessionLogFieldTypes.subscribe(res=>{
-    //   console.log('genTab',res);
-    // })
+    console.log('general',this.fmControls);
   }
 
 }

@@ -1,1 +1,25 @@
-<p>security works!</p>
+<section class="tabs-section">
+
+  <nb-checkbox (checkedChange)="toggle($event)">
+    Use Project Level Security (Make sure to include yourself)
+  </nb-checkbox>
+
+  <div class="list_box">
+    <app-input-ui [title]="'Security List:'"
+                  [labelFor]="'securityList'">
+
+    </app-input-ui>
+    <div class="list_box-options">
+      <p>Enter users separated with semicolons.</p>
+      <div class="list_box-options_cnt">
+        <button>
+          <nb-icon icon="checkHuman" pack="security"></nb-icon>
+        </button>
+        <button>
+          <nb-icon icon="humanList" pack="security"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</section>

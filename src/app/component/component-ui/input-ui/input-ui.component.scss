@@ -1,0 +1,17 @@
+@import "./../../../../assets/scss/link";
+
+label{
+  @include flex(start);
+  width: 100%;
+  position: relative;
+  //margin:$space-4 0 0 0;
+  input{
+    width: calc(100% - 157px);
+    max-width: unset!important;
+  }
+  .loader_wrapper{
+    @include square(20px);
+    position: absolute;
+    right: 0;
+  }
+}

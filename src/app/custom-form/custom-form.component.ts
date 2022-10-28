@@ -166,7 +166,6 @@ export class CustomFormComponent   implements OnInit {
   }
 
   private initTagsSection(){
-
     this.tagSearchScope.setValue(this.formData.organizations
       .find(item => item.ID === this.formData.form.OrganizationId).Title);
   }
@@ -265,14 +264,35 @@ export class CustomFormComponent   implements OnInit {
     return chBoundShadow.join(':')
   }
 
+  private onOrgChange(data:{type:string, value:number}){
+    if(data.value === -1) return this.resetSearchScrope();
+
+  }
+
+  private resetSearchScrope(){
+    this.areaSearchScope.setValue('All');
+    this.tagSearchScope.setValue('All');
+    this.revieContextSearchScope.setValue('All');
+    this.teamSearchScope.setValue('All');
+    this.stakeholdeSearchScope.setValue('All');
+    this.notificationsSearchScope.setValue('All');
+  }
+
    tabsHandler(i:number){
     this.tabs.forEach((tab,index ) => {
       index === i ? this.activateTab(tab) :  tab.active = false
     })
   }
 
-   onSectionValueChange(event){
+   onSectionValueChange(event:{type:string, value:number}){
       console.log('onSectionValueChange',event);
+     if(event.type === 'OrganizationId'){
+       this.onOrgChange(event)
+     }
+   }
+
+   onSectionValInputStart(dataType:any){
+     this.customFmSrv.createSessionLog(dataType)
    }
 
    onTitleInput(event){

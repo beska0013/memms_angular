@@ -9,4 +9,8 @@
          #input
          nbInput
          type="text">
+  <span class="loader_wrapper" *ngIf="loading | async">
+    <app-loader-ui></app-loader-ui>
+  </span>
+
 </label>

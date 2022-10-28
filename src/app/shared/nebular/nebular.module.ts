@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   NbAutocompleteModule,
   NbButtonModule,
-  NbCardModule,
+  NbCardModule, NbCheckboxModule,
   NbFormFieldModule,
   NbIconModule,
   NbInputModule,
@@ -35,7 +35,8 @@ import {NbEvaIconsModule} from "@nebular/eva-icons";
     NbFormFieldModule,
     NbButtonModule,
     NbTooltipModule,
-    NbTimepickerModule
+    NbTimepickerModule,
+    NbCheckboxModule
   ],
   providers:[NbTabsetModule]
 })

@@ -36,7 +36,8 @@ export class FmControlComponent implements OnInit {
   @Input() status:any;
   @Input() statusReason:any;
   @Input() organizations!:any;
-  @Input() cntSectionFmControls:any
+  @Input() cntSectionFmControls:any;
+
   @Output() output = new EventEmitter();
 
   statusReasonList:any[]
@@ -64,7 +65,8 @@ export class FmControlComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // console.log(this.formData);
+    this.organizations.push({ID:-1,Id:-1, Title:'(None)'})
+    console.log(this.organizations);
     this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
 
   }

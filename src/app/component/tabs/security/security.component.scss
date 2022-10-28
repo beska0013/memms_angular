@@ -1,0 +1,36 @@
+@import './../../../../assets/scss/link';
+
+
+.tabs-section{
+  flex-direction: row;
+  justify-content: flex-start;
+
+}
+nb-checkbox{
+  @include flex(center);
+}
+.list_box{
+  @include flex(center,column);
+  align-items: flex-end;
+}
+.list_box-options{
+  @include flex(between);
+  width: calc(100% - 168px);
+  p{
+    font-size: 10px;
+  }
+  .list_box-options_cnt{
+    display: flex;
+    button{
+      @include square(20px);
+      min-width: 20px;
+      padding: 0;
+      margin: 0 0 0 5px;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+    }
+  }
+}
+
+

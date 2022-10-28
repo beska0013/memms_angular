@@ -103,6 +103,10 @@
   border-radius: 0;
   border: 1px solid #000000;
   background-color: #FFFFFF;
+  &:hover{
+    border: 1px solid #d0d0d0;
+    background-color: #FFFFFF!important;
+  }
 }
 
 @mixin checkSvg{

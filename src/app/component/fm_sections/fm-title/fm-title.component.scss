@@ -10,15 +10,16 @@ section{
       @include flex(center);
       position: relative;
     }
-    input{
-      @include fm_input;
-      &:hover{
-        border: 1px solid #d0d0d0;
-      }
-      &.warning{
-        border: 2px solid #ff0000;
-      }
-
-    }
+    //input{
+    //  @include fm_input;
+    //  &:hover{
+    //    border: 1px solid #d0d0d0;
+    //  }
+    //  &.warning{
+    //    border: 2px solid #ff0000;
+    //  }
+    //
+    //}
+    app-input-ui{width: 100%}
   }
 }

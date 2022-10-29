@@ -5,6 +5,16 @@ label{
   width: 100%;
   position: relative;
   //margin:$space-4 0 0 0;
+  .label-title{
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: "Verdana",sans-serif;
+    margin: 0 1em 0 0;
+    width: 157px;
+    text-align: end;
+    white-space: nowrap;
+  }
   input{
     width: calc(100% - 157px);
     max-width: unset!important;

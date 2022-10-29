@@ -37,6 +37,7 @@ export class GeneralComponent implements OnInit {
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
 
 
+
   ngOnInit(): void {}
 
 }

@@ -31,7 +31,7 @@ function initForm(){
         // S4_workspace.style.height = '100vh';
         // S4_workspace.style.padding = '0 2px';
         // S4_workspace.innerHTML +=`<div root></div>`;
-  body.innerHTML +=`<div root></div>`;
+  body.innerHTML +=`<div root class="rootEl"></div>`;
   platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err))
   return S4_workspace;
 }

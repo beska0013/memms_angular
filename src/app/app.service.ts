@@ -32,14 +32,13 @@ export class AppService  {
     return this.http.get(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('${listName}')/items?$select=${selectItems.toString()}`)
   }
 
-  deleteSessionLogListItemby(item:any){
+  deleteSessionLogListItembyId(item:any){
     const headers = new HttpHeaders({
       "Accept": "application/json;odata=verbose",
       "X-RequestDigest": `${_spPageContextInfo.formDigestValue}`,
       "X-HTTP-Method": "DELETE",
       "If-Match": "*",
     })
-
     return this.http.delete(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('ProjectSessionLog')/items('${item.ID}')`,{headers: headers})
   }
 

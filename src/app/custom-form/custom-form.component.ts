@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HeaderComponent} from "../component/header/header.component";
 import {FmTitleComponent} from "../component/fm_sections/fm-title/fm-title.component";
@@ -50,8 +50,13 @@ import {CustomFormService} from "./custom-form.service";
   styleUrls: ['./custom-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CustomFormComponent   implements OnInit {
-  constructor( private srv:AppService, private customFmSrv:CustomFormService) { }
+export class CustomFormComponent   implements OnInit,OnDestroy {
+  constructor(
+    private srv:AppService,
+    private customFmSrv:CustomFormService
+  ) { }
+
+
 
   @Input() formData!: any;
 
@@ -296,7 +301,6 @@ export class CustomFormComponent   implements OnInit {
    }
 
    onTitleInput(event){
-     console.log('onTitleInput', event);
      this.formData.form.ProjectTitle = event
   }
 
@@ -339,6 +343,10 @@ export class CustomFormComponent   implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.customFmSrv.sessionLogHandlerUnsubscribe();
+    this.customFmSrv.deleteAllSEssionLogItems();
+  }
 
 
 

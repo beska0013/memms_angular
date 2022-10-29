@@ -1,7 +1,7 @@
 <label [for]="labelFor"
        nbTooltip="{{tooltip}}"
        [nbTooltipDisabled]="!(!!tooltip)">
-  <h5 class="label-title">{{title}}</h5>
+  <h5 class="label-title" *ngIf="title">{{title}}</h5>
   <input [formControl]="inputControl"
          [id]="labelFor"
          (focusin)="onFirstInput()"

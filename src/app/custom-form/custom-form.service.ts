@@ -8,7 +8,7 @@ import {
   empty,
   EMPTY,
   Observable,
-  of,
+  of, Subscription,
   switchMap,
   tap
 } from "rxjs";
@@ -21,7 +21,6 @@ export class CustomFormService {
 
   constructor(private appSrv:AppService) { }
 
-  //private sessionLogListToDelete = [];
 
   private $sessionLogListToCreate = new BehaviorSubject<{type:string}[]|undefined>([]);
   private SessionLogListToCreate = () => this.$sessionLogListToCreate as Observable<any>;
@@ -29,8 +28,8 @@ export class CustomFormService {
   private $deleteSessionLogItemState = new BehaviorSubject<{type:string, value:string} |null>(null);
   private DeleteSesionLogItems = () => this.$deleteSessionLogItemState as Observable<{type:string, value:string} |null|undefined>;
 
-  private $updatableList = new BehaviorSubject<any[]|undefined>([]);
-  private UpdatableList = () => this.$updatableList as Observable<any>;
+  private $projectUpdate = new BehaviorSubject<any[]|undefined>([]);
+  private ProjectUpdate = () => this.$projectUpdate as Observable<any>;
 
   private $sessionLogFieldTypes = new BehaviorSubject([]);
   SeessionLogFieldTypes = () => this.$sessionLogFieldTypes as Observable<any>;
@@ -38,56 +37,44 @@ export class CustomFormService {
   private $loading = new BehaviorSubject<boolean>(false);
   loading = () => this.$loading as Observable<boolean>;
 
-  sessionLogHandler(){
-    this.SessionLogListToCreate()
-      .pipe(switchMap(list => list.length > 0 ?
-          combineLatest(list.map( item => this.onCreateSessionLogItem(item))):
-          EMPTY ))
-      .subscribe();
+  private $sessionLogCreatSubscription:Subscription;
+  private $sessionLogDeleteSubscription:Subscription;
+  private $projectUpdateSubscription:Subscription;
 
-    this.DeleteSesionLogItems()
+  sessionLogHandler(){
+   this.$sessionLogCreatSubscription = this.SessionLogListToCreate()
       .pipe(
-        switchMap((data) => {
-          return !!data ? this.getCurrentSessionLog(data?.type)
+        switchMap(list => list.length > 0 ?
+          combineLatest(list.map( item => this.onCreateSessionLogItem(item))):
+          EMPTY )
+      ).subscribe();
+
+    this.$sessionLogDeleteSubscription = this.DeleteSesionLogItems()
+      .pipe(
+        switchMap((data) => !!data ? this.getCurrentSessionLog(data?.type)
             .pipe(
               debounceTime(1000),
-              switchMap((res:{value:any[]}) =>
-               combineLatest(res.value.map( item => this.deleteSessionLogItem(item)) )
-                  .pipe(
-                    tap((res) =>  this.prjFormUpdateHandler(data) )
-                  )
-              )
-            ) : EMPTY
-          },
-        ))
-      .subscribe();
+              switchMap((res:{value:any[]}) => this.deleteSessionLogItem(res.value, data) )
+            ) : EMPTY )
+      ).subscribe();
 
-    this.UpdatableList().pipe(
-      debounceTime(1000),
-      switchMap(list => {
-        return  list.length > 0 ?
-          this.convertArrayToObj(list).pipe(
-            switchMap(data => {
-              //console.log(data);
-              return this.onUpdate(data)
-                .pipe(
-                  tap(()=> {
-                    this.$loading.next(false)
-                    this.$updatableList.next([])
-                    this.$deleteSessionLogItemState.next(null);
-                  })
-                )
-            })
-          ) :
-          EMPTY
-      } ))
-      .subscribe(res => {
-      console.log('UpdatableList', res)
-    })
+    this.$projectUpdateSubscription = this.ProjectUpdate()
+      .pipe(
+        debounceTime(1000),
+        switchMap(list => list.length > 0 ? this.convertArrayToObj(list)
+              .pipe(
+                switchMap(data => this.onUpdate(data))
+              ) : EMPTY)
+      ).subscribe()
+  }
+
+  sessionLogHandlerUnsubscribe(){
+    this.$sessionLogCreatSubscription.unsubscribe();
+    this.$sessionLogDeleteSubscription.unsubscribe();
+    this.$projectUpdateSubscription.unsubscribe();
   }
 
   sessionLogCheck = () => setInterval(() => this.checkFielldsState(), 500);
-
 
   createSessionLog(dataType:string) {
     const list = [ ...this.$sessionLogListToCreate.value];
@@ -100,10 +87,24 @@ export class CustomFormService {
     this.$deleteSessionLogItemState.next(data);
   }
 
+  deleteAllSEssionLogItems(){
+    return this.appSrv.getListByFilter(
+      'ProjectSessionLog',
+      ['ID','Field_type','User_id'],
+      50,
+      `User_id eq '${_spPageContextInfo.userId}'`
+    ).pipe(
+      switchMap((res:{value:any[]} | null) =>  !!res ?
+        combineLatest(res.value.map( item => this.appSrv.deleteSessionLogListItembyId(item) )) :
+        EMPTY
+      )
+    )
+  }
+
   private prjFormUpdateHandler(data:{type:string, value:string}){
-    const list = [...this.$updatableList.value]
+    const list = [...this.$projectUpdate.value]
     list.push({[`${data.type}`]:data.value});
-    this.$updatableList.next(list);
+    this.$projectUpdate.next(list);
   }
 
   private onCreateSessionLogItem(item:any){
@@ -130,8 +131,9 @@ export class CustomFormService {
       )
   }
 
-  private deleteSessionLogItem(item:any){
-    return this.appSrv.deleteSessionLogListItemby(item)
+  private deleteSessionLogItem(res:any[],data:{type:string, value:string}){
+    return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
+      .pipe(tap(() =>  this.prjFormUpdateHandler(data) ) )
 
   }
 
@@ -151,13 +153,14 @@ export class CustomFormService {
       },
       ...item
     }
-    //console.log('onUpdate line 145',item);
-    return this.appSrv.updatePrjForm(DATA).pipe(
-      // catchError((err) => {
-      //   console.log('onUpdate',err);
-      //   return EMPTY
-      // }),
-    )
+    return this.appSrv.updatePrjForm(DATA)
+      .pipe(tap(()=> this.resetSessionLogProcess()))
+  }
+
+  private resetSessionLogProcess(){
+    this.$loading.next(false)
+    this.$projectUpdate.next([])
+    this.$deleteSessionLogItemState.next(null);
   }
 
   private checkFielldsState(){

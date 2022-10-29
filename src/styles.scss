@@ -50,33 +50,26 @@ section{
       padding: 5px;
 
       }
+  //TODO need to rewright
   &.tabs-section{
     flex-direction: column;
     border-radius: 8px;
     background-color: #f1f1f1;
     border: 1px solid #aaa;
     padding: 0 $space-4;
-    //label{
-    //  @include flex(start);
-    //  width: 100%;
-    //  margin:$space-4 0;
-    //  input{
-    //    width: calc(100% - 157px);
-    //    max-width: unset!important;
-    //  }
-    //}
-    .label-title{
-      color: #000;
-      font-weight: 700;
-      font-size: 13px;
-      font-family: "Verdana",sans-serif;
-      margin: 0 1em 0 0;
-      width: 157px;
-      text-align: end;
-      white-space: nowrap;
-    }
+
     .dates{
       @include flex(start);
+      .label-title{
+        color: #000;
+        font-weight: 700;
+        font-size: 13px;
+        font-family: "Verdana",sans-serif;
+        margin: 0 1em 0 0;
+        width: 157px;
+        text-align: end;
+        white-space: nowrap;
+      }
       width: 100%;
       margin:$space-4 0;
       label{
@@ -93,6 +86,7 @@ section{
 
 .rootEl{
   padding: 2px;
+  min-width: 1600px;
 }
 
 .wrapper{

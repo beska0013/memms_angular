@@ -39,7 +39,7 @@ export class AppService  {
       "X-HTTP-Method": "DELETE",
       "If-Match": "*",
     })
-    const filter = `Field_type eq ${item.type} and User_id eq ${_spPageContextInfo.userId}`
+
     return this.http.delete(`${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/GetByTitle('ProjectSessionLog')/items('${item.ID}')`,{headers: headers})
   }
 

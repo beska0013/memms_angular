@@ -61,7 +61,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
 
   $fieldLockSubscription:Subscription;
   $fmCntValSubscription:Subscription;
-  $loadingSubscription:Subscription;
+
 
   onFirstInput(){
     if(!this.inputControl) return null;
@@ -71,7 +71,10 @@ export class InputUiComponent implements OnInit,OnDestroy{
   }
 
   onFieldChange(){
-    this.output.emit({[`${this.dataType}`]: this.inputControl.value})
+    this.output.emit({
+      type: this.dataType,
+      value: this.inputControl.value
+    })
     clearInterval(this.timeOutInterval);
   }
 
@@ -109,7 +112,6 @@ export class InputUiComponent implements OnInit,OnDestroy{
     this.initFmControl();
     this.$fieldLockSubscription = this.fmControlValueChanges().subscribe();
     this.$fmCntValSubscription = this.fieldLock.subscribe();
-    // this.$loadingSubscription =
   }
 
   ngOnDestroy(): void {

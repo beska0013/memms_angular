@@ -31,14 +31,12 @@ export class GeneralComponent implements OnInit {
 
 
 
-  onOutputChange = (event) => this.customFmSrv.deleteSessionLog(event)
+  onOutputChange = (event) => this.customFmSrv.sessionLogDeleteHandler(event)
+
 
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
 
 
-  ngOnInit(): void {
-    console.log('general',this.formData);
-    console.log('general',this.fmControls);
-  }
+  ngOnInit(): void {}
 
 }

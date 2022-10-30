@@ -29,14 +29,13 @@ export class FmAreaComponent implements OnInit {
 
   onFieldChange(event){
     //TODO fix firing event on first time
-   // console.log(event);
     const chosenCh = this.areaPathList.find(item => item.ID === event.value)
-    //console.log('onFieldChange',chosenCh.CHPath);
+    console.log('onFieldChange',chosenCh);
 
   }
 
   onSearchScopeChange(event){
-    //console.log(this.areaPathList);
+
     const chosenOrgId = this.organizations.find(item => item.ID === event.value).ID;
     //TODO fix search scope effect on area list
     // this.$areaListItems = this.srv.getListByFilter(this.listName,['ID','Title','CHPath'],500, `OrganizationId eq ${chosenOrgId}`)

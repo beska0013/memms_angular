@@ -3,6 +3,7 @@
   <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">
     <input [formControl]="fmControl"
            [fieldSize]="'tiny'"
+           (focusin)="onFirstInput()"
            (input)="onInput()"
            (change)="onChange()"
            [id]="labelFor"

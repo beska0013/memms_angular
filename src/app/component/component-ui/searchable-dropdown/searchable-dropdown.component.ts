@@ -9,7 +9,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NbAutocompleteModule, NbComponentSize, NbInputModule} from "@nebular/theme";
 import {map, Observable, of} from "rxjs";
 import {environment} from "../../../../environments/environment";
@@ -39,7 +39,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Output() output = new EventEmitter<{type: string, value: string | number}>()
 
 
-
+  inputControl:FormControl;
   filteredOptions$: Observable<string[]>;
 
   onChange(){
@@ -57,6 +57,10 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     if(!(!!event)) return null
     this.filteredOptions$ = this.getFilteredOptions(event);
     this.onFieldstateChange(event, environment.fieldSelectChange)
+  }
+
+  onFirstInput(){
+
   }
 
   private onFieldstateChange(value:any, changeType:string){

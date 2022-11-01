@@ -24,7 +24,9 @@ export class FmTitleComponent {
     this.titleInput.emit(title)
   }
 
-  onOutputChange = (event) => this.customFmSrv.sessionLogDeleteHandler(event)
+  onOutputChange = (event) => {
+    // this.customFmSrv.sessionLogDeleteHandler(event)
+  }
 
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
 

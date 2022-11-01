@@ -10,7 +10,7 @@ import {
   Observable,
   of, Subscription,
   switchMap,
-  tap
+  tap, timer
 } from "rxjs";
 import {AppService} from "../app.service";
 
@@ -21,12 +21,13 @@ export class CustomFormService {
 
   constructor(private appSrv:AppService) { }
 
+  deleteInterval = setTimeout(()=> this.$deleteSessionLogItemState.next(true), 1000)
 
   private $sessionLogListToCreate = new BehaviorSubject<{type:string}[]|undefined>([]);
   private SessionLogListToCreate = () => this.$sessionLogListToCreate as Observable<any>;
 
-  private $deleteSessionLogItemState = new BehaviorSubject<{type:string, value:string} |null>(null);
-  private DeleteSesionLogItems = () => this.$deleteSessionLogItemState as Observable<{type:string, value:string} |null|undefined>;
+  private $deleteSessionLogItemState = new BehaviorSubject<boolean>(false);
+  private DeleteSesionLogItems = () => this.$deleteSessionLogItemState as Observable<boolean>;
 
   private $projectUpdate = new BehaviorSubject<any[]|undefined>([]);
   private ProjectUpdate = () => this.$projectUpdate as Observable<any>;
@@ -36,6 +37,9 @@ export class CustomFormService {
 
   private $loading = new BehaviorSubject<boolean>(false);
   loading = () => this.$loading as Observable<boolean>;
+
+  $editMode = new BehaviorSubject<boolean>(false)
+  private EditMode =() => this.$editMode as Observable<boolean>
 
   private $sessionLogCreatSubscription:Subscription;
   private $sessionLogDeleteSubscription:Subscription;
@@ -51,21 +55,17 @@ export class CustomFormService {
 
     this.$sessionLogDeleteSubscription = this.DeleteSesionLogItems()
       .pipe(
-        switchMap((data) => !!data ? this.getCurrentSessionLog(data?.type)
+        switchMap((canDelete) => canDelete ? this.getCurrentSessionLog()
             .pipe(
               debounceTime(1000),
-              switchMap((res:{value:any[]}) => this.deleteSessionLogItem(res.value, data) )
+              switchMap((res:{value:any[]}) => this.deleteSessionLogItem(res.value) )
             ) : EMPTY )
       ).subscribe();
 
     this.$projectUpdateSubscription = this.ProjectUpdate()
       .pipe(
-        debounceTime(1000),
-        switchMap(list => list.length > 0 ? this.convertArrayToObj(list)
-              .pipe(
-                switchMap(data => this.onUpdate(data))
-              ) : EMPTY)
-      ).subscribe()
+        switchMap((list)=> this.editModeHadler(list))
+      ).subscribe();
   }
 
   sessionLogHandlerUnsubscribe(){
@@ -87,7 +87,7 @@ export class CustomFormService {
     this.$deleteSessionLogItemState.next(data);
   }
 
-  deleteAllSEssionLogItems(){
+  deleteAllSessionLogItems(){
     return this.appSrv.getListByFilter(
       'ProjectSessionLog',
       ['ID','Field_type','User_id'],
@@ -101,7 +101,7 @@ export class CustomFormService {
     )
   }
 
-  private prjFormUpdateHandler(data:{type:string, value:string}){
+  prjFormUpdateHandler(data:{type:string, value:string}){
     const list = [...this.$projectUpdate.value]
     list.push({[`${data.type}`]:data.value});
     this.$projectUpdate.next(list);
@@ -123,30 +123,47 @@ export class CustomFormService {
     return this.appSrv.createListItem(DATA, 'ProjectSessionLog')
       .pipe(
         tap((res:{d:any}) => {
-         // Object.assign(item,{ID:res.d.ID});
+          // Object.assign(item,{ID:res.d.ID});
           this.$sessionLogListToCreate.next([]);
           //this.sessionLogListToDelete.push(item);
-          //console.log('onCreateSessionLogItem',this.sessionLogListToDelete);
         })
       )
   }
 
-  private deleteSessionLogItem(res:any[],data:{type:string, value:string}){
-    return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
-      .pipe(tap(() =>  this.prjFormUpdateHandler(data) ) )
+  private editModeHadler(list:any[]|undefined){
+    return this.EditMode().pipe(
+      debounce(state => state ? timer(2000) : timer(0)),
+      switchMap(() => list.length > 0 ? this.convertArrayToObj(list)
+        .pipe(
+          switchMap(data => this.onUpdatePrjForm(data))
+        ) : EMPTY )
+    )
 
   }
 
-  private getCurrentSessionLog(type:string){
+  // private deleteSessionLogItem(res:any[],data:{type:string, value:string}){
+  //   return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
+  //     // .pipe(tap(() =>  this.prjFormUpdateHandler(data) ) )
+  //
+  // }
+
+  private deleteSessionLogItem(res:any[]){
+    return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
+    .pipe( tap(()=> this.resetSessionLogProcess()))
+  }
+
+  private getCurrentSessionLog(){
+    //const filter = `Field_type eq '${type}' and User_id eq '${_spPageContextInfo.userId}'`
     return this.appSrv.getListByFilter(
       'ProjectSessionLog',
       ['ID','Field_type','User_id'],
       50,
-      `Field_type eq '${type}' and User_id eq '${_spPageContextInfo.userId}'`
+      ` User_id eq '${_spPageContextInfo.userId}'`
     )
   }
 
-  private onUpdate(item:any){
+  private onUpdatePrjForm(item:any){
+    clearInterval(this.deleteInterval)
     const DATA = {
       "__metadata": {
         "type": "SP.Data.ProjectsListItem",
@@ -154,13 +171,16 @@ export class CustomFormService {
       ...item
     }
     return this.appSrv.updatePrjForm(DATA)
-      .pipe(tap(()=> this.resetSessionLogProcess()))
+      .pipe(
+        tap(() => this.deleteInterval = setTimeout(()=> this.$deleteSessionLogItemState.next(true), 500))
+      )
   }
 
   private resetSessionLogProcess(){
     this.$loading.next(false)
     this.$projectUpdate.next([])
-    this.$deleteSessionLogItemState.next(null);
+    this.$deleteSessionLogItemState.next(false);
+    //this.sessionLogListToDelete = [];
   }
 
   private checkFielldsState(){

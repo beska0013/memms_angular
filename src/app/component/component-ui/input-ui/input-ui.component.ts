@@ -10,7 +10,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
-import {EMPTY, map, Subscription, switchMap, take, tap} from "rxjs";
+import {debounceTime, EMPTY, map, Subscription, switchMap, take, tap} from "rxjs";
 
 import {CustomFormService} from "../../../custom-form/custom-form.service";
 import {AppService} from "../../../app.service";
@@ -87,12 +87,14 @@ export class InputUiComponent implements OnInit,OnDestroy{
   private unlockField = () => {
     return this.inputControl.disabled ?
       this.appSrv.getFormField(this.dataType)
-        .pipe(tap((res) =>  {
-          this.inputControl.enable()
-          this.inputControl.setValue(res[this.dataType])
-          this.tooltip = null;
-          this.cdr.markForCheck();
-          return res
+        .pipe(
+          tap((res) =>  {
+            console.log('unlockField line 92',res);
+            this.inputControl.enable()
+              this.inputControl.setValue(res[this.dataType])
+              this.tooltip = null;
+              this.cdr.markForCheck();
+              return res
         })): EMPTY
   }
   private onInActivity(){
@@ -105,6 +107,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
     return this.inputControl.valueChanges.pipe(tap(() => {
       clearInterval(this.timeOutInterval);
       this.onInActivity();
+      this.customFmSrv.$editMode.next(true);
     }))
   }
 

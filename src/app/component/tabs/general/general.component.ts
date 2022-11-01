@@ -31,7 +31,11 @@ export class GeneralComponent implements OnInit {
 
 
 
-  onOutputChange = (event) => this.customFmSrv.sessionLogDeleteHandler(event)
+  onOutputChange = (event) => {
+    console.log('general tab onOutputChange line 35', event);
+    //this.customFmSrv.sessionLogDeleteHandler(event)
+    this.customFmSrv.prjFormUpdateHandler(event)
+  }
 
 
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)

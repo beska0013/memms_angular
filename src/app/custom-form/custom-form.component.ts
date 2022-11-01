@@ -345,7 +345,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
 
   ngOnDestroy(): void {
     this.customFmSrv.sessionLogHandlerUnsubscribe();
-    this.customFmSrv.deleteAllSEssionLogItems();
+    this.customFmSrv.deleteAllSessionLogItems();
   }
 
 

@@ -141,19 +141,12 @@ export class CustomFormService {
 
   }
 
-  // private deleteSessionLogItem(res:any[],data:{type:string, value:string}){
-  //   return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
-  //     // .pipe(tap(() =>  this.prjFormUpdateHandler(data) ) )
-  //
-  // }
-
   private deleteSessionLogItem(res:any[]){
     return combineLatest(res.map( item => this.appSrv.deleteSessionLogListItembyId(item)))
     .pipe( tap(()=> this.resetSessionLogProcess()))
   }
 
   private getCurrentSessionLog(){
-    //const filter = `Field_type eq '${type}' and User_id eq '${_spPageContextInfo.userId}'`
     return this.appSrv.getListByFilter(
       'ProjectSessionLog',
       ['ID','Field_type','User_id'],
@@ -180,7 +173,6 @@ export class CustomFormService {
     this.$loading.next(false)
     this.$projectUpdate.next([])
     this.$deleteSessionLogItemState.next(false);
-    //this.sessionLogListToDelete = [];
   }
 
   private checkFielldsState(){

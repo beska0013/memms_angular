@@ -82,10 +82,10 @@ export class CustomFormService {
     this.$sessionLogListToCreate.next(list);
   }
 
-  sessionLogDeleteHandler(data:any){
-    this.$loading.next(true);
-    this.$deleteSessionLogItemState.next(data);
-  }
+  // sessionLogDeleteHandler(data:any){
+  //   this.$loading.next(true);
+  //   this.$deleteSessionLogItemState.next(data);
+  // }
 
   deleteAllSessionLogItems(){
     return this.appSrv.getListByFilter(
@@ -156,7 +156,7 @@ export class CustomFormService {
   }
 
   private onUpdatePrjForm(item:any){
-    clearInterval(this.deleteInterval)
+    clearInterval(this.deleteInterval);
     const DATA = {
       "__metadata": {
         "type": "SP.Data.ProjectsListItem",
@@ -164,9 +164,7 @@ export class CustomFormService {
       ...item
     }
     return this.appSrv.updatePrjForm(DATA)
-      .pipe(
-        tap(() => this.deleteInterval = setTimeout(()=> this.$deleteSessionLogItemState.next(true), 500))
-      )
+      .pipe(tap(() => this.initDeleteSessionlogItems()))
   }
 
   private resetSessionLogProcess(){
@@ -190,5 +188,8 @@ export class CustomFormService {
     return of(array.map(item => Object.assign(obj, item))[0])
   }
 
+  private initDeleteSessionlogItems(){
+    return this.deleteInterval = setTimeout(()=> this.$deleteSessionLogItemState.next(true), 500)
+  }
 
 }

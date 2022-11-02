@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
   OnChanges,
-  OnInit,
+  OnInit, Output,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -27,7 +27,7 @@ export class TagUiComponent implements OnInit, OnChanges {
   @Input() status:string
   @Input() taglist:any[];
   @Input() initialValues:{ids:string, members:string};
-
+  @Output() output= new EventEmitter()
 
 
 
@@ -86,6 +86,7 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.onTagsInit();
+    console.log( this.trees);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

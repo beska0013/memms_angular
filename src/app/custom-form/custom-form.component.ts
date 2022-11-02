@@ -290,7 +290,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
   }
 
    onSectionValueChange(event:{type:string, value:number}){
-      console.log('onSectionValueChange',event);
+     // console.log('onSectionValueChange',event);
      if(event.type === 'OrganizationId'){
        this.onOrgChange(event)
      }

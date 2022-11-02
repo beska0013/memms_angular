@@ -30,7 +30,7 @@ export class FmAreaComponent implements OnInit {
   onFieldChange(event){
     //TODO fix firing event on first time
     const chosenCh = this.areaPathList.find(item => item.ID === event.value)
-    console.log('onFieldChange',chosenCh);
+    //console.log('area onFieldChange',chosenCh);
 
   }
 

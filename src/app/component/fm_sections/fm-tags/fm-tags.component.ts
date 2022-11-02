@@ -44,8 +44,8 @@ export class FmTagsComponent implements OnInit {
 
   onSearchScopeChange(event){
     const chosenOrgId = this.organizations.find(item => item.ID === event.value).ID;
-    console.log(event);
-    console.log(chosenOrgId);
+    //console.log(event);
+    //console.log(chosenOrgId);
     this.$taglistItems =  this.srv.getListByFilter(this.listName,['ID','Title'],500, `OrganizationId eq ${chosenOrgId}`)
                           .pipe(map( res => {
                             // console.log('tags',res);

@@ -49,8 +49,8 @@ export class FmControlComponent implements OnInit {
 
   onFieldChange(event){
     if(this.formData[event.type] === event.value) return null
-    console.log('onFieldChange',event);
-    console.log(event.type, this.formData[event.type]);
+    //console.log('onFieldChange',event);
+   // console.log(event.type, this.formData[event.type]);
     if(event.type === 'StatusId'){
       this.statusFieldsCascade(event.value)
     }
@@ -66,7 +66,7 @@ export class FmControlComponent implements OnInit {
 
   ngOnInit(): void {
     this.organizations.push({ID:-1,Id:-1, Title:'(None)'})
-    console.log(this.organizations);
+    //console.log(this.organizations);
     this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
 
   }

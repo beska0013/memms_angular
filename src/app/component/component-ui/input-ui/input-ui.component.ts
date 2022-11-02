@@ -75,7 +75,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
       type: this.dataType,
       value: this.inputControl.value
     })
-    clearInterval(this.timeOutInterval);
+    clearTimeout(this.timeOutInterval);
   }
 
   private lockField = (res) => {
@@ -98,14 +98,14 @@ export class InputUiComponent implements OnInit,OnDestroy{
         })): EMPTY
   }
   private onInActivity(){
-    this.timeOutInterval = setTimeout(() => this.inputRef.nativeElement.blur(), 3000)
+   return this.timeOutInterval = setTimeout( () => this.inputRef.nativeElement.blur(), 3000)
   }
   private initFmControl(){
    this.inputControl = new FormControl({value: this.initialValue, disabled: this.disableState});
  }
   private fmControlValueChanges(){
     return this.inputControl.valueChanges.pipe(tap(() => {
-      clearInterval(this.timeOutInterval);
+      clearTimeout(this.timeOutInterval);
       this.onInActivity();
       this.customFmSrv.$editMode.next(true);
     }))

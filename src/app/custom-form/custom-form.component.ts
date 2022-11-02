@@ -20,7 +20,7 @@ import {TimeComponent} from "../component/tabs/time/time.component";
 import {AutoTextComponent} from "../component/tabs/auto-text/auto-text.component";
 import {AudioLogComponent} from "../component/tabs/audio-log/audio-log.component";
 import {CustomFormService} from "./custom-form.service";
-
+import {parseISO} from 'date-fns'
 
 @Component({
   selector: 'app-custom-form',
@@ -119,6 +119,16 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     statusInputFmControl: new FormControl(),
     statusReasonInputFmControl: new FormControl(),
     areaInputFmControl: new FormControl(),
+    highLevelGoal:new FormControl(),
+    acceptanceCriteria: new FormControl(),
+    buisinessBenefit: new FormControl(),
+    internalStatus: new FormControl(),
+    externalStatus: new FormControl(),
+    due_date: new FormControl(),
+    commit_date: new FormControl(),
+    project_start_date: new FormControl(),
+    completion_date: new FormControl(),
+    current_sts_date: new FormControl(),
   })
 
   cntSectionFmControls = {
@@ -133,12 +143,29 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     StatusReasonSelect: this.form.controls.statusInputFmControl,
 };
 
+  // generalTabFmControls = {
+  //   highLevelGoal:new FormControl(),
+  //   acceptanceCriteria: new FormControl(),
+  //   buisinessBenefit: new FormControl(),
+  //   internalStatus: new FormControl(),
+  //   externalStatus: new FormControl(),
+  //   due_date: new FormControl(),
+  //   commit_date: new FormControl(),
+  //   project_start_date: new FormControl(),
+  //   completion_date: new FormControl(),
+  //   current_sts_date: new FormControl(),
+  // };
   generalTabFmControls = {
-    highLevelGoal:new FormControl(),
-    acceptanceCriteria: new FormControl(),
-    buisinessBenefit: new FormControl(),
-    internalStatus: new FormControl(),
-    externalStatus: new FormControl(),
+    highLevelGoal:this.form.controls.highLevelGoal,
+    acceptanceCriteria: this.form.controls.acceptanceCriteria,
+    buisinessBenefit: this.form.controls.buisinessBenefit,
+    internalStatus: this.form.controls.internalStatus,
+    externalStatus: this.form.controls.externalStatus,
+    due_date: this.form.controls.due_date,
+    commit_date: this.form.controls.commit_date,
+    project_start_date: this.form.controls.project_start_date,
+    completion_date: this.form.controls.completion_date,
+    current_sts_date: this.form.controls.current_sts_date,
   };
 
   autoTextTabFmControls = {
@@ -240,16 +267,27 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
   }
 
   private initGeneralTabsValues(){
-    this.generalTabFmControls.highLevelGoal
+    this.form.controls.highLevelGoal
       .setValue(this.formData.form.ProjectHighLevelGoal);
-    this.generalTabFmControls.acceptanceCriteria
+    this.form.controls.acceptanceCriteria
       .setValue(this.formData.form.AcceptanceCriteria)
-    this.generalTabFmControls.buisinessBenefit
+    this.form.controls.buisinessBenefit
       .setValue(this.formData.form.BusinessBenefit)
-    this.generalTabFmControls.internalStatus
+    this.form.controls.internalStatus
       .setValue(this.formData.form.Current_x0020_Status)
-    this.generalTabFmControls.externalStatus
+    this.form.controls.externalStatus
       .setValue(this.formData.form.External_x0020_Status)
+
+    this.form.controls.due_date
+       .setValue(this.formData.form.Due_x0020_Date ? parseISO(this.formData.form.Due_x0020_Date): this.formData.form.Due_x0020_Date)
+    this.form.controls.commit_date
+      .setValue(this.formData.form.Commit_x0020_Date ? parseISO(this.formData.form.Commit_x0020_Date) : this.formData.form.Commit_x0020_Date)
+    this.form.controls.completion_date
+      .setValue(this.formData.form.Completion_x0020_Date ? parseISO(this.formData.form.Completion_x0020_Date) : this.formData.form.Completion_x0020_Date)
+    this.form.controls.current_sts_date
+      .setValue(this.formData.form.Current_x0020_Status_x0020_Date ? parseISO(this.formData.form.Current_x0020_Status_x0020_Date) : this.formData.form.Current_x0020_Status_x0020_Date)
+    this.form.controls.project_start_date
+      .setValue(this.formData.form.Project_x0020_Start_x0020_Date ? parseISO(this.formData.form.Project_x0020_Start_x0020_Date) : this.formData.form.Project_x0020_Start_x0020_Date)
   }
 
   private genTabhandler(){

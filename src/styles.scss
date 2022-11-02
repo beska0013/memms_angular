@@ -56,30 +56,9 @@ section{
     border-radius: 8px;
     background-color: #f1f1f1;
     border: 1px solid #aaa;
-    padding: 0 $space-4;
+    padding: $space-4;
+    gap: $space-4;
 
-    .dates{
-      @include flex(start);
-      .label-title{
-        color: #000;
-        font-weight: 700;
-        font-size: 13px;
-        font-family: "Verdana",sans-serif;
-        margin: 0 1em 0 0;
-        width: 157px;
-        text-align: end;
-        white-space: nowrap;
-      }
-      width: 100%;
-      margin:$space-4 0;
-      label{
-        display: block;
-        input{
-          //width: 100%;
-        }
-
-      }
-    }
   }
 }
 

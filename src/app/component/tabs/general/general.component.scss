@@ -1,0 +1,25 @@
+@import './../../../../assets/scss/link';
+
+.dates{
+  @include flex(start);
+  align-items: flex-end;
+
+  width: 100%;
+  .dates-title{
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: "Verdana",sans-serif;
+    margin:0;
+    width: 157px;
+    text-align: end;
+    white-space: nowrap;
+  }
+  .dates-content{
+    @include flex(start);
+    align-items: flex-end;
+    gap:$space-4;
+    margin: 0 1em ;
+  }
+
+}

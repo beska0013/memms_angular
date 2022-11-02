@@ -86,7 +86,7 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.onTagsInit();
-    console.log( this.trees);
+    //console.log( this.trees);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {CustomFormComponent} from "./custom-form/custom-form.component";
 import {NbDatepickerModule, NbThemeModule, NbTimepickerModule} from "@nebular/theme";
+import {NbDateFnsDateModule} from "@nebular/date-fns";
 
 
 
@@ -15,6 +16,7 @@ import {NbDatepickerModule, NbThemeModule, NbTimepickerModule} from "@nebular/th
     BrowserModule,
     HttpClientModule,
     CustomFormComponent,
+    NbDateFnsDateModule.forRoot({ format: 'MM-dd-yyyy' }),
     NbDatepickerModule.forRoot(),
     NbThemeModule.forRoot(),
     NbTimepickerModule.forRoot(),

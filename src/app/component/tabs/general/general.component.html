@@ -1,12 +1,47 @@
 <section class="tabs-section">
 
   <div class="dates">
-    <h5 class="label-title">Dates:</h5>
-    <app-datepicker [for]="'dueDates'"></app-datepicker>
-    <app-datepicker [for]="'commitDate'"></app-datepicker>
-    <app-datepicker [for]="'prjStartDate'"></app-datepicker>
-    <app-datepicker [for]="'completionDate'"></app-datepicker>
-    <app-datepicker [for]="'currentStsdat'"></app-datepicker>
+    <h5 class="dates-title">Dates:</h5>
+
+    <div class="dates-content">
+      <app-datepicker [labelfor]="'dueDates'"
+                      [title]="'Due Date'"
+                      [inputControl]="fmControls.due_date"
+                      (onInputStart)="inputStart($event)"
+                      (output)="onOutputChange($event)"
+                      [dataType]="dataTypes.due_date"></app-datepicker>
+      <app-datepicker [labelfor]="'commitDate'"
+                      [inputControl]="fmControls.commit_date"
+                      (output)="onOutputChange($event)"
+                      [title]="'Commit Date'"
+                      (onInputStart)="inputStart($event)"
+                      [dataType]="dataTypes.commit_date"></app-datepicker>
+      <app-datepicker [labelfor]="'prjStartDate'"
+                      [inputControl]="fmControls.project_start_date"
+                      (output)="onOutputChange($event)"
+                      [title]="'Project Start Date'"
+                      (onInputStart)="inputStart($event)"
+                      [dataType]="dataTypes.project_start_date"></app-datepicker>
+      <app-datepicker [labelfor]="'completionDate'"
+                      [inputControl]="fmControls.completion_date"
+                      (output)="onOutputChange($event)"
+                      [title]="'Completion Date'"
+                      (onInputStart)="inputStart($event)"
+                      [dataType]="dataTypes.completion_date"></app-datepicker>
+      <app-datepicker [labelfor]="'currentStsdat'"
+                      [inputControl]="fmControls.current_sts_date"
+                      [title]="'Current Status Date'"
+                      (onInputStart)="inputStart($event)"
+                      (output)="onOutputChange($event)"
+                      [dataType]="dataTypes.current_sts_date"></app-datepicker>
+    </div>
+
+    <button nbButton
+            outline
+            status="primary"
+            size="small"
+            shape="rectangle"
+            (click)="resetDates()">Reset Dates</button>
   </div>
 
   <app-input-ui [title]="'High Level Goal:'"

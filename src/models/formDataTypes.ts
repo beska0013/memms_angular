@@ -64,6 +64,11 @@ export class GeneralTabDataTypes{
  readonly businessBenefit:string;
  readonly internalSts:string;
  readonly externalSts:string;
+ readonly due_date:string;
+ readonly commit_date:string;
+ readonly project_start_date:string;
+ readonly completion_date:string;
+ readonly current_sts_date:string;
  constructor() {
 
    this.highLvLGoal = 'ProjectHighLevelGoal';
@@ -71,6 +76,11 @@ export class GeneralTabDataTypes{
    this.businessBenefit= 'BusinessBenefit';
    this.internalSts= 'Current_x0020_Status';
    this.externalSts= 'External_x0020_Status';
+   this.due_date= 'Due_x0020_Date';
+   this.commit_date= 'Commit_x0020_Date';
+   this.project_start_date= 'Project_x0020_Start_x0020_Date';
+   this.completion_date= 'Completion_x0020_Date';
+   this.current_sts_date= 'Current_x0020_Status_x0020_Date';
  }
 
 }

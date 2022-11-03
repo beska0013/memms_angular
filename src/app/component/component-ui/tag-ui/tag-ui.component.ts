@@ -11,30 +11,38 @@ import {
 import { CommonModule } from '@angular/common';
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {NbTagComponent, NbTagInputDirective} from "@nebular/theme";
-import {map, Observable, of} from "rxjs";
+import {BehaviorSubject, EMPTY, map, Observable, of, Subscription, switchMap, take, tap} from "rxjs";
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CustomFormService} from "../../../custom-form/custom-form.service";
 
 @Component({
   selector: 'app-tag-ui',
   standalone: true,
-  imports: [CommonModule, NebularModule],
+  imports: [CommonModule, NebularModule, ReactiveFormsModule, FormsModule],
   templateUrl: './tag-ui.component.html',
   styleUrls: ['./tag-ui.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class TagUiComponent implements OnInit, OnChanges {
 
-  constructor(private cdr:ChangeDetectorRef) { }
+  constructor(
+    private cdr:ChangeDetectorRef,
+    private customFmSrv: CustomFormService,) { }
+
+
   @Input() status:string
+  @Input() listName:string
   @Input() taglist:any[];
   @Input() initialValues:{ids:string, members:string};
 
-  @Output() output= new EventEmitter()
 
-
-
+  @Output() output= new EventEmitter();
+  @Output() onInputStart= new EventEmitter();
+  @Output() onInputEnd= new EventEmitter();
 
   trees: Set<string> = new Set([]);
-  filteredOptions$: Observable<string[]>;
+  filteredOptions$: Observable<any>;
+  $inputSubject = new BehaviorSubject<string | null>(null)
 
 
   @ViewChild(NbTagInputDirective, { read: ElementRef }) tagInputElement: ElementRef<HTMLInputElement>;
@@ -47,38 +55,68 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   private filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.taglist.filter(optionValue =>
+    return this.taglist?.filter(optionValue =>
       optionValue.Title ?
         optionValue.Title.toLowerCase().includes(filterValue):
         optionValue.toLowerCase().includes(filterValue));
   }
 
+  private tagResult(list, chosenSet){
+    console.log('tagResult', list);
+    switch (this.listName) {
+        case 'ProjectTags':
+          return this.onPrjTagsFilters(list, chosenSet)
+        case 'ProjectReviewContextTags':
+          return this.onPrjReviewContextTags(list, chosenSet)
+        case 'ProjectHumanResources':
+          return this.onPrjHumanResources(list, chosenSet)
+      }
+
+  }
+
+  private onPrjTagsFilters(list, chosenSet){
+    return !!list ? list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
+  }
+
+  //TODO fix filters
+  private onPrjReviewContextTags(list, chosenSet){
+    console.log(list);
+    console.log(chosenSet);
+    return  !!list ? list?.filter( tag => [...chosenSet].map(val => val.toLowerCase()).includes(tag.Title.toLowerCase())) : null;
+  }
+  private onPrjHumanResources(list, chosenSet){
+    return  !!list ? list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
+  }
+
+  //TODO save on remove
   onTagRemove(tagToRemove: NbTagComponent): void {
     this.trees?.delete(tagToRemove.text);
     this.taglist?.push(tagToRemove.text);
+    const chosenTags = this.tagResult(this.taglist, this.trees);
+    //console.log('onTagRemove', chosenTags);
+    !!chosenTags ? this.output.emit(chosenTags) : null;
   }
 
   onTagAdd(value: string): void {
     if (value) {
       this.trees?.add(value);
-      const chosenTags = this.tagResult(this.taglist, this.trees)
+      const chosenTags = this.tagResult(this.taglist, this.trees);
+      console.log('chosenTags result', chosenTags);
       !!chosenTags ? this.output.emit(chosenTags) : null;
-
       this.taglist = this.taglist?.filter(o => o !== value);
     }
     this.tagInputElement.nativeElement.value = '';
-    // this.taglist = [];
-  }
-
-  tagResult(list, chosenSet){
-    return !!list ? list?.filter(tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
+    //this.taglist = undefined
   }
 
   onInput(){
     this.filteredOptions$ = this.getFilteredOptions(this.tagInputElement.nativeElement.value);
+    this.$inputSubject.next(this.tagInputElement.nativeElement.value);
+    this.customFmSrv.$editMode.next(true);
   }
 
   onTagsInit(){
+    this.trees.clear();
     this.filteredOptions$ = of(this.taglist);
     if(!!this.initialValues){
       this.initialValues.members ? this.initialValues.members
@@ -98,10 +136,32 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   }
 
+  //TODO change behavior
+  onFocusIn(){
+    this.$inputSubject.pipe(
+      take(2),
+      tap(res =>!!res ? this.onInputStart.emit(res): EMPTY)
+    ).subscribe();
+  }
+
+  //TODO change behavior
+  onFocusout = () =>  {
+    this.$inputSubject.next(null);
+    this.tagInputElement.nativeElement.value = '';
+    //this.taglist = undefined;
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
+
     for (let propName in changes) {
       if(propName === 'taglist'){
-        this.filteredOptions$ = this.taglist ? of(this.taglist) : null;
+        this.filteredOptions$ =  of(changes[propName].currentValue) ;
+      }
+
+      if(propName === 'initialValues'){
+        this.initialValues = changes[propName].currentValue;
+        this.onTagsInit()
+        // this.trees?.add(member)
       }
 
     }

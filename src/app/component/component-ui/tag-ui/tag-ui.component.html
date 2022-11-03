@@ -3,6 +3,8 @@
     <nb-tag [status]="status" [size]="'tiny'" *ngFor="let tag of trees" [text]="tag" removable></nb-tag>
     <input type="text"
            nbTagInput
+           (focusin)="onFocusIn()"
+           (focusout)="onFocusout()"
            (input)="onInput()"
            (tagAdd)="onTagAdd($event.value)"
            [nbAutocomplete]="autocomplete"

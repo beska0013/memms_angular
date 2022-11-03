@@ -27,6 +27,7 @@ export class TagUiComponent implements OnInit, OnChanges {
   @Input() status:string
   @Input() taglist:any[];
   @Input() initialValues:{ids:string, members:string};
+
   @Output() output= new EventEmitter()
 
 
@@ -60,10 +61,17 @@ export class TagUiComponent implements OnInit, OnChanges {
   onTagAdd(value: string): void {
     if (value) {
       this.trees?.add(value);
+      const chosenTags = this.tagResult(this.taglist, this.trees)
+      !!chosenTags ? this.output.emit(chosenTags) : null;
+
       this.taglist = this.taglist?.filter(o => o !== value);
     }
     this.tagInputElement.nativeElement.value = '';
     // this.taglist = [];
+  }
+
+  tagResult(list, chosenSet){
+    return !!list ? list?.filter(tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
   }
 
   onInput(){
@@ -75,9 +83,10 @@ export class TagUiComponent implements OnInit, OnChanges {
     if(!!this.initialValues){
       this.initialValues.members ? this.initialValues.members
         .split('|')
-        .forEach(member=> this.trees?.add(member)) : null
-    }
+        .forEach(member => this.trees?.add(member)) : null
 
+    }
+    this.cdr.markForCheck();
   }
 
   trackByFn(index, item) {
@@ -86,7 +95,7 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.onTagsInit();
-    //console.log( this.trees);
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -94,6 +103,7 @@ export class TagUiComponent implements OnInit, OnChanges {
       if(propName === 'taglist'){
         this.filteredOptions$ = this.taglist ? of(this.taglist) : null;
       }
+
     }
   }
 

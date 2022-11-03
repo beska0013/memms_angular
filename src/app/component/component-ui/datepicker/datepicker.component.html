@@ -1,13 +1,14 @@
 <label for="{{labelfor}}"
-       nbTooltip="{{tooltip}}"
-       [nbTooltipDisabled]="!(!!tooltip)"
        class="inputLabel"
-       (click)="onFirstInput()">
+       nbTooltip="{{tooltip}}"
+       [nbTooltipDisabled]="!(!!tooltip)">
   <span class="input-box">
       <h6 class="label-title" *ngIf="title">{{title}}</h6>
       <input [id]="labelfor"
+
              [formControl]="inputControl"
              [fieldSize]="'tiny'"
+             (focusin)="onFirstInput()"
              (change)="onFieldChange()"
              placeholder="mm-dd-yyyy"
              nbInput

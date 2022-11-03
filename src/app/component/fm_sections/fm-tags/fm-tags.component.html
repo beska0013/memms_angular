@@ -12,29 +12,10 @@
                              [dropdownList]="organizations"></app-searchable-dropdown>
 
     <app-tag-ui class="tags"
+                (output)="onTagValueChange($event)"
                 [initialValues]="initialValues"
                 [status]="status"
                 [taglist]="$taglistItems | async"></app-tag-ui>
-
-<!--      <nb-form-field>-->
-<!--      <nb-tag-list (tagRemove)="onTagRemove($event)">-->
-<!--        <nb-tag [status]="status" *ngFor="let tag of trees" [text]="tag" removable></nb-tag>-->
-<!--        <input id="tags"-->
-<!--               type="text"-->
-<!--               nbTagInput-->
-<!--               (input)="onInputChanges()"-->
-<!--               (tagAdd)="onTagAdd($event.value)"-->
-<!--               [nbAutocomplete]="autocomplete"-->
-<!--               fullWidth>-->
-<!--      </nb-tag-list>-->
-
-
-<!--      </nb-form-field>-->
-
-<!--      <nb-autocomplete [activeFirst]="true" #autocomplete (selectedChange)="onTagAdd($event)">-->
-<!--        <nb-option *ngFor="let option of taglist;trackBy: trackByFn"-->
-<!--                   [value]="option">{{ option }}</nb-option>-->
-<!--      </nb-autocomplete>-->
 
   </div>
 </section>

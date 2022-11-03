@@ -60,7 +60,7 @@ export class DatepickerComponent implements OnInit {
     )
 
   onFirstInput(){
-    console.log(this.inputControl);
+    //console.log(this.inputControl);
     if(!this.inputControl) return null;
     this.onInputStart.emit(this.dataType)
     // this.inputControl.valueChanges
@@ -86,9 +86,9 @@ export class DatepickerComponent implements OnInit {
       this.appSrv.getFormField(this.dataType)
         .pipe(
           tap((res) =>  {
-            console.log(res[this.dataType]);
+            //console.log(res[this.dataType]);
             this.inputControl.enable();
-            this.inputControl.setValue(res[this.dataType] ?parseISO(res[this.dataType]) : res[this.dataType])
+            this.inputControl.setValue(res[this.dataType] ? parseISO(res[this.dataType]) : res[this.dataType])
             this.tooltip = null;
             this.cdr.markForCheck();
             return res

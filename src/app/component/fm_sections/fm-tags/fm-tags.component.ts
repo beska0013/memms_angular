@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   Input,
-  OnInit,
+  OnInit, Output,
   ViewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,22 +36,32 @@ export class FmTagsComponent implements OnInit {
   @Input() listName!:any;
   @Input() labelFor:string;
 
-  $taglistItems:Observable<any>
 
+  $taglistItems:Observable<any>
+  @Output() searchScopeOutput = new EventEmitter<{orgId:number, title: string}>();
 
   @Input() taglist:any[];
-  @Input() initialValues:{ids:string, members:string};
+  @Input() initialValues:{ids:string, members:string}
 
-  onSearchScopeChange(event){
-    const chosenOrgId = this.organizations.find(item => item.ID === event.value).ID;
-    //console.log(event);
+  onSearchScopeChange(event) {
+
+    const chosenOrg = this.organizations.find(item => item.ID === event.value);
+
     //console.log(chosenOrgId);
-    this.$taglistItems =  this.srv.getListByFilter(this.listName,['ID','Title'],500, `OrganizationId eq ${chosenOrgId}`)
-                          .pipe(map( res => {
-                            // console.log('tags',res);
-                            this.cdr.markForCheck();
-                            return  res['value']
-                          }))
+    this.$taglistItems = this.srv.getListByFilter(this.listName, ['ID', 'Title'], 500, `OrganizationId eq ${chosenOrg.ID}`)
+      .pipe(map(res => {
+        // console.log('tags',res);
+        this.cdr.markForCheck();
+        return res['value']
+      }));
+  }
+
+  onTagValueChange(tagList){
+    const tags = tagList.reverse()
+      .reduce((acc, t)=> acc.ids ?
+                  { ids: `${acc.ids}|${t.ID}` , title: `${acc.title}|${t.Title}`} :
+                  { ids: `${t.ID}` , title: `${t.Title}` }, {})
+    console.log(tags);
   }
 
 

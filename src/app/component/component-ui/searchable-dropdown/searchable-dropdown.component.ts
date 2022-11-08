@@ -38,6 +38,8 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Input() form:any[];
   @Output() output = new EventEmitter<{type: string, value: string | number}>()
 
+  //when data loads first time
+  dataFirstChange = true;
 
   inputControl:FormControl;
   filteredOptions$: Observable<string[]>;
@@ -53,10 +55,14 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value);
   }
 
+
   onSelectionChange(event) {
+   // console.log('onSelectionChange', event);
     if(!(!!event)) return null
     this.filteredOptions$ = this.getFilteredOptions(event);
-    this.onFieldstateChange(event, environment.fieldSelectChange)
+    //TODO fix on first change
+    this.onFieldstateChange(event, environment.fieldSelectChange);
+
   }
 
   onFirstInput(){
@@ -65,6 +71,10 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
 
   private onFieldstateChange(value:any, changeType:string){
     if(changeType === environment.fieldInputChange) return null;
+    if(this.dataFirstChange) {
+      this.dataFirstChange = false;
+      return null;
+    }
 
     const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value )
 
@@ -72,6 +82,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
       type: this.dataType,
       value: item ? item.ID ? item.Id : item : value
     })
+
   }
 
   private filter(value: string): string[] {
@@ -89,13 +100,16 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    //this.firstChange = false
     this.filteredOptions$ = of(this.dropdownList);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     for (let propName in changes) {
       if(propName === 'dropdownList'){
         this.filteredOptions$ = of(this.dropdownList);
+       // console.log(propName);
         //this.cdr.markForCheck();
       }
     }

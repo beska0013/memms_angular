@@ -8,6 +8,7 @@
     </app-header>
     <app-fm-title [titleValue]="formData.form.ProjectTitle"
                   (titleInput)="onTitleInput($event)"></app-fm-title>
+
     <app-fm-control (output)="onSectionValueChange($event)"
                     [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"

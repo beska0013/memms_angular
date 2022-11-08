@@ -2,9 +2,9 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnChanges,
   OnInit,
-  Output,
+  Output, SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
@@ -48,6 +48,8 @@ export class FmControlComponent implements OnInit {
 
 
   onFieldChange(event){
+    console.log('line 51', event);
+
     if(this.formData[event.type] === event.value) return null
     //console.log('onFieldChange',event);
    // console.log(event.type, this.formData[event.type]);
@@ -70,6 +72,7 @@ export class FmControlComponent implements OnInit {
     this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
 
   }
+
 
 
 

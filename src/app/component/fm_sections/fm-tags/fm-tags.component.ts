@@ -41,6 +41,10 @@ export class FmTagsComponent implements OnInit, OnDestroy {
   @Input() listName!:any;
   @Input() labelFor:string;
   @Input() dataTypes: {ids:string, value:string};
+  @Input() taglist:any[];
+  @Input() initialValues:{ids:string, members:string}
+
+  @Output() searchScopeOutput = new EventEmitter<{orgId:number, title: string}>();
 
   disabled = false;
   tooltip:string;
@@ -53,31 +57,25 @@ export class FmTagsComponent implements OnInit, OnDestroy {
   sectuionLockSubscription$:Subscription
 
   $taglistItems:Observable<any>
-  @Output() searchScopeOutput = new EventEmitter<{orgId:number, title: string}>();
 
-  @Input() taglist:any[];
-  @Input() initialValues:{ids:string, members:string}
-
+//TODO fix cascade with search scope
   onSearchScopeChange(event) {
     const chosenOrg = this.organizations.find(item => item.ID === event.value);
     this.$taglistItems = this.appSrv.getListByFilter(this.listName, ['ID', 'Title'], 500, `OrganizationId eq ${chosenOrg.ID}`)
       .pipe(map(res =>  res['value']));
-   // this.cdr.markForCheck();
+    this.cdr.markForCheck();
   }
-
-
   onInputStart = () => this.customFmSrv.createSessionLog(this.listName);
-
-
   onTagValueChange(tagList){
-    const tags = tagList.reverse().reduce((acc, t)=> acc.ids ?
+    console.log(tagList);
+    const tags = !!tagList ? tagList.reverse().reduce((acc, t)=> acc.ids ?
                   { ids: `${acc.ids}|${t.ID}` , title: `${acc.title}|${t.Title}`} :
-                  { ids: `${t.ID}` , title: `${t.Title}` }, {});
+                  { ids: `${t.ID}` , title: `${t.Title}` }, {}) : null
     const data = [
-      {type: this.dataTypes.ids, value: tags.ids},
-      {type: this.dataTypes.value, value: tags.title}
+      {type: this.dataTypes.ids, value: !!tags? tags.ids : null},
+      {type: this.dataTypes.value, value: !!tags? tags.title : null}
     ];
-          data.forEach(item => this.customFmSrv.prjFormUpdateHandler(item));
+    data.forEach(item => this.customFmSrv.prjFormUpdateHandler(item));
   }
 
   private lockSection(res){
@@ -88,15 +86,12 @@ export class FmTagsComponent implements OnInit, OnDestroy {
   }
 
   private unlockSection(){
-
      return  this.disabled ? this.appSrv.getFormField([this.dataTypes.ids,this.dataTypes.value].toString())
       .pipe(
         tap((res) =>  {
           console.log('unlockField line 92',res);
           this.initialValues = {ids: res[this.dataTypes.ids], members: res[this.dataTypes.value]};
 
-          // this.inputControl.enable()
-          // this.inputControl.setValue(res[this.dataType])
           this.tooltip = null;
           this.disabled = false;
           this.cdr.markForCheck();
@@ -109,7 +104,8 @@ export class FmTagsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //console.log(this.listName);
+   this.$taglistItems = of(this.taglist);
+
     this.sectuionLockSubscription$ = this.sectionLock.subscribe()
 
   }

@@ -1,26 +1,29 @@
-<section>
-  <div class="sec_title">
-    <h4>{{sectionTitle}}</h4>
-  </div>
-  <div class="sec_content">
-    <app-searchable-dropdown class="mediumField"
-                             [dataType]="labelFor"
-                             (output)="onSearchScopeChange($event)"
-                             [fmControl]="searchScope"
-                             [labelFor]="labelFor"
-                             [title]="'Search Scope'"
-                             [dropdownList]="organizations"></app-searchable-dropdown>
 
-    <app-tag-ui class="tags"
-                (onInputStart)="onInputStart()"
-                (output)="onTagValueChange($event)"
-                [listName]="listName"
-                [initialValues]="initialValues"
-                [status]="status"
-                [taglist]="$taglistItems | async"></app-tag-ui>
+  <section >
+    <div class="sec_title">
+      <h4>{{sectionTitle}}</h4>
+    </div>
+    <div class="sec_content">
+      <app-searchable-dropdown class="mediumField"
+                               [dataType]="labelFor"
+                               (output)="onSearchScopeChange($event)"
+                               [fmControl]="searchScope"
+                               [labelFor]="labelFor"
+                               [title]="'Search Scope'"
+                               [dropdownList]="organizations"></app-searchable-dropdown>
 
-  </div>
-  <ng-template [ngIf]="disabled">
-    <div class="disabled-overlay"></div>
-  </ng-template>
-</section>
+      <app-tag-ui class="tags"
+                  (onInputStart)="onInputStart()"
+                  (output)="onTagValueChange($event)"
+                  [listName]="listName"
+                  [initialValues]="initialValues"
+                  [status]="status"
+                  [taglist]="$taglistItems | async"></app-tag-ui>
+
+    </div>
+    <ng-template [ngIf]="disabled">
+      <div class="disabled-overlay"></div>
+    </ng-template>
+  </section>
+
+

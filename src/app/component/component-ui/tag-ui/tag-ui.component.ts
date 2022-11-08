@@ -27,7 +27,8 @@ export class TagUiComponent implements OnInit, OnChanges {
 
   constructor(
     private cdr:ChangeDetectorRef,
-    private customFmSrv: CustomFormService,) { }
+    private customFmSrv: CustomFormService
+  ) { }
 
 
   @Input() status:string
@@ -62,7 +63,6 @@ export class TagUiComponent implements OnInit, OnChanges {
   }
 
   private tagResult(list, chosenSet){
-    console.log('tagResult', list);
     switch (this.listName) {
         case 'ProjectTags':
           return this.onPrjTagsFilters(list, chosenSet)
@@ -75,17 +75,15 @@ export class TagUiComponent implements OnInit, OnChanges {
   }
 
   private onPrjTagsFilters(list, chosenSet){
-    return !!list ? list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
+    return list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title));
   }
 
   //TODO fix filters
   private onPrjReviewContextTags(list, chosenSet){
-    console.log(list);
-    console.log(chosenSet);
-    return  !!list ? list?.filter( tag => [...chosenSet].map(val => val.toLowerCase()).includes(tag.Title.toLowerCase())) : null;
+    return list?.filter( tag => [...chosenSet].map(val => val.toLowerCase()).includes(tag.Title.toLowerCase()));
   }
   private onPrjHumanResources(list, chosenSet){
-    return  !!list ? list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title)) : null;
+    return  list?.filter( tag => [...chosenSet].map(val => val.split(':').at(-1)).includes(tag.Title));
   }
 
   //TODO save on remove
@@ -93,17 +91,17 @@ export class TagUiComponent implements OnInit, OnChanges {
     this.trees?.delete(tagToRemove.text);
     this.taglist?.push(tagToRemove.text);
     const chosenTags = this.tagResult(this.taglist, this.trees);
-    //console.log('onTagRemove', chosenTags);
-    !!chosenTags ? this.output.emit(chosenTags) : null;
+    this.customFmSrv.$editMode.next(true);
+    // console.log(!!chosenTags);
+     this.output.emit(chosenTags) ;
   }
 
   onTagAdd(value: string): void {
     if (value) {
       this.trees?.add(value);
       const chosenTags = this.tagResult(this.taglist, this.trees);
-      console.log('chosenTags result', chosenTags);
-      !!chosenTags ? this.output.emit(chosenTags) : null;
-      this.taglist = this.taglist?.filter(o => o !== value);
+      this.output.emit(chosenTags) ;
+      //this.taglist = this.taglist?.filter(o => o !== value);
     }
     this.tagInputElement.nativeElement.value = '';
     //this.taglist = undefined
@@ -122,46 +120,48 @@ export class TagUiComponent implements OnInit, OnChanges {
       this.initialValues.members ? this.initialValues.members
         .split('|')
         .forEach(member => this.trees?.add(member)) : null
-
     }
     this.cdr.markForCheck();
   }
 
   trackByFn(index, item) {
-    return item.name;
-  }
-
-  ngOnInit(): void {
-    this.onTagsInit();
-
+    return index;
   }
 
   //TODO change behavior
   onFocusIn(){
+    console.log('onFocusIn',this.taglist);
     this.$inputSubject.pipe(
       take(2),
       tap(res =>!!res ? this.onInputStart.emit(res): EMPTY)
     ).subscribe();
+    this.cdr.markForCheck();
   }
 
   //TODO change behavior
   onFocusout = () =>  {
     this.$inputSubject.next(null);
     this.tagInputElement.nativeElement.value = '';
-    //this.taglist = undefined;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnInit(): void {
+    this.onTagsInit();
+    //console.log('ngOnInit',this.taglist);
+  }
 
+
+
+  ngOnChanges(changes: SimpleChanges): void {
     for (let propName in changes) {
       if(propName === 'taglist'){
         this.filteredOptions$ =  of(changes[propName].currentValue) ;
+        // console.log(changes);
+        // console.log(propName);
       }
 
       if(propName === 'initialValues'){
         this.initialValues = changes[propName].currentValue;
         this.onTagsInit()
-        // this.trees?.add(member)
       }
 
     }

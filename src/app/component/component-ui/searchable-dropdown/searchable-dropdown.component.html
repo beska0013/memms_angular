@@ -1,18 +1,24 @@
 <label [for]="labelFor" class="inputLabel">
   <h6> {{title}}</h6>
   <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">
-    <input [formControl]="fmControl"
-           [fieldSize]="'tiny'"
-           (focusin)="onFirstInput()"
-           (input)="onInput()"
-           (change)="onChange()"
-           [id]="labelFor"
-           #autoInput
-           nbInput
-           fullWidth
-           type="text"
-           placeholder="Enter value"
-           [nbAutocomplete]="auto"/>
+    <div class="input-wrapper">
+      <input [formControl]="fmControl"
+             [fieldSize]="'tiny'"
+             (focusin)="onFirstInput()"
+             (focusout)="onFocusout()"
+             (input)="onInput()"
+             (change)="onChange()"
+             [id]="labelFor"
+             #autoInput
+             nbInput
+             fullWidth
+             type="text"
+             placeholder="Enter value"
+             [nbAutocomplete]="auto"/>
+      <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
+    </div>
+
+
     <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
       <nb-option *ngFor="let item of options" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
@@ -20,6 +26,9 @@
     </nb-autocomplete>
   </ng-container>
   <ng-template #inputTemplate>
+    <div class="input-wrapper">
+
+
     <input [formControl]="fmControl"
            [fieldSize]="'tiny'"
            (change)="onChange()"
@@ -28,6 +37,7 @@
            type="text"
            placeholder="Enter value"/>
     <span>%</span>
+    </div>
   </ng-template>
 
 </label>

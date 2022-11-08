@@ -40,11 +40,13 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
 
   //when data loads first time
   dataFirstChange = true;
+  closeState = true;
 
   inputControl:FormControl;
   filteredOptions$: Observable<string[]>;
 
   onChange(){
+    this.closeState = true;
     //console.log(this.input.nativeElement.value);
     !!this.input.nativeElement.value ?
     this.onFieldstateChange(this.input.nativeElement.value, environment.fieldInputChange) :
@@ -60,14 +62,18 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
    // console.log('onSelectionChange', event);
     if(!(!!event)) return null
     this.filteredOptions$ = this.getFilteredOptions(event);
-    //TODO fix on first change
+    this.closeState = true;
     this.onFieldstateChange(event, environment.fieldSelectChange);
 
   }
 
   onFirstInput(){
-
+      this.closeState = false;
   }
+  onFocusout(){
+    this.closeState =  true;
+  }
+
 
   private onFieldstateChange(value:any, changeType:string){
     if(changeType === environment.fieldInputChange) return null;
@@ -100,7 +106,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    //this.firstChange = false
+    console.log( this.dataType, this.dropdownList);
     this.filteredOptions$ = of(this.dropdownList);
   }
 

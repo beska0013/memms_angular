@@ -7,6 +7,10 @@
   align-items: flex-start;
   position: relative;
   padding: 0 $space-4 0 0;
+  .input-wrapper{
+    @include flex(between);
+    width: 100%;
+    position: relative;
     input{
       @include square(100%);
       @include fieldFont;
@@ -21,15 +25,29 @@
       &:hover{
         border: 1px solid #d0d0d0;
       }
-    &#cnt_percentComplete {
-      & + span {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        translate: -200% -10%;
+      &#cnt_percentComplete {
+        & + span {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          translate: -200% -10%;
+        }
       }
     }
+    .select_chevron{
+      position: absolute;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 6px 6px 6px;
+      translate: -50% 0;
+      border-color: transparent transparent #a6a6a6 transparent;
+      &.closed{rotate: 180deg;}
+      &.opened{rotate: 0deg;}
+    }
   }
+
 
 
 }

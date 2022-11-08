@@ -48,26 +48,26 @@ export class FmTagsComponent implements OnInit, OnDestroy {
 
   disabled = false;
   tooltip:string;
-
+  sectuionLockSubscription$:Subscription;
+  $taglistItems:Observable<any>;
   sectionLock = this.customFmSrv.SeessionLogFieldTypes()
     .pipe(
       map(res => res.find(item => item.Field_type === this.listName && item?.sessionId !== this.appSrv.getSessionId())),
       switchMap( res => !!res ? this.lockSection(res) : this.unlockSection())
     )
-  sectuionLockSubscription$:Subscription
 
-  $taglistItems:Observable<any>
 
-//TODO fix cascade with search scope
+
   onSearchScopeChange(event) {
     const chosenOrg = this.organizations.find(item => item.ID === event.value);
-    this.$taglistItems = this.appSrv.getListByFilter(this.listName, ['ID', 'Title'], 500, `OrganizationId eq ${chosenOrg.ID}`)
+    const filterQuery = !!chosenOrg ? `OrganizationId eq ${chosenOrg.ID}` : '';
+
+    this.$taglistItems = this.appSrv.getListByFilter(this.listName, ['ID', 'Title'], 500, filterQuery)
       .pipe(map(res =>  res['value']));
     this.cdr.markForCheck();
   }
   onInputStart = () => this.customFmSrv.createSessionLog(this.listName);
   onTagValueChange(tagList){
-    console.log(tagList);
     const tags = !!tagList ? tagList.reverse().reduce((acc, t)=> acc.ids ?
                   { ids: `${acc.ids}|${t.ID}` , title: `${acc.title}|${t.Title}`} :
                   { ids: `${t.ID}` , title: `${t.Title}` }, {}) : null

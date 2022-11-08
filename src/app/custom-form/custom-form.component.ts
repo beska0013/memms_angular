@@ -262,8 +262,6 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     this.form.controls.statusReasonInputFmControl
       .setValue(this.formData.statusReason
         .find(item => item.ID === this.formData.form.StatusReasonId).Title);
-
-
   }
 
   private initGeneralTabsValues(){
@@ -290,12 +288,6 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
       .setValue(this.formData.form.Project_x0020_Start_x0020_Date ? parseISO(this.formData.form.Project_x0020_Start_x0020_Date) : this.formData.form.Project_x0020_Start_x0020_Date)
   }
 
-  private genTabhandler(){
-    // this.generalTabFmControls.highLevelGoal.valueChanges.subscribe(res=>{
-    //   console.log(res);
-    // })
-  }
-
 
   private calcAreaPathId(){
     const chBoundShadow = [this.formData.form.CHOrganizationId]
@@ -308,18 +300,19 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
   }
 
   private onOrgChange(data:{type:string, value:number}){
-    if(data.value === -1) return this.resetSearchScrope();
-
+    const org = this.formData.organizations.find(item => item.ID === data.value);
+    return !!org ? this.resetSearchScrope(org.Title)  : this.resetSearchScrope('All')
   }
 
-  private resetSearchScrope(){
-    this.areaSearchScope.setValue('All');
-    this.tagSearchScope.setValue('All');
-    this.revieContextSearchScope.setValue('All');
-    this.teamSearchScope.setValue('All');
-    this.stakeholdeSearchScope.setValue('All');
-    this.notificationsSearchScope.setValue('All');
+  private resetSearchScrope(val:string){
+    this.areaSearchScope.setValue(val);
+    this.tagSearchScope.setValue(val);
+    this.revieContextSearchScope.setValue(val);
+    this.teamSearchScope.setValue(val);
+    this.stakeholdeSearchScope.setValue(val);
+    this.notificationsSearchScope.setValue(val);
   }
+
 
    tabsHandler(i:number){
     this.tabs.forEach((tab,index ) => {
@@ -363,7 +356,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     this.initNotificationsSection();
     this.initGeneralTabsValues();
 
-    this.genTabhandler();
+
 
     for (const key in this.form.controls) {
       this.form.controls[key].valueChanges.subscribe(res => {

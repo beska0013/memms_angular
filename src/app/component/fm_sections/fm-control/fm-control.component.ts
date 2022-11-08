@@ -45,14 +45,10 @@ export class FmControlComponent implements OnInit {
   dataTypes = new ControlDataTypes();
   priorityGroup = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   prioritySubGroup = ['A', 'B', 'C'];
-
+  orgLastOption = {ID:-1,Id:-1, Title:'(None)'}
 
   onFieldChange(event){
-    console.log('line 51', event);
-
     if(this.formData[event.type] === event.value) return null
-    //console.log('onFieldChange',event);
-   // console.log(event.type, this.formData[event.type]);
     if(event.type === 'StatusId'){
       this.statusFieldsCascade(event.value)
     }
@@ -62,12 +58,11 @@ export class FmControlComponent implements OnInit {
   private statusFieldsCascade(statusId:number){
     this.statusReasonList = this.statusReason.filter(item => item.StatusId === statusId);
     //this.cntSectionFmControls.StatusReasonSelect.reset()
-
   }
 
 
   ngOnInit(): void {
-    this.organizations.push({ID:-1,Id:-1, Title:'(None)'})
+    //this.organizations.push({ID:-1,Id:-1, Title:'(None)'})
     //console.log(this.organizations);
     this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
 

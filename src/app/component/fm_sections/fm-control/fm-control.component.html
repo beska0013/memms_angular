@@ -9,7 +9,8 @@
                              [labelFor]="'cnt_organization'"
                              [title]="'Control Organization'"
                              [fmControl]="cntSectionFmControls.OrgSelect"
-                             [dropdownList]="organizations"></app-searchable-dropdown>
+                             [dropdownList]="organizations"
+                             [lastOption]="orgLastOption"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.ownerId"

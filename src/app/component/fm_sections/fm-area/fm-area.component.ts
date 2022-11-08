@@ -36,7 +36,7 @@ export class FmAreaComponent implements OnInit {
 
   onSearchScopeChange(event){
 
-    const chosenOrgId = this.organizations.find(item => item.ID === event.value).ID;
+    const chosenOrgId = this.organizations.find(item => item.ID === event.value);
     //TODO fix search scope effect on area list
     // this.$areaListItems = this.srv.getListByFilter(this.listName,['ID','Title','CHPath'],500, `OrganizationId eq ${chosenOrgId}`)
     //                         .pipe(map( res => res['value']))

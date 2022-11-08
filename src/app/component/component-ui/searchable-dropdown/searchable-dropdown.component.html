@@ -23,6 +23,7 @@
       <nb-option *ngFor="let item of options" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>
+      <nb-option *ngIf="lastOption && options.length > 1" [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
     </nb-autocomplete>
   </ng-container>
   <ng-template #inputTemplate>

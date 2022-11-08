@@ -36,6 +36,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Input() fmControl!:any;
   @Input() dropdownList:any[];
   @Input() form:any[];
+  @Input() lastOption:{ID:number,Id:number, Title:string} = {ID:-1,Id:-1, Title: 'All'}
   @Output() output = new EventEmitter<{type: string, value: string | number}>()
 
   //when data loads first time
@@ -81,12 +82,10 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
       this.dataFirstChange = false;
       return null;
     }
-
     const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value )
-
     this.output.emit({
       type: this.dataType,
-      value: item ? item.ID ? item.Id : item : value
+      value: item ? item.ID : this.lastOption.ID
     })
 
   }
@@ -106,7 +105,6 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    console.log( this.dataType, this.dropdownList);
     this.filteredOptions$ = of(this.dropdownList);
   }
 

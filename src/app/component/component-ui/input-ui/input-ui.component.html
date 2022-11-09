@@ -4,7 +4,7 @@
   <h5 class="label-title" *ngIf="title">{{title}}</h5>
   <input [formControl]="inputControl"
          [id]="labelFor"
-         (focusin)="onFirstInput()"
+         (focusin)="onFocusin()"
          (change)="onFieldChange()"
          #input
          nbInput

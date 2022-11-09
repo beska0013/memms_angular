@@ -43,9 +43,11 @@ export class InputUiComponent implements OnInit,OnDestroy{
 
   @Output() output = new EventEmitter();
   @Output() onInputStart = new EventEmitter();
+  @Output() duringInput = new EventEmitter();
 
   tooltip:string;
   timeOutInterval:any;
+  firstInput = true;
   loading = this.customFmSrv.loading().pipe(
     //tap((res) => res ? this.inputControl.disable() : this.inputControl.enable())
   );
@@ -63,12 +65,14 @@ export class InputUiComponent implements OnInit,OnDestroy{
   $fmCntValSubscription:Subscription;
 
 
-  onFirstInput(){
+  onFocusin(){
     if(!this.inputControl) return null;
-    this.inputControl.valueChanges
-      .pipe(take(1))
-      .subscribe(() => this.onInputStart.emit(this.dataType))
+    this.inputControl.valueChanges.subscribe((res) => {
+        if(this.firstInput) this.onFirstinput()
+        this.duringInput.emit(res)
+      })
   }
+
 
   onFieldChange(){
     this.output.emit({
@@ -78,6 +82,10 @@ export class InputUiComponent implements OnInit,OnDestroy{
     clearTimeout(this.timeOutInterval);
   }
 
+  private onFirstinput(){
+    this.onInputStart.emit(this.dataType);
+    this.firstInput = false;
+  }
   private lockField = (res) => {
     this.inputControl.disable();
     this.tooltip = `Modyfing by ${res.Username}`;
@@ -97,7 +105,6 @@ export class InputUiComponent implements OnInit,OnDestroy{
               return res
         })): EMPTY
   }
-
   private onInActivity(){
    return this.timeOutInterval = setTimeout( () => this.inputRef.nativeElement.blur(), 3000)
   }

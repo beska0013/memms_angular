@@ -18,17 +18,15 @@ export class FmTitleComponent {
   constructor(private customFmSrv:CustomFormService) { }
 
   @Input() titleValue:string;
-  @Output() titleInput = new EventEmitter;
+  @Output() titleInput = new EventEmitter();
 
-  onTitleInput(title){
-    this.titleInput.emit(title)
-  }
+  onTitleInput = (title) => this.titleInput.emit(title)
 
-  onOutputChange = (event) => {
-    // this.customFmSrv.sessionLogDeleteHandler(event)
-  }
+
+  onOutputChange = (event) => this.customFmSrv.prjFormUpdateHandler(event)
 
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
+
 
 
 }

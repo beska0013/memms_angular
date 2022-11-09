@@ -100,9 +100,6 @@ export class FmControlComponent implements OnInit {
     this.statusFieldsCascade(this.formData.StatusId);
 
 
-    this.statusReasonList$.subscribe(res => {
-      console.log(res);
-    })
   }
 
 

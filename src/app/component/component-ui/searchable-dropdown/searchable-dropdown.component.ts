@@ -54,7 +54,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value )
     this.output.emit({
       type: this.dataType,
-      value: item ? item.ID : this.lastOption.ID
+      value: !!item ? item.ID : this.lastOption ? this.lastOption.ID: null
     })
 
   }

@@ -46,6 +46,7 @@ export class FmTagsComponent implements OnInit, OnDestroy {
 
   @Output() searchScopeOutput = new EventEmitter<{orgId:number, title: string}>();
 
+  searchScopeLastOption = {ID: 0,Id: 0, Title:'All'};
   disabled = false;
   tooltip:string;
   sectuionLockSubscription$:Subscription;
@@ -60,6 +61,7 @@ export class FmTagsComponent implements OnInit, OnDestroy {
 
   onSearchScopeChange(event) {
     const chosenOrg = this.organizations.find(item => item.ID === event.value);
+
     const filterQuery = !!chosenOrg ? `OrganizationId eq ${chosenOrg.ID}` : '';
 
     this.$taglistItems = this.appSrv.getListByFilter(this.listName, ['ID', 'Title'], 500, filterQuery)

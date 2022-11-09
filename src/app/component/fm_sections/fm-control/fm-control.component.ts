@@ -56,7 +56,6 @@ export class FmControlComponent implements OnInit {
   dataFirstChange = true;
 
   onFieldChange(event){
-    console.log(event);
     if(event.type === 'StatusId'){
       this.statusFieldsCascade(event.value);
     }
@@ -66,14 +65,13 @@ export class FmControlComponent implements OnInit {
 
     this.output.emit(event)
   }
-//TODO fix cascade between status and status_reason
+
   private statusFieldsCascade(statusId:number){
     this.statusReasonList$ = of(this.statusReason)
       .pipe(map((sts) => sts.filter(item => item.StatusId === statusId )))
    !this.dataFirstChange ? this.cntSectionFmControls.StatusReasonSelect.setValue('(None)'): null;
     this.dataFirstChange = false;
   }
-
   private onOrgChange(orgId:number){
     if(orgId < 0) return this.noOrgValueForHumanRrecource();
     this.humanResource$ = this.appSrv.getListByFilter('ProjectHumanResources', ['ID','Title'], 320, `OrganizationId eq ${orgId}`)

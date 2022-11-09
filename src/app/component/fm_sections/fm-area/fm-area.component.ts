@@ -24,6 +24,7 @@ export class FmAreaComponent implements OnInit {
   @Input() labelFor!:any;
   @Input() listName!:any;
 
+  searchScopeLastOption = {ID: 0,Id: 0, Title:'All'};
   $areaListItems:Observable<any>;
   CHAreaPath = 'CHOrganizationBoundShadow:CH1BoundShadow:CH2BoundShadow:CH3BoundShadow:CH4BoundShadow:CH5BoundShadow:CH6BoundShadow:CH7BoundShadow:CH8BoundShadow:CH9BoundShadow:CH10BoundShadow'
 

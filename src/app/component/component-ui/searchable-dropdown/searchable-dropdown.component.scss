@@ -14,16 +14,17 @@
     input{
       @include square(100%);
       @include fieldFont;
-      max-width: 100%!important;
+      max-width: unset!important;
       border-radius: 0;
-      border: 1px solid #000000;
+      border: 1px solid;
+      border-color:#000000!important;
       background-color: transparent;
       &::placeholder{ @include fieldFont;}
       &:-ms-input-placeholder{ @include fieldFont;}
       &::-ms-input-placeholder{ @include fieldFont;}
-
       &:hover{
-        border: 1px solid #d0d0d0;
+        border: 1px solid;
+        border-color:#d0d0d0!important;
       }
       &#cnt_percentComplete {
         & + span {

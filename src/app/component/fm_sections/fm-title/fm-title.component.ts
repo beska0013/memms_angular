@@ -19,8 +19,15 @@ export class FmTitleComponent {
 
   @Input() titleValue:string;
   @Output() titleInput = new EventEmitter();
+  warningMessage = false;
+  titleMaxLength = 100;
+  titleCurrentLength:number;
 
-  onTitleInput = (title) => this.titleInput.emit(title)
+  onTitleInput = (title) => {
+    this.warningMessage = title.length > this.titleMaxLength
+    this.titleCurrentLength = title.length
+    this.titleInput.emit(title)
+  }
 
 
   onOutputChange = (event) => this.customFmSrv.prjFormUpdateHandler(event)

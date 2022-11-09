@@ -4,24 +4,21 @@
   </div>
 
   <div class="sec_content">
-<!--    <div class="title_input_wrap">-->
-<!--      <input type="text"-->
-<!--             data-type="ProjectTitle"-->
-<!--             nbInput-->
-<!--             (change)="onChange()"-->
-<!--             [ngModel]="titleValue"-->
-<!--             (ngModelChange)="onTitleInput($event)">-->
-<!--    </div>-->
-<!--    <p id="titleWarning" class="input-warning"></p>-->
-    <app-input-ui (output)="onOutputChange($event)"
-                  (onInputStart)="inputStart($event)"
-                  [dataType]="'ProjectTitle'"
-                  [initialValue]="titleValue"
-                  (duringInput)="onTitleInput($event)"
-                  [labelFor]="'ProjectTitle'"></app-input-ui>
-    <p id="titleWarning" class="input-warning"></p>
-  </div>
+    <div class="title_input_wrap">
+      <app-input-ui (output)="onOutputChange($event)"
+                    (onInputStart)="inputStart($event)"
+                    [dataType]="'ProjectTitle'"
+                    [initialValue]="titleValue"
+                    (duringInput)="onTitleInput($event)"
+                    [labelFor]="'ProjectTitle'"></app-input-ui>
+      <p class="input-warning" *ngIf="warningMessage">
+        Title maximum lenght: {{titleMaxLength}}
+        <br>
+        Current length: {{titleCurrentLength}}
+      </p>
+     </div>
 
+  </div>
 
 
 </section>

@@ -1,8 +1,8 @@
 
 @mixin fieldFont{
-  font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
-  font-size: 13px;
-  font-weight: 400;
+  font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif!important;
+  font-size: 13px!important;
+  font-weight: 400!important;
 }
 
 @mixin flex($spacing : none, $direction : row){

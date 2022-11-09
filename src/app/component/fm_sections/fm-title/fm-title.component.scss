@@ -6,20 +6,19 @@
 section{
   .sec_content{
     .title_input_wrap{
-      @include size(100%, 80%);
-      @include flex(center);
+      @include size(100%, 100%);
+      @include flex(start);
       position: relative;
+      gap: 1rem;
+      app-input-ui{width: 80%}
+
+      .input-warning{
+        color: #ff0000;
+        font-size: 14px;
+        font-weight: 700;
+      }
     }
-    //input{
-    //  @include fm_input;
-    //  &:hover{
-    //    border: 1px solid #d0d0d0;
-    //  }
-    //  &.warning{
-    //    border: 2px solid #ff0000;
-    //  }
-    //
-    //}
-    app-input-ui{width: 100%}
+
+
   }
 }

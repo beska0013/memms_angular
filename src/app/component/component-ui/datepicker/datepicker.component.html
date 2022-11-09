@@ -2,10 +2,9 @@
        class="inputLabel"
        nbTooltip="{{tooltip}}"
        [nbTooltipDisabled]="!(!!tooltip)">
-  <span class="input-box">
+  <div class="input-box">
       <h6 class="label-title" *ngIf="title">{{title}}</h6>
       <input [id]="labelfor"
-
              [formControl]="inputControl"
              [fieldSize]="'tiny'"
              (focusin)="onFirstInput()"
@@ -14,7 +13,7 @@
              nbInput
              #dateInput
              [nbDatepicker]="datepicker">
-  </span>
+  </div>
 
 
       <nb-datepicker  #datepicker (dateChange)="onDateChange($event)"></nb-datepicker>

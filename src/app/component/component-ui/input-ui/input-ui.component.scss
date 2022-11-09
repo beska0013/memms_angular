@@ -4,20 +4,32 @@ label{
   @include flex(start);
   width: 100%;
   position: relative;
-  //margin:$space-4 0 0 0;
   .label-title{
     color: #000;
     font-weight: 700;
     font-size: 13px;
     font-family: "Verdana",sans-serif;
     margin: 0 1em 0 0;
-    width: 157px;
+    width: 180px;
     text-align: end;
     white-space: nowrap;
   }
   input{
-    width: calc(100% - 157px);
+    @include square(100%);
+    @include fieldFont;
+    width: calc(100% - 180px);
     max-width: unset!important;
+    border-radius: 0!important;;
+    border: 1px solid!important;
+    border-color: #000000!important;
+    background-color: transparent;
+    &::placeholder{ @include fieldFont;}
+    &:-ms-input-placeholder{ @include fieldFont;}
+    &::-ms-input-placeholder{ @include fieldFont;}
+    &:hover{
+      border: 1px solid!important;
+      border-color: #d0d0d0!important;
+    }
   }
   .loader_wrapper{
     @include square(20px);

@@ -10,28 +10,28 @@
                              [title]="'Control Organization'"
                              [fmControl]="cntSectionFmControls.OrgSelect"
                              [dropdownList]="organizations"
-                             [lastOption]="orgLastOption"></app-searchable-dropdown>
+                             [lastOption]="lastSelectOption"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.ownerId"
                              [labelFor]="'cnt_owner'"
                              [title]="'Owner'"
                              [fmControl]="cntSectionFmControls.OwnerSelect"
-                             [dropdownList]="humanResource"></app-searchable-dropdown>
+                             [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.mngId"
                              [labelFor]="'cnt_manager'"
                              [title]="'Manager'"
                              [fmControl]="cntSectionFmControls.ManagerSelect"
-                             [dropdownList]="humanResource"></app-searchable-dropdown>
+                             [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.leadId"
                              [labelFor]="'cnt_lead'"
                              [title]="'Lead'"
                              [fmControl]="cntSectionFmControls.LeadSelect"
-                             [dropdownList]="humanResource"></app-searchable-dropdown>
+                             [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="tinyField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.prGroup"
@@ -58,6 +58,7 @@
                              [labelFor]="'cnt_status'"
                              [title]="'Status'"
                              [fmControl]="cntSectionFmControls.StatusSelect"
+                             [lastOption]="lastSelectOption"
                              [dropdownList]="status"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
@@ -65,7 +66,8 @@
                              [labelFor]="'cnt_statusReason'"
                              [title]="'Status Reason'"
                              [fmControl]="cntSectionFmControls.StatusReasonSelect"
-                             [dropdownList]="statusReasonList"></app-searchable-dropdown>
+                             [lastOption]="lastSelectOption"
+                             [dropdownList]="statusReasonList$ | async"></app-searchable-dropdown>
   </div>
 </section>
 

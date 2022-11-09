@@ -140,7 +140,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     PrioritySubGrSelect: this.form.controls.prioritySubGrInputFmControl,
     PercentComplete: this.form.controls.percentCompleteInputFmControl,
     StatusSelect: this.form.controls.statusInputFmControl,
-    StatusReasonSelect: this.form.controls.statusInputFmControl,
+    StatusReasonSelect: this.form.controls.statusReasonInputFmControl,
 };
 
   // generalTabFmControls = {

@@ -25,7 +25,7 @@ import {environment} from "../../../../environments/environment";
 })
 export class SearchableDropdownComponent implements OnInit, OnChanges {
 
-  constructor(private cdr:ChangeDetectorRef) { }
+  constructor() { }
 
   @ViewChild('autoInput') input;
 
@@ -36,45 +36,13 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Input() fmControl!:any;
   @Input() dropdownList:any[];
   @Input() form:any[];
-  @Input() lastOption:{ID:number,Id:number, Title:string} = {ID:-1,Id:-1, Title: 'All'}
+  @Input() lastOption:{ID:number,Id:number, Title:string}
   @Output() output = new EventEmitter<{type: string, value: string | number}>()
 
   //when data loads first time
   dataFirstChange = true;
   closeState = true;
-
-  inputControl:FormControl;
   filteredOptions$: Observable<string[]>;
-
-  onChange(){
-    this.closeState = true;
-    //console.log(this.input.nativeElement.value);
-    !!this.input.nativeElement.value ?
-    this.onFieldstateChange(this.input.nativeElement.value, environment.fieldInputChange) :
-    null
-  }
-
-  onInput(){
-    this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value);
-  }
-
-
-  onSelectionChange(event) {
-   // console.log('onSelectionChange', event);
-    if(!(!!event)) return null
-    this.filteredOptions$ = this.getFilteredOptions(event);
-    this.closeState = true;
-    this.onFieldstateChange(event, environment.fieldSelectChange);
-
-  }
-
-  onFirstInput(){
-      this.closeState = false;
-  }
-  onFocusout(){
-    this.closeState =  true;
-  }
-
 
   private onFieldstateChange(value:any, changeType:string){
     if(changeType === environment.fieldInputChange) return null;
@@ -82,6 +50,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
       this.dataFirstChange = false;
       return null;
     }
+
     const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value )
     this.output.emit({
       type: this.dataType,
@@ -95,7 +64,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     return this.dropdownList.filter(optionValue =>
       optionValue.Title ?
         optionValue.Title.toLowerCase().includes(filterValue):
-         optionValue.toLowerCase().includes(filterValue));
+        optionValue.toLowerCase().includes(filterValue));
   }
 
   private getFilteredOptions(value: string): Observable<string[]> {
@@ -104,7 +73,35 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     );
   }
 
+  onChange(){
+    this.closeState = true;
+    !!this.input.nativeElement.value ?
+    this.onFieldstateChange(this.input.nativeElement.value, environment.fieldInputChange) :
+    null
+  }
+  onInput(){
+    this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value);
+  }
+  onSelectionChange(event) {
+    if(!(!!event)) return null
+    this.filteredOptions$ = this.getFilteredOptions(event);
+    this.closeState = true;
+    this.onFieldstateChange(event, environment.fieldSelectChange);
+
+  }
+  onFirstInput(){
+      this.closeState = false;
+  }
+  onFocusout(){
+    this.closeState =  true;
+  }
+  trackBy =(index, item) => index
+
+
+
   ngOnInit(): void {
+
+
     this.filteredOptions$ = of(this.dropdownList);
   }
 
@@ -113,8 +110,6 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     for (let propName in changes) {
       if(propName === 'dropdownList'){
         this.filteredOptions$ = of(this.dropdownList);
-       // console.log(propName);
-        //this.cdr.markForCheck();
       }
     }
   }

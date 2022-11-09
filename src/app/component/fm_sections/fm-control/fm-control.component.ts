@@ -2,15 +2,17 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input, OnChanges,
+  Input,
   OnInit,
-  Output, SimpleChanges,
+  Output,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
 import {ControlDataTypes} from "../../../../models/formDataTypes";
+import {AppService} from "../../../app.service";
+import {filter, map, Observable, of, tap} from "rxjs";
 
 
 
@@ -29,7 +31,10 @@ import {ControlDataTypes} from "../../../../models/formDataTypes";
   styleUrls: ['./fm-control.component.scss']
 })
 export class FmControlComponent implements OnInit {
-  constructor(private cdr:ChangeDetectorRef) { }
+  constructor(
+    private cdr:ChangeDetectorRef,
+    private appSrv: AppService
+  ) { }
 
   @Input() formData!: any
   @Input() humanResource!:any;
@@ -39,33 +44,67 @@ export class FmControlComponent implements OnInit {
   @Input() cntSectionFmControls:any;
 
   @Output() output = new EventEmitter();
+  humanResource$:Observable<any>
+  statusReasonList$:Observable<any>;
 
-  statusReasonList:any[]
+  noOrgValueStr = '(Select an Organization)'
 
   dataTypes = new ControlDataTypes();
   priorityGroup = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   prioritySubGroup = ['A', 'B', 'C'];
-  orgLastOption = {ID:-1,Id:-1, Title:'(None)'}
+  lastSelectOption = {ID:-1,Id:-1, Title:'(None)'};
+  dataFirstChange = true;
 
   onFieldChange(event){
-    if(this.formData[event.type] === event.value) return null
+    console.log(event);
     if(event.type === 'StatusId'){
-      this.statusFieldsCascade(event.value)
+      this.statusFieldsCascade(event.value);
     }
+    if(event.type === 'OrganizationId'){
+      this.onOrgChange(event.value)
+    }
+
     this.output.emit(event)
   }
 //TODO fix cascade between status and status_reason
   private statusFieldsCascade(statusId:number){
-    this.statusReasonList = this.statusReason.filter(item => item.StatusId === statusId);
-    //this.cntSectionFmControls.StatusReasonSelect.reset()
+    this.statusReasonList$ = of(this.statusReason)
+      .pipe(map((sts) => sts.filter(item => item.StatusId === statusId )))
+   !this.dataFirstChange ? this.cntSectionFmControls.StatusReasonSelect.setValue('(None)'): null;
+    this.dataFirstChange = false;
   }
 
+  private onOrgChange(orgId:number){
+    if(orgId < 0) return this.noOrgValueForHumanRrecource();
+    this.humanResource$ = this.appSrv.getListByFilter('ProjectHumanResources', ['ID','Title'], 320, `OrganizationId eq ${orgId}`)
+                          .pipe(map(res =>  res['value']));
+   this.resetHumanRrecourceInputs();
+  }
+  private noOrgValueForHumanRrecource(){
+    this.cntSectionFmControls.OwnerSelect.setValue(this.noOrgValueStr);
+    this.cntSectionFmControls.LeadSelect.setValue(this.noOrgValueStr);
+    this.cntSectionFmControls.ManagerSelect.setValue(this.noOrgValueStr);
+  }
+  private resetHumanRrecourceInputs(){
+    if(
+      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr ||
+      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr ||
+      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr
+    ){
+      this.cntSectionFmControls.OwnerSelect.reset();
+      this.cntSectionFmControls.LeadSelect.reset();
+      this.cntSectionFmControls.ManagerSelect.reset();
+    }
+  }
 
   ngOnInit(): void {
-    //this.organizations.push({ID:-1,Id:-1, Title:'(None)'})
-    //console.log(this.organizations);
-    this.statusReasonList = this.statusReason.filter(item => item.StatusId === this.formData.StatusId)
+    this.humanResource$ = of(this.humanResource);
+    this.statusFieldsCascade(this.formData.StatusId);
 
+
+    this.statusReasonList$.subscribe(res => {
+      console.log(res);
+    })
   }
 
 

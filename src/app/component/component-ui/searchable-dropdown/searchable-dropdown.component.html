@@ -17,10 +17,8 @@
              [nbAutocomplete]="auto"/>
       <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
     </div>
-
-
     <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
-      <nb-option *ngFor="let item of options" [value]="item['Title'] || item">
+      <nb-option *ngFor="let item of options;trackBy:trackBy" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>
       <nb-option *ngIf="lastOption && options.length > 1" [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
@@ -28,8 +26,6 @@
   </ng-container>
   <ng-template #inputTemplate>
     <div class="input-wrapper">
-
-
     <input [formControl]="fmControl"
            [fieldSize]="'tiny'"
            (change)="onChange()"

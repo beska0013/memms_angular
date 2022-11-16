@@ -14,8 +14,9 @@
 
 
     <app-searchable-dropdown class="areaField"
-                             [dataType]="CHAreaPath"
                              (output)="onFieldChange($event)"
+                             [allowAdd]="true"
+                             [dataType]="CHAreaPath"
                              [fmControl]="areaFmControl"
                              [labelFor]="'areaPath'"
                              [title]="'Area'"

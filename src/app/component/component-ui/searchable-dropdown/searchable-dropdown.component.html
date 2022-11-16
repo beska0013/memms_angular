@@ -1,5 +1,18 @@
 <label [for]="labelFor" class="inputLabel">
-  <h6> {{title}}</h6>
+  <div class="input-title">
+    <h6>{{title}}</h6>
+    <button *ngIf="addItemState"
+            (click)="onAddNewItem()"
+            nbTooltip="{{tooltip}}"
+            class="addBtn"
+            type="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 9 9" fill="none">
+        <rect width="9" height="9" rx="4.5" fill="#71CEFF"/>
+        <path d="M4.18146 6.60227V2.85227H4.81783V6.60227H4.18146ZM2.62464 5.04545V4.40909H6.37465V5.04545H2.62464Z" fill="white"/>
+      </svg>
+    </button>
+  </div>
+
 <!--  <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">-->
     <div class="input-wrapper">
       <input [formControl]="fmControl"
@@ -17,6 +30,7 @@
              placeholder="Enter value"
              [nbAutocomplete]="auto"/>
       <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
+
     </div>
     <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
       <nb-option *ngFor="let item of filteredOptions$ | async;trackBy:trackBy" [value]="item['Title'] || item">

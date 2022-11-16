@@ -27,6 +27,7 @@ input:focus{
 section{
      @include flex(between);
      @include min-size($section-min-height, 100%);
+     height: 100%;
      align-items: stretch;
      border-bottom: $section-border;
      .sec_title{
@@ -70,6 +71,7 @@ section{
 
 .wrapper{
   @include flex(start);
+  align-items: stretch;
   & > * {
     flex: 1;
     &:nth-child(2){

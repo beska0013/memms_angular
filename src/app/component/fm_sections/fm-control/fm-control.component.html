@@ -13,6 +13,7 @@
                              [lastOption]="lastSelectOption"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             [allowAdd]="true"
                              [dataType]="dataTypes.ownerId"
                              [labelFor]="'cnt_owner'"
                              [title]="'Owner'"
@@ -21,6 +22,7 @@
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             [allowAdd]="true"
                              [dataType]="dataTypes.mngId"
                              [labelFor]="'cnt_manager'"
                              [title]="'Manager'"
@@ -29,6 +31,7 @@
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             [allowAdd]="true"
                              [dataType]="dataTypes.leadId"
                              [labelFor]="'cnt_lead'"
                              [title]="'Lead'"

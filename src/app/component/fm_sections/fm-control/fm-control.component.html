@@ -17,6 +17,7 @@
                              [labelFor]="'cnt_owner'"
                              [title]="'Owner'"
                              [fmControl]="cntSectionFmControls.OwnerSelect"
+                             [lastOption]="lastSelectOption"
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
@@ -24,6 +25,7 @@
                              [labelFor]="'cnt_manager'"
                              [title]="'Manager'"
                              [fmControl]="cntSectionFmControls.ManagerSelect"
+                             [lastOption]="lastSelectOption"
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
@@ -31,6 +33,7 @@
                              [labelFor]="'cnt_lead'"
                              [title]="'Lead'"
                              [fmControl]="cntSectionFmControls.LeadSelect"
+                             [lastOption]="lastSelectOption"
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="tinyField"
                              (output)="onFieldChange($event)"

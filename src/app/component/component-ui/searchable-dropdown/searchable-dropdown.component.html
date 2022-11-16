@@ -1,9 +1,10 @@
 <label [for]="labelFor" class="inputLabel">
   <h6> {{title}}</h6>
-  <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">
+<!--  <ng-container *ngIf="filteredOptions$ | async as options;else inputTemplate">-->
     <div class="input-wrapper">
       <input [formControl]="fmControl"
              [fieldSize]="'tiny'"
+             (click)="onInputClick()"
              (focusin)="onFirstInput()"
              (focusout)="onFocusout()"
              (input)="onInput()"
@@ -18,23 +19,25 @@
       <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
     </div>
     <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
-      <nb-option *ngFor="let item of options;trackBy:trackBy" [value]="item['Title'] || item">
+      <nb-option *ngFor="let item of filteredOptions$ | async;trackBy:trackBy" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>
-      <nb-option *ngIf="lastOption && options.length > 1" [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
+      <nb-option *ngIf="lastOption" [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
     </nb-autocomplete>
-  </ng-container>
+<!--  </ng-container>-->
+
   <ng-template #inputTemplate>
-    <div class="input-wrapper">
-    <input [formControl]="fmControl"
-           [fieldSize]="'tiny'"
-           (change)="onChange()"
-           [id]="labelFor"
-           nbInput
-           type="text"
-           placeholder="Enter value"/>
-    <span>%</span>
-    </div>
+<!--    <div class="input-wrapper">-->
+<!--    <input [formControl]="fmControl"-->
+<!--           [fieldSize]="'tiny'"-->
+<!--           (change)="onChange()"-->
+<!--           [id]="labelFor"-->
+<!--           nbInput-->
+<!--           type="text"-->
+<!--           placeholder="Enter value"/>-->
+<!--      <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>-->
+<!--&lt;!&ndash;    <span>%</span>&ndash;&gt;-->
+<!--    </div>-->
   </ng-template>
 
 </label>

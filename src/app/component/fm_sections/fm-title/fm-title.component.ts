@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {InputUiComponent} from "../../component-ui/input-ui/input-ui.component";
@@ -11,7 +11,7 @@ import {CustomFormService} from "../../../custom-form/custom-form.service";
   standalone: true,
   imports: [CommonModule, FormsModule, NebularModule, InputUiComponent],
   templateUrl: './fm-title.component.html',
-  styleUrls: ['./fm-title.component.scss']
+  styleUrls: ['./fm-title.component.scss'],
 })
 export class FmTitleComponent {
 

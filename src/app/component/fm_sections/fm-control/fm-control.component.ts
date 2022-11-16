@@ -12,7 +12,7 @@ import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
 import {ControlDataTypes} from "../../../../models/formDataTypes";
 import {AppService} from "../../../app.service";
-import {filter, map, Observable, of, tap} from "rxjs";
+import {EMPTY, filter, map, Observable, of, tap} from "rxjs";
 
 
 
@@ -82,17 +82,18 @@ export class FmControlComponent implements OnInit {
     this.cntSectionFmControls.OwnerSelect.setValue(this.noOrgValueStr);
     this.cntSectionFmControls.LeadSelect.setValue(this.noOrgValueStr);
     this.cntSectionFmControls.ManagerSelect.setValue(this.noOrgValueStr);
+    this.cntSectionFmControls.OwnerSelect.disable();
+    this.cntSectionFmControls.LeadSelect.disable();
+    this.cntSectionFmControls.ManagerSelect.disable();
+    this.humanResource$ = EMPTY;
   }
   private resetHumanRrecourceInputs(){
-    if(
-      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr ||
-      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr ||
-      this.cntSectionFmControls.OwnerSelect.value === this.noOrgValueStr
-    ){
-      this.cntSectionFmControls.OwnerSelect.reset();
-      this.cntSectionFmControls.LeadSelect.reset();
-      this.cntSectionFmControls.ManagerSelect.reset();
-    }
+    this.cntSectionFmControls.OwnerSelect.reset();
+    this.cntSectionFmControls.LeadSelect.reset();
+    this.cntSectionFmControls.ManagerSelect.reset();
+    this.cntSectionFmControls.OwnerSelect.enable();
+    this.cntSectionFmControls.LeadSelect.enable();
+    this.cntSectionFmControls.ManagerSelect.enable();
   }
 
   ngOnInit(): void {

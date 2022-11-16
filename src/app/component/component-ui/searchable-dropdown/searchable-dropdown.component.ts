@@ -11,7 +11,7 @@ import {
 import {CommonModule} from '@angular/common';
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NbAutocompleteModule, NbComponentSize, NbInputModule} from "@nebular/theme";
-import {map, Observable, of} from "rxjs";
+import {EMPTY, map, Observable, of} from "rxjs";
 import {environment} from "../../../../environments/environment";
 
 
@@ -36,13 +36,14 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Input() fmControl!:any;
   @Input() dropdownList:any[];
   @Input() form:any[];
-  @Input() lastOption:{ID:number,Id:number, Title:string}
+  @Input() lastOption:{ID:number,Id:number, Title:string};
   @Output() output = new EventEmitter<{type: string, value: string | number}>()
 
   //when data loads first time
   dataFirstChange = true;
   closeState = true;
-  filteredOptions$: Observable<string[]>;
+  filteredOptions$: Observable<string[] | never>;
+  private areaDataType = 'CHOrganizationBoundShadow:CH1BoundShadow:CH2BoundShadow:CH3BoundShadow:CH4BoundShadow:CH5BoundShadow:CH6BoundShadow:CH7BoundShadow:CH8BoundShadow:CH9BoundShadow:CH10BoundShadow'
 
   private onFieldstateChange(value:any, changeType:string){
     if(changeType === environment.fieldInputChange) return null;
@@ -89,11 +90,18 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     this.onFieldstateChange(event, environment.fieldSelectChange);
 
   }
+  onInputClick(){
+    this.dataType !== this.areaDataType ? this.filteredOptions$ = of(this.dropdownList): null;
+    console.log('this.dropdownList',this.dropdownList);
+  }
   onFirstInput(){
       this.closeState = false;
+
+
   }
   onFocusout(){
     this.closeState =  true;
+
   }
   trackBy =(index, item) => index
 

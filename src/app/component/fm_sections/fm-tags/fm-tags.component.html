@@ -23,7 +23,9 @@
 
     </div>
     <ng-template [ngIf]="disabled">
-      <div class="disabled-overlay"></div>
+      <div class="disabled-overlay"
+           nbTooltip="{{tooltip}}"
+           [nbTooltipDisabled]="!(!!tooltip)"></div>
     </ng-template>
   </section>
 

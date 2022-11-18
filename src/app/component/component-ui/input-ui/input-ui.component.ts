@@ -47,7 +47,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
 
   tooltip:string;
   timeOutInterval:any;
-  firstInput = true;
+  firstInput = true; // check for first charachter input;
   loading = this.customFmSrv.loading().pipe(
     //tap((res) => res ? this.inputControl.disable() : this.inputControl.enable())
   );
@@ -87,6 +87,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
     this.onInputStart.emit(this.dataType);
     this.firstInput = false;
   }
+
   private lockField = (res) => {
     this.inputControl.disable();
     this.tooltip = `Modyfing by ${res.Username}`;

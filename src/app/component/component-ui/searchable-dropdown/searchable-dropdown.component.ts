@@ -38,14 +38,16 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Input() fieldSize!:NbComponentSize;
   @Input() fmControl!:any;
   @Input() dropdownList:any[];
-  @Input() form:any[];
+  // @Input() form:any[];
   @Input() lastOption:{ID:number,Id:number, Title:string};
   @Output() output = new EventEmitter<{type: string, value: string | number}>();
+  @Output() onInputStart = new EventEmitter();
+  @Output() duringInput = new EventEmitter();
 
-  //when data loads first time
-  dataFirstChange = true;
+  dataFirstChange = true; // => when data loads first time
   closeState = true;
-
+  firstInput = true; // check for first charachter input;
+  sessionLogcreateState = false;
   filteredOptions$: Observable<string[] | never>;
   addItemState:boolean = false;
   // tooltip:string;
@@ -92,6 +94,13 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     );
   }
 
+  private onFirstinput(){
+    console.log('sessionLogcreateState', !this.sessionLogcreateState);
+    !this.sessionLogcreateState ? this.onInputStart.emit(this.dataType): null;
+    this.firstInput = false;
+    //this.sessionLogcreateState = true;
+  }
+
   onChange(){
     this.closeState = true;
     !!this.input.nativeElement.value ?
@@ -120,12 +129,16 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
   onFocusIn(){
       this.closeState = false;
+      this.fmControl.valueChanges.subscribe(res =>{
+        if(this.firstInput) this.onFirstinput();
+        this.duringInput.emit(res);
 
+      })
 
   }
   onFocusout(){
     this.closeState =  true;
-
+    //this.sessionLogcreateState = false;
   }
   trackBy = (index, item) => index;
 
@@ -142,10 +155,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-
-
     this.filteredOptions$ = of(this.dropdownList);
-    // this.tooltip = `Add New ${this.title}`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

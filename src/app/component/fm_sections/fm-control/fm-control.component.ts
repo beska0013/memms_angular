@@ -55,7 +55,8 @@ export class FmControlComponent implements OnInit {
   prioritySubGroup = ['A', 'B', 'C'];
   lastSelectOption = {ID:-1,Id:-1, Title:'(None)'};
   dataFirstChange = true;
-
+  disabled = false;
+  tooltip:string;
   onFieldChange(event){
     if(event.type === this.dataTypes.sts){
       this.statusFieldsCascade(event.value);
@@ -65,6 +66,16 @@ export class FmControlComponent implements OnInit {
     }
     console.log('fm-control.onFieldChange',event);
     this.output.emit(event);
+  }
+  inputStart(event){
+    console.log(event);
+  }
+
+  private lockSection(res){
+    this.disabled = true;
+    this.tooltip = `Modyfing by ${res.Username}`;
+    this.cdr.markForCheck();
+    return EMPTY
   }
 
   private statusFieldsCascade(statusId:number){

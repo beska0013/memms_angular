@@ -5,6 +5,7 @@
   <div class="sec_content">
     <app-searchable-dropdown class="mediumField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.orgId"
                              [labelFor]="'cnt_organization'"
                              [title]="'Control Organization'"
@@ -13,6 +14,7 @@
                              [lastOption]="lastSelectOption"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [allowAdd]="true"
                              [dataType]="dataTypes.ownerId"
                              [labelFor]="'cnt_owner'"
@@ -22,6 +24,7 @@
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [allowAdd]="true"
                              [dataType]="dataTypes.mngId"
                              [labelFor]="'cnt_manager'"
@@ -31,6 +34,7 @@
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [allowAdd]="true"
                              [dataType]="dataTypes.leadId"
                              [labelFor]="'cnt_lead'"
@@ -41,6 +45,7 @@
 
     <app-searchable-dropdown class="tinyField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.prGroup"
                              [labelFor]="'cnt_priorityGr'"
                              [title]="'Priority Group'"
@@ -48,6 +53,7 @@
                              [dropdownList]="priorityGroup"></app-searchable-dropdown>
     <app-searchable-dropdown class="smallField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.prSubGroup"
                              [labelFor]="'cnt_prioritySubGr'"
                              [title]="'Priority Sub Group'"
@@ -55,6 +61,7 @@
                              [dropdownList]="prioritySubGroup"></app-searchable-dropdown>
     <app-searchable-dropdown class="smallField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.percent"
                              [labelFor]="'cnt_percentComplete'"
                              [title]="'Percent Complete'"
@@ -62,6 +69,7 @@
 
     <app-searchable-dropdown class="smallField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.sts"
                              [labelFor]="'cnt_status'"
                              [title]="'Status'"
@@ -70,6 +78,7 @@
                              [dropdownList]="status"></app-searchable-dropdown>
     <app-searchable-dropdown class="largeField"
                              (output)="onFieldChange($event)"
+                             (onInputStart)="inputStart($event)"
                              [dataType]="dataTypes.stsReason"
                              [labelFor]="'cnt_statusReason'"
                              [title]="'Status Reason'"
@@ -77,5 +86,8 @@
                              [lastOption]="lastSelectOption"
                              [dropdownList]="statusReasonList$ | async"></app-searchable-dropdown>
   </div>
+  <ng-template [ngIf]="disabled">
+    <div class="disabled-overlay"></div>
+  </ng-template>
 </section>
 

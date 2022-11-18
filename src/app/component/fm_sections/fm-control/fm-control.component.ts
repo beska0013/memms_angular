@@ -13,6 +13,7 @@ import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdow
 import {ControlDataTypes} from "../../../../models/formDataTypes";
 import {AppService} from "../../../app.service";
 import {EMPTY, filter, map, Observable, of, tap} from "rxjs";
+import {NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
 
 
 
@@ -56,13 +57,12 @@ export class FmControlComponent implements OnInit {
   dataFirstChange = true;
 
   onFieldChange(event){
-    if(event.type === 'StatusId'){
+    if(event.type === this.dataTypes.sts){
       this.statusFieldsCascade(event.value);
     }
-    if(event.type === 'OrganizationId'){
+    if(event.type === this.dataTypes.orgId){
       this.onOrgChange(event.value)
     }
-
     this.output.emit(event)
   }
 

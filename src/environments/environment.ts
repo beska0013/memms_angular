@@ -8,6 +8,8 @@ export const environment = {
   fieldSelectChange:'select_change',
 };
 
+export const NEW_HUMAN_RESOURCE_ITEM = 'Add New Human';
+export const ORGANIZATION_ID= 'OrganizationId';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

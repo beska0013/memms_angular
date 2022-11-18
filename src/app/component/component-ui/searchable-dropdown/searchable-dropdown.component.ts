@@ -12,7 +12,7 @@ import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import { NbComponentSize} from "@nebular/theme";
 import { map, Observable, of, tap} from "rxjs";
-import {environment} from "../../../../environments/environment";
+import {environment, NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
 
 
@@ -44,9 +44,11 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   //when data loads first time
   dataFirstChange = true;
   closeState = true;
+
   filteredOptions$: Observable<string[] | never>;
   addItemState:boolean = false;
-  tooltip:string;
+  // tooltip:string;
+  newItemModel:string;
   private areaDataType = 'CHOrganizationBoundShadow:CH1BoundShadow:CH2BoundShadow:CH3BoundShadow:CH4BoundShadow:CH5BoundShadow:CH6BoundShadow:CH7BoundShadow:CH8BoundShadow:CH9BoundShadow:CH10BoundShadow'
 
   private onFieldstateChange(value:any, changeType:string){
@@ -85,11 +87,11 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     null
   }
   onInput(){
+    this.newItemModel = this.input.nativeElement.value;
     this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value)
       .pipe(
         tap(list => {
           this.addItemState = this.allowAdd && list.length <= 0;
-
         })
       );
   }
@@ -115,8 +117,15 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
   trackBy =(index, item) => index
 
-  onAddNewItem(){
-    console.log(this.input.nativeElement.value);
+  onAddNewItem(event){
+    event.stopPropagation();
+    event.preventDefault();
+    return this.addItemState ?
+      this.output.emit({
+        type: NEW_HUMAN_RESOURCE_ITEM,
+        value: this.input.nativeElement.value
+      }) :
+      null
   }
 
 
@@ -124,7 +133,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
 
 
     this.filteredOptions$ = of(this.dropdownList);
-    this.tooltip = `Add New ${this.title}`;
+    // this.tooltip = `Add New ${this.title}`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

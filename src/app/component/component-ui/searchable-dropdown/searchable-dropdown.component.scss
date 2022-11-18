@@ -9,15 +9,15 @@
   padding: 0 $space-4 0 0;
   .input-title{
     @include flex(start);
-    .addBtn{
-      @include square(20px);
-      @include min-square(20px);
-      @include flex(center);
-      border-radius: 100%;
-      padding: 0;
-      margin: 0 .5rem;
-      cursor: pointer;
-    }
+    //.addBtn{
+    //  @include square(20px);
+    //  @include min-square(20px);
+    //  @include flex(center);
+    //  border-radius: 100%;
+    //  padding: 0;
+    //  margin: 0 .5rem;
+    //  cursor: pointer;
+    //}
   }
   .input-wrapper{
     @include flex(between);

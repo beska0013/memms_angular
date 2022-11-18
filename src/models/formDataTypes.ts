@@ -1,8 +1,9 @@
+import {NEW_HUMAN_RESOURCE_ITEM, ORGANIZATION_ID} from "../environments/environment";
 
 
 export class ControlDataTypes {
   constructor() {
-    this.orgId = 'OrganizationId';
+    this.orgId = ORGANIZATION_ID;
     this.ownerId ='OwnerId';
     this.mngId ='ProjectManagerId';
     this.leadId ='ProjectLeadId';
@@ -12,6 +13,8 @@ export class ControlDataTypes {
     this.sts ='StatusId';
     this.stsReason ='StatusReasonId';
     this.CHAreaPath ='CHAreaPath';
+    this.newHumanResourceItem = NEW_HUMAN_RESOURCE_ITEM;
+
   }
   readonly orgId:string
   readonly ownerId:string
@@ -23,6 +26,7 @@ export class ControlDataTypes {
   readonly sts:string
   readonly stsReason:string;
   readonly CHAreaPath:string;
+  readonly newHumanResourceItem:string;
 
 }
 

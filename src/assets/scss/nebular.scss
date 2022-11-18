@@ -94,6 +94,10 @@ nb-form-field{
   font-family: "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif!important;
   font-size: 13px!important;
   font-weight: 400!important;
+  &.addOption{
+    font-weight: 800!important;;
+    color: #787373;
+  }
 }
 
 .nb-theme-default nb-tag{

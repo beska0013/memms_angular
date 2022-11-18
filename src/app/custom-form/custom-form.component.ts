@@ -21,6 +21,7 @@ import {AutoTextComponent} from "../component/tabs/auto-text/auto-text.component
 import {AudioLogComponent} from "../component/tabs/audio-log/audio-log.component";
 import {CustomFormService} from "./custom-form.service";
 import {parseISO} from 'date-fns'
+import {NEW_HUMAN_RESOURCE_ITEM, ORGANIZATION_ID} from "../../environments/environment";
 
 @Component({
   selector: 'app-custom-form',
@@ -143,18 +144,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     StatusReasonSelect: this.form.controls.statusReasonInputFmControl,
 };
 
-  // generalTabFmControls = {
-  //   highLevelGoal:new FormControl(),
-  //   acceptanceCriteria: new FormControl(),
-  //   buisinessBenefit: new FormControl(),
-  //   internalStatus: new FormControl(),
-  //   externalStatus: new FormControl(),
-  //   due_date: new FormControl(),
-  //   commit_date: new FormControl(),
-  //   project_start_date: new FormControl(),
-  //   completion_date: new FormControl(),
-  //   current_sts_date: new FormControl(),
-  // };
+
   generalTabFmControls = {
     highLevelGoal:this.form.controls.highLevelGoal,
     acceptanceCriteria: this.form.controls.acceptanceCriteria,
@@ -299,7 +289,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
     return chBoundShadow.join(':')
   }
 
-  private onOrgChange(data:{type:string, value:number}){
+  private onOrgChange(data:{type:string, value:number|string}){
     const org = this.formData.organizations.find(item => item.ID === data.value);
     return !!org ? this.resetSearchScrope(org.Title)  : this.resetSearchScrope('All')
   }
@@ -314,15 +304,19 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
   }
 
 
+
    tabsHandler(i:number){
     this.tabs.forEach((tab,index ) => {
       index === i ? this.activateTab(tab) :  tab.active = false
     })
   }
 
-   onControlOrgChange(event:{type:string, value:number}){
-     if(event.type === 'OrganizationId'){
-       this.onOrgChange(event)
+   onControlSectionChange(event:{type:string, value:number|string}){
+     if(event.type === ORGANIZATION_ID){
+      return this.onOrgChange(event)
+     }
+     if(event.type === NEW_HUMAN_RESOURCE_ITEM){
+      return this.customFmSrv.addHumanResource(event.value as string)
      }
    }
 

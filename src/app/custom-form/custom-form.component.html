@@ -9,7 +9,7 @@
     <app-fm-title [titleValue]="formData.form.ProjectTitle"
                   (titleInput)="onTitleInput($event)"></app-fm-title>
 
-    <app-fm-control (output)="onControlOrgChange($event)"
+    <app-fm-control (output)="onControlSectionChange($event)"
                     [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"
                     [status]="formData.status"

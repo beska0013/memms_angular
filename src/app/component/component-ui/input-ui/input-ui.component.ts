@@ -68,9 +68,9 @@ export class InputUiComponent implements OnInit,OnDestroy{
   onFocusin(){
     if(!this.inputControl) return null;
     this.inputControl.valueChanges.subscribe((res) => {
-        if(this.firstInput) this.onFirstinput()
-        this.duringInput.emit(res)
-      })
+        if(this.firstInput) this.onFirstinput();
+        this.duringInput.emit(res);
+    })
   }
 
 

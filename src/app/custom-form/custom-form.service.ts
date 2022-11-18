@@ -82,10 +82,6 @@ export class CustomFormService {
     this.$sessionLogListToCreate.next(list);
   }
 
-  // sessionLogDeleteHandler(data:any){
-  //   this.$loading.next(true);
-  //   this.$deleteSessionLogItemState.next(data);
-  // }
 
   deleteAllSessionLogItems(){
     return this.appSrv.getListByFilter(
@@ -107,6 +103,10 @@ export class CustomFormService {
     this.$projectUpdate.next(list);
   }
 
+  addHumanResource(name: string){
+    console.log('addHumanResource line 107', name);
+  }
+
   private onCreateSessionLogItem(item:any){
     const DATA = {
       "__metadata": {
@@ -123,6 +123,7 @@ export class CustomFormService {
     return this.appSrv.createListItem(DATA, 'ProjectSessionLog')
       .pipe(
         tap((res:{d:any}) => {
+          console.log('res', res);
           // Object.assign(item,{ID:res.d.ID});
           this.$sessionLogListToCreate.next([]);
           //this.sessionLogListToDelete.push(item);
@@ -130,13 +131,18 @@ export class CustomFormService {
       )
   }
 
+
   private editModeHadler(list:any[]|undefined){
     return this.EditMode().pipe(
-      debounce(state => state ? timer(2000) : timer(0)),
-      switchMap(() => list.length > 0 ? this.convertArrayToObj(list)
-        .pipe(
+      debounce(state => {
+        console.log('state line 136', state);
+        return state ? timer(2000) : timer(0)
+      }),
+      switchMap(() => list.length > 0 ?
+        this.convertArrayToObj(list).pipe(
           switchMap(data => this.onUpdatePrjForm(data))
-        ) : EMPTY )
+        ) :
+        EMPTY )
     )
 
   }
@@ -189,6 +195,7 @@ export class CustomFormService {
   }
 
   private initDeleteSessionlogItems(){
+    // this.$editMode.next(false);
     return this.deleteInterval = setTimeout(()=> this.$deleteSessionLogItemState.next(true), 500)
   }
 

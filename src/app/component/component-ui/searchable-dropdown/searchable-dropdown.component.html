@@ -18,7 +18,7 @@
       <input [formControl]="fmControl"
              [fieldSize]="'tiny'"
              (click)="onInputClick()"
-             (focusin)="onFirstInput()"
+             (focusin)="onFocusIn()"
              (focusout)="onFocusout()"
              (input)="onInput()"
              (change)="onChange()"
@@ -28,11 +28,11 @@
              fullWidth
              type="text"
              placeholder="Enter value"
-             [nbAutocomplete]="auto"/>
+             [nbAutocomplete]="optionList"/>
       <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
 
     </div>
-    <nb-autocomplete  #auto (selectedChange)="onSelectionChange($event)">
+    <nb-autocomplete  #optionList (selectedChange)="onSelectionChange($event)">
       <nb-option *ngFor="let item of filteredOptions$ | async;trackBy:trackBy" [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>

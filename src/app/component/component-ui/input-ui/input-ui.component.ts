@@ -79,6 +79,7 @@ export class InputUiComponent implements OnInit,OnDestroy{
       type: this.dataType,
       value: this.inputControl.value
     })
+    this.firstInput = true;
     clearTimeout(this.timeOutInterval);
   }
 

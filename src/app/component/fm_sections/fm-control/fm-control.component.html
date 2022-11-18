@@ -38,6 +38,7 @@
                              [fmControl]="cntSectionFmControls.LeadSelect"
                              [lastOption]="lastSelectOption"
                              [dropdownList]="humanResource$ | async"></app-searchable-dropdown>
+
     <app-searchable-dropdown class="tinyField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.prGroup"
@@ -58,6 +59,7 @@
                              [labelFor]="'cnt_percentComplete'"
                              [title]="'Percent Complete'"
                              [fmControl]="cntSectionFmControls.PercentComplete"></app-searchable-dropdown>
+
     <app-searchable-dropdown class="smallField"
                              (output)="onFieldChange($event)"
                              [dataType]="dataTypes.sts"

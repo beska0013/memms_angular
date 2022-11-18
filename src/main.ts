@@ -22,8 +22,7 @@ function initApp(){
 function initForm(){
   const body = document.body
   const spForm = document.getElementById('aspnetForm');
-  spForm.style.display ='none';
-  body.innerHTML +=`<div root class="rootEl"></div>`;
+        spForm.style.display ='none';
+        body.innerHTML +=`<div root class="rootEl"></div>`;
   platformBrowserDynamic().bootstrapModule(AppModule).catch(err => console.error(err))
-  // return S4_workspace;
 }

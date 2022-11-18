@@ -63,7 +63,8 @@ export class FmControlComponent implements OnInit {
     if(event.type === this.dataTypes.orgId){
       this.onOrgChange(event.value)
     }
-    this.output.emit(event)
+    console.log('fm-control.onFieldChange',event);
+    this.output.emit(event);
   }
 
   private statusFieldsCascade(statusId:number){

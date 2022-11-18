@@ -12,8 +12,9 @@ import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import { NbComponentSize} from "@nebular/theme";
 import { map, Observable, of, tap} from "rxjs";
-import {environment, NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
+import {environment, NEW_HUMAN_RESOURCE_ITEM, ALL_VALUE, NONE_VALUE} from "../../../../environments/environment";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
+
 
 
 @Component({
@@ -58,12 +59,23 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
       return null;
     }
 
-    const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value )
-    this.output.emit({
-      type: this.dataType,
-      value: !!item ? item.ID : this.lastOption ? this.lastOption.ID: null
-    })
+    const item = this.dropdownList?.find(item => item.Title ? item.Title === value : item === value );
+    if(!!item) {
+      return !!item.ID ?
+        this.onOutputEmit(item.ID, 'type:item') :
+        this.onOutputEmit(item, 'type:item')
+    }
+    return value === NONE_VALUE || value === ALL_VALUE ?
+      !!this.lastOption ? this.onOutputEmit(this.lastOption.ID, 'type:lastOption'):null :
+      this.onOutputEmit(value, 'type:value')
 
+  }
+
+  private onOutputEmit(value:any, type:string){
+    return typeof value === 'string' ? this.output.emit({
+      type: this.dataType,
+      value: value
+    }) : null
   }
 
   private filter(value: string): string[] {
@@ -106,7 +118,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     this.dataType !== this.areaDataType ? this.filteredOptions$ = of(this.dropdownList): null;
 
   }
-  onFirstInput(){
+  onFocusIn(){
       this.closeState = false;
 
 
@@ -115,7 +127,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
     this.closeState =  true;
 
   }
-  trackBy =(index, item) => index
+  trackBy = (index, item) => index;
 
   onAddNewItem(event){
     event.stopPropagation();

@@ -107,6 +107,14 @@ export class CustomFormService {
     console.log('addHumanResource line 107', name);
   }
 
+  addReviewContextTag(tagTitle: string){
+
+  }
+
+  addTag(tagTitle: string){
+
+  }
+
   private onCreateSessionLogItem(item:any){
     const DATA = {
       "__metadata": {

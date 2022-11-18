@@ -7,7 +7,7 @@ header {
   padding: 0 0 0 5px;
   position: sticky;
   top:0;
-  z-index:9999999;
+ // z-index:9999999;
   border-bottom: 2px solid;
   @include flex(between);
   width: 100%;

@@ -2,7 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit,
   Output,
 } from '@angular/core';
@@ -12,8 +12,9 @@ import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
 import {ControlDataTypes} from "../../../../models/formDataTypes";
 import {AppService} from "../../../app.service";
-import {EMPTY, filter, map, Observable, of, tap} from "rxjs";
+import {EMPTY, filter, map, Observable, of, Subscription, switchMap, tap} from "rxjs";
 import {NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
+import {CustomFormService} from "../../../custom-form/custom-form.service";
 
 
 
@@ -31,10 +32,11 @@ import {NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
   templateUrl: './fm-control.component.html',
   styleUrls: ['./fm-control.component.scss']
 })
-export class FmControlComponent implements OnInit {
+export class FmControlComponent implements OnInit, OnDestroy {
   constructor(
     private cdr:ChangeDetectorRef,
-    private appSrv: AppService
+    private appSrv: AppService,
+    private customFmSrv: CustomFormService,
   ) { }
 
   @Input() formData!: any
@@ -43,6 +45,7 @@ export class FmControlComponent implements OnInit {
   @Input() statusReason:any;
   @Input() organizations!:any;
   @Input() cntSectionFmControls:any;
+  @Input() sectionName:string;
 
   @Output() output = new EventEmitter();
   humanResource$:Observable<any>
@@ -57,6 +60,14 @@ export class FmControlComponent implements OnInit {
   dataFirstChange = true;
   disabled = false;
   tooltip:string;
+  private sectuionLockSubscription$:Subscription;
+
+  private sectionLock = this.customFmSrv.SeessionLogFieldTypes()
+    .pipe(
+      map(res => res.find(item => item.Field_type === this.sectionName && item?.sessionId !== this.appSrv.getSessionId())),
+      switchMap( res => !!res ? this.lockSection(res) : this.unlockSection())
+    )
+
   onFieldChange(event){
     if(event.type === this.dataTypes.sts){
       this.statusFieldsCascade(event.value);
@@ -67,9 +78,7 @@ export class FmControlComponent implements OnInit {
     console.log('fm-control.onFieldChange',event);
     this.output.emit(event);
   }
-  inputStart(event){
-    console.log(event);
-  }
+  inputStart = () => this.customFmSrv.createSessionLog(this.sectionName);
 
   private lockSection(res){
     this.disabled = true;
@@ -78,6 +87,19 @@ export class FmControlComponent implements OnInit {
     return EMPTY
   }
 
+  private unlockSection(){
+    // return  this.disabled ? this.appSrv.getFormField([this.dataTypes.ids,this.dataTypes.value].toString())
+    //   .pipe(
+    //     tap((res) =>  {
+    //       console.log('unlockField line 92',res);
+    //       //this.initialValues = {ids: res[this.dataTypes.ids], members: res[this.dataTypes.value]};
+    //
+    //       this.tooltip = null;
+    //       this.disabled = false;
+    //       this.cdr.markForCheck();
+    //     })) : EMPTY
+    return EMPTY
+  }
   private statusFieldsCascade(statusId:number){
     this.statusReasonList$ = of(this.statusReason)
       .pipe(map((sts) => sts.filter(item => item.StatusId === statusId )))
@@ -109,10 +131,15 @@ export class FmControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sectuionLockSubscription$ = this.sectionLock.subscribe()
     this.humanResource$ = of(this.humanResource);
     this.statusFieldsCascade(this.formData.StatusId);
 
 
+  }
+
+  ngOnDestroy(): void {
+    this.sectuionLockSubscription$.unsubscribe()
   }
 
 

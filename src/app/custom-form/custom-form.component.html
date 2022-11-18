@@ -10,6 +10,7 @@
                   (titleInput)="onTitleInput($event)"></app-fm-title>
 
     <app-fm-control (output)="onControlSectionChange($event)"
+                    [sectionName]="'Control'"
                     [cntSectionFmControls] = cntSectionFmControls
                     [humanResource]="formData.prjHumanRecource"
                     [status]="formData.status"

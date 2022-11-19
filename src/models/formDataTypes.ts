@@ -1,20 +1,33 @@
-import {NEW_HUMAN_RESOURCE_ITEM, ORGANIZATION_ID} from "../environments/environment";
+import {
+  CH_AREA_PATH,
+  NEW_HUMAN_RESOURCE_ITEM,
+  ORGANIZATION_ID,
+  OWNER_ID, PERCENT_COMPLETE,
+  PRJ_LEAD_ID,
+  PRJ_MNG_ID,
+  PRJ_PRIORITY_SUB_GR,
+  STATUS_ID,
+  PRJ_PRIORITY_GR,
+  STATUS_REASON_ID
+} from "../environments/environment";
+
+
+
 
 
 export class ControlDataTypes {
   constructor() {
     this.orgId = ORGANIZATION_ID;
-    this.ownerId ='OwnerId';
-    this.mngId ='ProjectManagerId';
-    this.leadId ='ProjectLeadId';
-    this.prGroup ='ProjectPriorityGroup';
-    this.prSubGroup ='ProjectPrioritySubGroup';
-    this.percent ='PercentComplete';
-    this.sts ='StatusId';
-    this.stsReason ='StatusReasonId';
-    this.CHAreaPath ='CHAreaPath';
+    this.ownerId = OWNER_ID;
+    this.mngId = PRJ_MNG_ID;
+    this.leadId = PRJ_LEAD_ID;
+    this.prGroup = PRJ_PRIORITY_GR;
+    this.prSubGroup = PRJ_PRIORITY_SUB_GR;
+    this.percent = PERCENT_COMPLETE;
+    this.sts = STATUS_ID;
+    this.stsReason = STATUS_REASON_ID;
+    this.CHAreaPath = CH_AREA_PATH;
     this.newHumanResourceItem = NEW_HUMAN_RESOURCE_ITEM;
-
   }
   readonly orgId:string
   readonly ownerId:string

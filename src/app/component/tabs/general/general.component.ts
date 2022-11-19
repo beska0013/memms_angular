@@ -38,7 +38,7 @@ export class GeneralComponent implements OnInit {
     this.dataTypes.project_start_date,
   ];
 
-  onOutputChange = (event) => this.customFmSrv.prjFormUpdateHandler(event)
+  onOutputChange = (event) => this.customFmSrv.prjFormUpdateHandler(event);
   inputStart = (dataType:string) => this.customFmSrv.createSessionLog(dataType)
 
   resetDates(){

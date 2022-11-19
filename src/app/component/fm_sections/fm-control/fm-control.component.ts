@@ -12,8 +12,7 @@ import {NebularModule} from "../../../shared/nebular/nebular.module";
 import {SearchableDropdownComponent} from "../../component-ui/searchable-dropdown/searchable-dropdown.component";
 import {ControlDataTypes} from "../../../../models/formDataTypes";
 import {AppService} from "../../../app.service";
-import {EMPTY, filter, map, Observable, of, Subscription, switchMap, tap} from "rxjs";
-import {NEW_HUMAN_RESOURCE_ITEM} from "../../../../environments/environment";
+import {EMPTY, map, Observable, of, Subscription, switchMap, tap} from "rxjs";
 import {CustomFormService} from "../../../custom-form/custom-form.service";
 
 
@@ -75,10 +74,13 @@ export class FmControlComponent implements OnInit, OnDestroy {
     if(event.type === this.dataTypes.orgId){
       this.onOrgChange(event.value)
     }
-    console.log('fm-control.onFieldChange',event);
+
     this.output.emit(event);
+    return this.customFmSrv.prjFormUpdateHandler(event);
   }
+
   inputStart = () => this.customFmSrv.createSessionLog(this.sectionName);
+
 
   private lockSection(res){
     this.disabled = true;
@@ -88,18 +90,50 @@ export class FmControlComponent implements OnInit, OnDestroy {
   }
 
   private unlockSection(){
-    // return  this.disabled ? this.appSrv.getFormField([this.dataTypes.ids,this.dataTypes.value].toString())
-    //   .pipe(
-    //     tap((res) =>  {
-    //       console.log('unlockField line 92',res);
-    //       //this.initialValues = {ids: res[this.dataTypes.ids], members: res[this.dataTypes.value]};
-    //
-    //       this.tooltip = null;
-    //       this.disabled = false;
-    //       this.cdr.markForCheck();
-    //     })) : EMPTY
-    return EMPTY
+    const cnt_section_fields = [
+      this.dataTypes.orgId,
+      this.dataTypes.ownerId,
+      this.dataTypes.mngId,
+      this.dataTypes.leadId,
+      this.dataTypes.prGroup,
+      this.dataTypes.prSubGroup,
+      this.dataTypes.percent,
+      this.dataTypes.sts,
+      this.dataTypes.stsReason
+    ];
+    return  this.disabled ? this.appSrv.getFormField(cnt_section_fields.toString())
+      .pipe(
+        tap((res) =>  {
+          this.applyNewDataOnUnlock(res);
+          this.tooltip = null;
+          this.disabled = false;
+          this.cdr.markForCheck();
+        })) : EMPTY
   }
+
+  applyNewDataOnUnlock(newData:any){
+    const orgValue = this.organizations.find(item => item.ID === newData.OrganizationId) || this.lastSelectOption;
+    const ownerValue = this.humanResource.find(item => item.ID === newData.OwnerId) || this.lastSelectOption;
+    const mngValue = this.humanResource.find(item => item.ID === newData.ProjectManagerId) || this.lastSelectOption;
+    const leadValue = this.humanResource.find(item => item.ID === newData.ProjectLeadId) || this.lastSelectOption;
+    const priorityGrValue = this.priorityGroup.find(item => parseInt(item, 10) === parseInt(newData.ProjectPriorityGroup, 10));
+    const prioritySubGrValue = this.prioritySubGroup.find(item => item === newData.ProjectPrioritySubGroup);
+    const stsValue = this.status.find(item => item.ID === newData.StatusId) || this.lastSelectOption;
+    const stsReasonValue = this.statusReason.find(item => item.ID === newData.StatuStatusReasonId) || this.lastSelectOption;
+
+
+    this.cntSectionFmControls.OrgSelect.setValue(orgValue?.Title);
+    this.cntSectionFmControls.OwnerSelect.setValue(ownerValue?.Title);
+    this.cntSectionFmControls.ManagerSelect.setValue(mngValue?.Title);
+    this.cntSectionFmControls.LeadSelect.setValue(leadValue?.Title);
+    this.cntSectionFmControls.PriorityGrSelect.setValue(priorityGrValue);
+    this.cntSectionFmControls.PrioritySubGrSelect.setValue(prioritySubGrValue);
+    this.cntSectionFmControls.PercentComplete.setValue(newData.PercentComplete);
+    this.cntSectionFmControls.StatusSelect.setValue(stsValue?.Title);
+    this.cntSectionFmControls.StatusReasonSelect.setValue(stsReasonValue?.Title );
+  }
+
+
   private statusFieldsCascade(statusId:number){
     this.statusReasonList$ = of(this.statusReason)
       .pipe(map((sts) => sts.filter(item => item.StatusId === statusId )))

@@ -19,15 +19,21 @@
              [nbAutocomplete]="optionList"/>
       <span class="select_chevron" [ngClass]="{'closed': closeState,'opened':!closeState}"></span>
     </div>
-    <nb-autocomplete  #optionList (selectedChange)="onSelectionChange($event)">
-      <nb-option *ngFor="let item of filteredOptions$ | async;trackBy:trackBy" [value]="item['Title'] || item">
+    <nb-autocomplete  #optionList
+                      (selectedChange)="onSelectionChange($event)">
+      <nb-option *ngFor="let item of filteredOptions$ | async;trackBy:trackBy"
+                 (mouseover)="onOptionListHover()"
+                 [value]="item['Title'] || item">
         {{ item['Title'] || item}}
       </nb-option>
       <nb-option *ngIf="addItemState"
                  class="addOption"
-                 (click)="onAddNewItem($event)"
+                 (mouseover)="onOptionListHover()"
+                 (click)="onCreateNewItem($event)"
                  [value]="newItemModel">Add {{newItemModel}}...</nb-option>
-      <nb-option *ngIf="lastOption" [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
+      <nb-option *ngIf="lastOption"
+                 (mouseover)="onOptionListHover()"
+                 [value]="lastOption.Title">{{lastOption.Title}}</nb-option>
     </nb-autocomplete>
 
 </label>

@@ -98,8 +98,10 @@ export class CustomFormService {
   }
 
   prjFormUpdateHandler(data:{type:string, value:string}){
+    console.log(data);
     const list = [...this.$projectUpdate.value]
     list.push({[`${data.type}`]:data.value});
+
     this.$projectUpdate.next(list);
   }
 

@@ -1,9 +1,9 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
-  OnChanges,
+  OnChanges, OnDestroy,
   OnInit,
   Output, SimpleChanges,
   ViewChild
@@ -11,9 +11,10 @@ import {
 import {CommonModule} from '@angular/common';
 import { ReactiveFormsModule} from "@angular/forms";
 import { NbComponentSize} from "@nebular/theme";
-import { map, Observable, of, tap} from "rxjs";
+import {map, Observable, of, Subscription, tap} from "rxjs";
 import {environment, NEW_HUMAN_RESOURCE_ITEM, ALL_VALUE, NONE_VALUE} from "../../../../environments/environment";
 import {NebularModule} from "../../../shared/nebular/nebular.module";
+
 
 
 
@@ -25,11 +26,12 @@ import {NebularModule} from "../../../shared/nebular/nebular.module";
   styleUrls: ['./searchable-dropdown.component.scss'],
   changeDetection:ChangeDetectionStrategy.OnPush
 })
-export class SearchableDropdownComponent implements OnInit, OnChanges {
+export class SearchableDropdownComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor() { }
 
   @ViewChild('autoInput') input;
+  @ViewChild('optionList') optionList;
 
   @Input() allowAdd:boolean = false;
   @Input() dataType:string
@@ -44,13 +46,14 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   @Output() onInputStart = new EventEmitter();
   @Output() duringInput = new EventEmitter();
 
+  $fmControlValueChangesSubs:Subscription;
+
   dataFirstChange = true; // => when data loads first time
   closeState = true;
   firstInput = true; // check for first charachter input;
   sessionLogcreateState = false;
   filteredOptions$: Observable<string[] | never>;
   addItemState:boolean = false;
-  // tooltip:string;
   newItemModel:string;
   private areaDataType = 'CHOrganizationBoundShadow:CH1BoundShadow:CH2BoundShadow:CH3BoundShadow:CH4BoundShadow:CH5BoundShadow:CH6BoundShadow:CH7BoundShadow:CH8BoundShadow:CH9BoundShadow:CH10BoundShadow'
 
@@ -67,6 +70,7 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
         this.onOutputEmit(item.ID, 'type:item') :
         this.onOutputEmit(item, 'type:item')
     }
+    this.sessionLogcreateState = false;
     return value === NONE_VALUE || value === ALL_VALUE ?
       !!this.lastOption ? this.onOutputEmit(this.lastOption.ID, 'type:lastOption'):null :
       this.onOutputEmit(value, 'type:value')
@@ -74,10 +78,13 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
 
   private onOutputEmit(value:any, type:string){
-    return typeof value === 'string' ? this.output.emit({
+    console.log(value);
+    console.log(' typeof', typeof value);
+    console.log(type);
+    return  this.output.emit({
       type: this.dataType,
       value: value
-    }) : null
+    })
   }
 
   private filter(value: string): string[] {
@@ -95,12 +102,13 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
   }
 
   private onFirstinput(){
-    console.log('sessionLogcreateState', !this.sessionLogcreateState);
-    !this.sessionLogcreateState ? this.onInputStart.emit(this.dataType): null;
+    if(this.sessionLogcreateState) return null;
+    this.onInputStart.emit(this.dataType);
     this.firstInput = false;
-    //this.sessionLogcreateState = true;
+    this.sessionLogcreateState = true;
   }
 
+  onOptionListHover = () => this.onFirstinput();
   onChange(){
     this.closeState = true;
     !!this.input.nativeElement.value ?
@@ -128,21 +136,21 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
 
   }
   onFocusIn(){
-      this.closeState = false;
-      this.fmControl.valueChanges.subscribe(res =>{
+     this.closeState = false;
+     this.$fmControlValueChangesSubs = this.fmControl.valueChanges.subscribe(res =>{
         if(this.firstInput) this.onFirstinput();
         this.duringInput.emit(res);
-
       })
 
   }
   onFocusout(){
     this.closeState =  true;
-    //this.sessionLogcreateState = false;
+
+    this.firstInput = true;
   }
   trackBy = (index, item) => index;
 
-  onAddNewItem(event){
+  onCreateNewItem(event){
     event.stopPropagation();
     event.preventDefault();
     return this.addItemState ?
@@ -152,7 +160,6 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
       }) :
       null
   }
-
 
   ngOnInit(): void {
     this.filteredOptions$ = of(this.dropdownList);
@@ -165,6 +172,11 @@ export class SearchableDropdownComponent implements OnInit, OnChanges {
         this.filteredOptions$ = of(this.dropdownList);
       }
     }
+  }
+
+  ngOnDestroy(): void {
+
+   this.$fmControlValueChangesSubs.unsubscribe();
   }
 
 }

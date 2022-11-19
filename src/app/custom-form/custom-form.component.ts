@@ -221,19 +221,19 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
 
     this.form.controls.orgInputFormControl
       .setValue(this.formData.organizations
-        .find(item => item.ID === this.formData.form.OrganizationId).Title);
+        .find(item => item.ID === this.formData.form.OrganizationId)?.Title);
 
     this.form.controls.ownerInputFormControl
       .setValue(this.formData.prjHumanRecource
-        .find(item => item.ID === this.formData.form.OwnerId).Title);
+        .find(item => item.ID === this.formData.form.OwnerId)?.Title);
 
     this.form.controls.managerFmControl
       .setValue(this.formData.prjHumanRecource
-        .find(item => item.ID === this.formData.form.ProjectManagerId).Title);
+        .find(item => item.ID === this.formData.form.ProjectManagerId)?.Title);
 
     this.form.controls.leadInputFmControl
       .setValue(this.formData.prjHumanRecource
-        .find(item => item.ID === this.formData.form.ProjectLeadId).Title);
+        .find(item => item.ID === this.formData.form.ProjectLeadId)?.Title);
 
     this.form.controls.priorityGrInputFmControl
       .setValue(this.formData.form.ProjectPriorityGroup);
@@ -251,7 +251,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
 
     this.form.controls.statusReasonInputFmControl
       .setValue(this.formData.statusReason
-        .find(item => item.ID === this.formData.form.StatusReasonId).Title);
+        .find(item => item.ID === this.formData.form.StatusReasonId)?.Title);
   }
 
   private initGeneralTabsValues(){
@@ -318,6 +318,7 @@ export class CustomFormComponent   implements OnInit,OnDestroy {
      if(event.type === NEW_HUMAN_RESOURCE_ITEM){
       return this.customFmSrv.addHumanResource(event.value as string)
      }
+
    }
 
    onSectionValInputStart(dataType:any){
